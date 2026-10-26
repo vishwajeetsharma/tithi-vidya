@@ -1,0 +1,5 @@
+.DS_Store
+cli/target/
+generator/.venv/
+generator/__pycache__/
+generator/*.bsp
