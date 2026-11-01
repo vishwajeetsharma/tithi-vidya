@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tithi Vidya</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --text: #221d17;
+    --muted: #6d6358;
+    --border: #e7e0d6;
+    --accent: #a8480b;
+    --on-accent: #ffffff;
+    --accent-soft: #fbeee2;
+    --now: #fff4d1;
+    --error-bg: #fdecea;
+    --error: #a3271c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #161310;
+      --surface: #201c18;
+      --text: #f2ece5;
+      --muted: #a69a8c;
+      --border: #3a332c;
+      --accent: #f0a050;
+      --on-accent: #1d1206;
+      --accent-soft: #3a2816;
+      --now: #3a3117;
+      --error-bg: #3d1b17;
+      --error: #f4a199;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 900px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { font-size: 1.875rem; line-height: 1.2; margin: 0 0 6px; }
+  .lede { color: var(--muted); margin: 0 0 28px; max-width: 60ch; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .fields { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .fields + .fields { margin-top: 16px; }
+  label, legend { display: block; font-size: .875rem; font-weight: 600; margin-bottom: 6px; }
+  input, select {
+    width: 100%;
+    font: inherit;
+    padding: 9px 11px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--bg);
+    color: var(--text);
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .hint { font-size: .8125rem; color: var(--muted); margin: 6px 0 0; }
+  fieldset { border: 0; padding: 0; margin: 20px 0 0; }
+  .choices { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .choices label { display: flex; align-items: center; gap: 8px; font-weight: 400; font-size: 1rem; margin: 0; }
+  .choices input { width: auto; accent-color: var(--accent); }
+  button {
+    margin-top: 22px;
+    font: inherit;
+    font-weight: 600;
+    padding: 10px 22px;
+    border: 0;
+    border-radius: 9px;
+    background: var(--accent);
+    color: var(--on-accent);
+    cursor: pointer;
+  }
+  button:disabled { opacity: .6; cursor: progress; }
+  .error {
+    margin: 20px 0 0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: var(--error-bg);
+    color: var(--error);
+  }
+  #result { margin-top: 28px; }
+  .eyebrow { margin: 0; font-size: .8125rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); }
+  h2 { font-size: 1.625rem; line-height: 1.25; margin: 4px 0 4px; }
+  .sub { margin: 0 0 16px; color: var(--muted); }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  .note { margin: 14px 0 0; padding: 10px 14px; border-radius: 10px; background: var(--accent-soft); }
+  .list-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin: 32px 0 12px; }
+  h3 { font-size: 1.125rem; margin: 0; }
+  a { color: var(--accent); }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { font-size: .8125rem; font-weight: 600; color: var(--muted); background: var(--surface); position: sticky; top: 0; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tr.now td { background: var(--now); }
+  td.date { font-weight: 600; }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+  .tag.next { background: var(--accent); color: var(--on-accent); }
+  .tags { display: inline-flex; gap: 6px; }
+  .fine { font-size: .8125rem; color: var(--muted); margin: 16px 0 0; max-width: 75ch; }
+  @media (max-width: 560px) {
+    main { padding-top: 24px; }
+    h1 { font-size: 1.5rem; }
+    dl { grid-template-columns: 1fr; gap: 0; }
+    dd { margin-bottom: 8px; }
+    th, td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Tithi Vidya</h1>
+  <p class="lede">Enter a birth date, time and place to see the birth tithi, and the dates it comes back on over the next 100 years.</p>
+
+  <form id="form" class="panel">
+    <div class="fields">
+      <div>
+        <label for="date">Birth date</label>
+        <input id="date" name="date" type="date" min="1900-01-01" max="2149-12-31" required>
+      </div>
+      <div>
+        <label for="time">Birth time</label>
+        <input id="time" name="time" type="time" required>
+      </div>
+      <div>
+        <label for="place">Birth place</label>
+        <select id="place" name="place"></select>
+      </div>
+    </div>
+    <div id="custom" class="fields" hidden>
+      <div>
+        <label for="lat">Latitude</label>
+        <input id="lat" name="lat" type="number" step="any" min="-90" max="90" placeholder="28.6139">
+        <p class="hint">North is positive.</p>
+      </div>
+      <div>
+        <label for="lon">Longitude</label>
+        <input id="lon" name="lon" type="number" step="any" min="-180" max="180" placeholder="77.2090">
+        <p class="hint">East is positive.</p>
+      </div>
+      <div>
+        <label for="tz">Time zone</label>
+        <input id="tz" name="tz" type="text" placeholder="Asia/Kolkata" autocomplete="off" spellcheck="false">
+        <p class="hint">An IANA name, such as Asia/Kolkata.</p>
+      </div>
+    </div>
+    <fieldset>
+      <legend>Show</legend>
+      <div class="choices">
+        <label><input type="radio" name="mode" value="yearly" checked> Once a year: the tithi birthday</label>
+        <label><input type="radio" name="mode" value="all"> Every time the tithi returns (about 12 a year)</label>
+      </div>
+    </fieldset>
+    <button id="submit" type="submit">Find dates</button>
+  </form>
+
+  <p id="error" class="error" role="alert" hidden></p>
+
+  <section id="result" aria-live="polite" hidden>
+    <div class="panel">
+      <p class="eyebrow">Birth tithi</p>
+      <h2 id="tithi"></h2>
+      <p id="tithi-sub" class="sub"></p>
+      <dl id="facts"></dl>
+      <div id="notes"></div>
+    </div>
+
+    <div class="list-head">
+      <h3 id="list-title"></h3>
+      <a id="jump" href="#">Jump to the next date</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Lunar month</th><th>Tithi begins</th><th>Tithi ends</th><th></th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="fine">
+      Each date is the day whose sunrise falls inside the tithi, since a panchang day takes the tithi in effect at sunrise.
+      <strong>Kshaya</strong>: no sunrise falls inside the tithi, so it is listed on the day it falls in.
+      <strong>Vriddhi</strong>: it covers two sunrises; the first day is listed.
+      Positions from JPL DE440, Lahiri ayanamsa, amanta months. Times are local to the birth place.
+    </p>
+  </section>
+</main>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const OTHER = "__other";
+  const thisYear = new Date().getFullYear();
+  const today = new Date().toLocaleDateString("en-CA"); // YYYY-MM-DD
+
+  function el(tag, props = {}, ...children) {
+    const node = Object.assign(document.createElement(tag), props);
+    node.append(...children.filter((c) => c !== null && c !== undefined));
+    return node;
+  }
+
+  async function loadPlaces() {
+    const select = $("place");
+    try {
+      const places = await (await fetch("/api/places")).json();
+      for (const p of places) select.add(new Option(p.name, p.name));
+    } catch {
+      // The coordinates option still works without the list.
+    }
+    select.add(new Option("Somewhere else (enter coordinates)", OTHER));
+    select.value = "New Delhi";
+  }
+
+  function showCustom() {
+    const custom = $("place").value === OTHER;
+    $("custom").hidden = !custom;
+    for (const id of ["lat", "lon", "tz"]) $(id).required = custom;
+  }
+
+  function query() {
+    const params = new URLSearchParams({
+      date: $("date").value,
+      time: $("time").value,
+      mode: new FormData($("form")).get("mode"),
+    });
+    if ($("place").value === OTHER) {
+      for (const id of ["lat", "lon", "tz"]) params.set(id, $(id).value.trim());
+    } else {
+      params.set("place", $("place").value);
+    }
+    return params;
+  }
+
+  async function submit(event) {
+    event?.preventDefault();
+    const params = query();
+    history.replaceState(null, "", "?" + params);
+    $("submit").disabled = true;
+    $("submit").textContent = "Finding dates…";
+    $("error").hidden = true;
+    try {
+      const response = await fetch("/api/birth?" + params);
+      const text = await response.text();
+      let data;
+      try { data = JSON.parse(text); } catch { data = { error: text }; }
+      if (!response.ok) throw new Error(data.error || "Something went wrong.");
+      render(data);
+    } catch (err) {
+      $("result").hidden = true;
+      $("error").textContent = err.message;
+      $("error").hidden = false;
+    } finally {
+      $("submit").disabled = false;
+      $("submit").textContent = "Find dates";
+    }
+  }
+
+  function render(data) {
+    const b = data.birth;
+    $("tithi").textContent = b.tithi;
+    const month = b.month === b.purnimanta_month
+      ? `${b.month} month`
+      : `${b.month} month (amanta), ${b.purnimanta_month} (purnimanta)`;
+    $("tithi-sub").textContent = `Tithi ${b.number} of 30 · ${b.paksha} paksha · ${month}`;
+
+    const placeName = data.place.name || `${data.place.lat}, ${data.place.lon}`;
+    const facts = [
+      ["Born", `${b.moment} · ${placeName}`],
+      ["Tithi ran", `${b.begins} to ${b.ends}`],
+      ["Panchang day", `${b.panchang_date}, from sunrise at ${b.sunrise}; that day is named ${b.udaya_tithi}`],
+    ];
+    $("facts").replaceChildren(...facts.flatMap(([k, v]) => [el("dt", { textContent: k }), el("dd", { textContent: v })]));
+
+    const notes = [...data.notes];
+    if (b.before_sunrise) notes.unshift("Born before sunrise, so by the panchang this birth belongs to the previous day.");
+    $("notes").replaceChildren(...notes.map((n) => el("p", { className: "note", textContent: n })));
+
+    const scope = data.yearly ? `${b.tithi} in ${b.month.replace(/^Adhika /, "")}, once a year` : `Every ${b.tithi}`;
+    $("list-title").textContent = `${scope}, ${data.from}–${data.to} · ${data.dates.length} dates`;
+
+    let next = null;
+    const rows = data.dates.map((d) => {
+      const tags = [];
+      if (!next && d.date >= today) {
+        tags.push(el("span", { className: "tag next", textContent: "Next" }));
+      }
+      if (d.kind === "kshaya") {
+        tags.push(el("span", { className: "tag", textContent: "Kshaya", title: "No sunrise falls inside this tithi; listed on the day it falls in." }));
+      } else if (d.kind === "vriddhi") {
+        tags.push(el("span", { className: "tag", textContent: `Vriddhi · also ${d.also}`, title: "This tithi covers two sunrises; the first day is listed." }));
+      }
+      const row = el("tr", { className: d.year === thisYear ? "now" : "" },
+        el("td", { className: "date", textContent: d.label }),
+        el("td", { textContent: d.month }),
+        el("td", { textContent: d.begins }),
+        el("td", { textContent: d.ends }),
+        el("td", {}, el("span", { className: "tags" }, ...tags)));
+      if (tags[0]?.textContent === "Next") next = row;
+      return row;
+    });
+    $("rows").replaceChildren(...rows);
+
+    $("jump").hidden = !next;
+    $("jump").onclick = (e) => {
+      e.preventDefault();
+      next.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+    $("result").hidden = false;
+  }
+
+  async function init() {
+    $("tz").value = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    await loadPlaces();
+    $("place").addEventListener("change", showCustom);
+    $("form").addEventListener("submit", submit);
+
+    const params = new URLSearchParams(location.search);
+    if (!params.has("date") || !params.has("time")) return;
+    $("date").value = params.get("date");
+    $("time").value = params.get("time");
+    if (params.get("mode") === "all") $("form").elements.mode.value = "all";
+    if (params.has("place")) {
+      $("place").value = params.get("place");
+    } else if (params.has("lat")) {
+      $("place").value = OTHER;
+      for (const id of ["lat", "lon", "tz"]) $(id).value = params.get(id) ?? "";
+    }
+    showCustom();
+    submit();
+  }
+
+  init();
+</script>
+</body>
+</html>

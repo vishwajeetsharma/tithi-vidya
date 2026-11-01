@@ -2,12 +2,29 @@
 
 Find the tithi (lunar day) for a birth moment, and the dates that tithi falls on at a place, from 1900 to 2149.
 
-There are two parts:
+There are three parts:
 
 - **`generator/`** (Python) uses JPL's DE440 ephemeris to compute every tithi boundary from 1900 to 2150 and writes `cli/data/tithi-table.bin`. You run it once, offline.
-- **`cli/`** (Rust) builds that table into the `tithi` binary. At runtime it only computes sunrise for your place.
+- **`cli/`** (Rust) builds that table into the `tithi` binary and the `tithi` library. At runtime it only computes sunrise for your place.
+- **`web/`** (Rust) is a small web app on top of the same library.
 
 This split works because a tithi starts and ends at the same instant everywhere on Earth. Only the date it lands on depends on the place, through local sunrise.
+
+## Using the web app
+
+```bash
+cd web && cargo run --release
+```
+
+Then open http://127.0.0.1:8080. Set `PORT` (and `HOST=0.0.0.0` to accept outside connections) to change where it listens.
+
+Enter a birth date, time and place to get:
+- the birth tithi, its lunar month and the panchang day;
+- the dates the tithi comes back on for the next 100 years, either once a year (the tithi birthday) or every time it returns.
+
+The next upcoming date is marked. The page address holds the inputs, so a result can be bookmarked or shared.
+
+The page is a single file, `web/static/index.html`, with no build step. It's compiled into the server, so restart the server after editing it. The JSON API it calls is described at the top of `web/src/lib.rs`.
 
 ## Using the CLI
 
@@ -57,7 +74,7 @@ These follow Drik Panchang:
 
 ## How it is checked
 
-`cargo test` checks the CLI against two kinds of reference:
+`cargo test` in `web/` checks the API: the page, the place list, both listing modes and bad input. `cargo test` in `cli/` checks the calculations against two kinds of reference:
 
 - **Data computed directly from DE440** (`cli/tests/fixtures/`, written by `generator/make_fixtures.py`):
   - the tithi at 3,000+ instants, half of them within 10 minutes of a boundary;

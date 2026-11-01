@@ -1,6 +1,7 @@
 //! Built-in places. Anywhere else can be given as --lat, --lon and --tz.
 
 use crate::names::normalize;
+use crate::panchang::Place;
 
 pub struct KnownPlace {
     pub name: &'static str,
@@ -8,6 +9,13 @@ pub struct KnownPlace {
     pub lat: f64,
     pub lon: f64,
     pub tz: &'static str,
+}
+
+impl KnownPlace {
+    pub fn to_place(&self) -> Place {
+        let tz = self.tz.parse().expect("built-in time zones are valid");
+        Place { name: self.name.to_string(), lat: self.lat, lon: self.lon, tz }
+    }
 }
 
 const fn place(name: &'static str, aliases: &'static [&'static str], lat: f64, lon: f64, tz: &'static str) -> KnownPlace {
@@ -83,7 +91,7 @@ mod tests {
     #[test]
     fn every_time_zone_is_known() {
         for p in PLACES {
-            assert!(p.tz.parse::<chrono_tz::Tz>().is_ok(), "{}", p.tz);
+            assert_eq!(p.to_place().tz.name(), p.tz);
         }
     }
 }

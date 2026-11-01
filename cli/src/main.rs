@@ -1,19 +1,15 @@
 use std::error::Error;
 use std::process::ExitCode;
 
-use chrono::{Datelike, LocalResult, NaiveDate, NaiveTime, TimeZone, Timelike, Utc};
-use chrono_tz::Tz;
+use chrono::{Datelike, NaiveDate, NaiveTime, TimeZone, Utc};
 use clap::{ArgGroup, Args, Parser, Subcommand};
 
 use tithi::names::{self, masa_name, paksha, purnimanta_name, tithi_name};
-use tithi::panchang::{self, DayKind, Occurrence, Place};
+use tithi::panchang::{self, DayKind, FIRST_YEAR, LAST_YEAR, Occurrence, Place, parse_time};
 use tithi::places::{self, PLACES};
 use tithi::table::Table;
 
 type Res = Result<(), Box<dyn Error>>;
-
-const FIRST_YEAR: i32 = 1900;
-const LAST_YEAR: i32 = 2149;
 
 #[derive(Parser)]
 #[command(
@@ -99,16 +95,10 @@ impl PlaceArgs {
             let p = places::find(query).ok_or_else(|| {
                 format!("unknown place {query:?}; run `tithi places`, or pass --lat, --lon and --tz")
             })?;
-            return Ok(Place { name: p.name.to_string(), lat: p.lat, lon: p.lon, tz: p.tz.parse()? });
+            return Ok(p.to_place());
         }
         let (lat, lon, tz) = (self.lat.unwrap(), self.lon.unwrap(), self.tz.as_deref().unwrap());
-        if !(-90.0..=90.0).contains(&lat) || !(-180.0..=180.0).contains(&lon) {
-            return Err("latitude must be -90..90 and longitude -180..180".into());
-        }
-        let tz: Tz = tz
-            .parse()
-            .map_err(|_| format!("unknown time zone {tz:?}; use an IANA name such as Asia/Kolkata"))?;
-        Ok(Place { name: String::new(), lat, lon, tz })
+        Ok(Place::from_coordinates(lat, lon, tz)?)
     }
 }
 
@@ -137,7 +127,7 @@ fn at(date: NaiveDate, time: Option<NaiveTime>, place: &PlaceArgs) -> Res {
     let table = Table::embedded();
     let place = place.resolve()?;
     let moment = match time {
-        Some(t) => local_moment(&place, date, t)?,
+        Some(t) => birth_moment(&place, date, t)?,
         None => panchang::sunrise(table, &place, date)?,
     };
     let span = table.tithi_at(moment).ok_or(panchang::Error::OutOfRange)?;
@@ -195,7 +185,7 @@ fn dates(
             (target, month, from, to.unwrap_or(from))
         }
         (None, Some((date, time))) => {
-            let moment = local_moment(&place, date, time)?;
+            let moment = birth_moment(&place, date, time)?;
             let span = table.tithi_at(moment).ok_or(panchang::Error::OutOfRange)?;
             let masa = table.masa_at(moment).ok_or(panchang::Error::OutOfRange)?;
             if !csv {
@@ -218,20 +208,7 @@ fn dates(
     if from > to {
         return Err(format!("no years to list; the data covers {FIRST_YEAR}-{LAST_YEAR}").into());
     }
-    let year_start = |y: i32| place.tz.with_ymd_and_hms(y, 1, 1, 0, 0, 0).earliest().unwrap().timestamp();
-    let margin = 3 * 86400;
-    let mut occurrences = Vec::new();
-    for span in table.occurrences(target, year_start(from) - margin, year_start(to + 1) + margin) {
-        if let Some(m) = month
-            && !table.masa_at(span.start).is_some_and(|x| x.index == m && !x.adhika)
-        {
-            continue;
-        }
-        let occ = panchang::assign_date(table, &place, span)?;
-        if (from..=to).contains(&occ.date.year()) {
-            occurrences.push(occ);
-        }
-    }
+    let occurrences = panchang::list_dates(table, &place, target, month, from, to)?;
 
     if csv {
         for note in &notes {
@@ -326,32 +303,11 @@ fn describe(place: &Place) -> String {
     if place.name.is_empty() { coords } else { format!("{} ({coords})", place.name) }
 }
 
-/// A local wall-clock time as Unix seconds, flagging clock changes.
-fn local_moment(place: &Place, date: NaiveDate, time: NaiveTime) -> Result<i64, Box<dyn Error>> {
-    match place.tz.from_local_datetime(&date.and_time(time)) {
-        LocalResult::Single(dt) => Ok(dt.timestamp()),
-        LocalResult::Ambiguous(first, _) => {
-            eprintln!("note: {date} {time} happened twice in {} (clocks went back); using the first", place.tz);
-            Ok(first.timestamp())
-        }
-        LocalResult::None => Err(format!("{date} {time} never happened in {} (clocks went forward)", place.tz).into()),
+/// A local wall-clock time as Unix seconds, noting when it happened twice.
+fn birth_moment(place: &Place, date: NaiveDate, time: NaiveTime) -> Result<i64, panchang::Error> {
+    let (moment, ambiguous) = panchang::local_moment(place, date, time)?;
+    if ambiguous {
+        eprintln!("note: {date} {time} happened twice in {} (clocks went back); using the first", place.tz);
     }
-}
-
-fn parse_time(s: &str) -> Result<NaiveTime, String> {
-    let lower = s.trim().to_ascii_lowercase();
-    let (clock, pm) = match (lower.strip_suffix("pm"), lower.strip_suffix("am")) {
-        (Some(c), _) => (c.trim(), Some(true)),
-        (_, Some(c)) => (c.trim(), Some(false)),
-        _ => (lower.as_str(), None),
-    };
-    let err = || format!("expected HH:MM or HH:MM:SS, got {s:?}");
-    let t = NaiveTime::parse_from_str(clock, "%H:%M:%S")
-        .or_else(|_| NaiveTime::parse_from_str(clock, "%H:%M"))
-        .map_err(|_| err())?;
-    match pm {
-        None => Ok(t),
-        Some(_) if t.hour() == 0 || t.hour() > 12 => Err(err()),
-        Some(pm) => Ok(t.with_hour(t.hour() % 12 + if pm { 12 } else { 0 }).unwrap()),
-    }
+    Ok(moment)
 }
