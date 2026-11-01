@@ -8,6 +8,8 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AUTHOR, KEYWORDS, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, siteUrl } from "@/lib/site";
 
+import { ANALYTICS_SCRIPT } from "@/lib/analytics-script";
+
 import "./globals.css";
 
 // Fraunces, trimmed to the soft display cut the headings use (scripts/make-fonts.py).
@@ -60,11 +62,14 @@ const MOTION_SCRIPT = `if(!matchMedia("(prefers-reduced-motion: reduce)").matche
 // page, which does not reload it. Must match STORE_KEY in lib/query.ts.
 const STRIP_DETAILS = `(function(){function s(){if(location.hash.includes("date=")){try{sessionStorage.setItem("tithi-birth",location.hash.slice(1))}catch(e){}history.replaceState(null,"",location.pathname+location.search)}}s();addEventListener("hashchange",s)})()`;
 
+// In this order: the address must be clean before any tag can read it.
+const HEAD_SCRIPT = [STRIP_DETAILS, MOTION_SCRIPT, ...(process.env.NODE_ENV === "production" ? [ANALYTICS_SCRIPT] : [])].join(";");
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `${STRIP_DETAILS};${MOTION_SCRIPT}` }} />
+        <script dangerouslySetInnerHTML={{ __html: HEAD_SCRIPT }} />
       </head>
       <body>
         <a className="skipLink" href="#main">

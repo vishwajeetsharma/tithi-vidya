@@ -6,15 +6,12 @@ import { useSyncExternalStore } from "react";
 
 import { chooseConsent, readConsent, settingsOpen, subscribe, type Consent } from "@/lib/consent";
 
-import { Analytics } from "./Analytics";
-
 const useConsent = () => useSyncExternalStore<Consent | "loading">(subscribe, readConsent, () => "loading");
 const useSettingsOpen = () => useSyncExternalStore(subscribe, settingsOpen, () => false);
 
 /**
- * Analytics and the pixel load by default, so ad landings on the home page are
- * measured, and stop if the visitor declines. The choice is asked on the finder
- * page, where birth details are entered.
+ * The cookie choice, asked on the finder page where birth details are entered.
+ * The tags themselves are in the page head (lib/analytics-script.ts).
  */
 export function CookieConsent() {
   const consent = useConsent();
@@ -23,7 +20,6 @@ export function CookieConsent() {
 
   return (
     <>
-      {consent !== "denied" && consent !== "loading" && <Analytics />}
       {((consent === null && onFinder) || reopened) && (
         <section className="cookieBar" aria-label="Cookie choice">
           <p>
