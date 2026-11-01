@@ -23,7 +23,7 @@ There are three pages: the animated home page, `/find` (the tool) and `/how-it-w
 
 ### Deploying to Vercel
 
-Import the repository into Vercel. No settings are needed: `vercel.json` at the repo root tells Vercel how to build `site/` and where the output is. Vercel does not need Rust, because the compiled engine is committed.
+Import the repository into Vercel. No settings are needed, and either Root Directory works: Vercel reads `vercel.json` at the repo root when it is empty, and `site/vercel.json` when it is `site`. Keep the two files' `headers` the same. Vercel does not need Rust, because the compiled engine is committed.
 
 Canonical links and the sitemap use Vercel's production address automatically. With a custom domain, set `NEXT_PUBLIC_SITE_URL` (for example `https://example.com`) in the Vercel project.
 
