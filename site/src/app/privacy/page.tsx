@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
-import { REPO_URL, SITE_NAME } from "@/lib/site";
+import { SITE_NAME } from "@/lib/site";
 
 import s from "../legal.module.css";
 
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
 
         <h2>Changes and contact</h2>
         <p>
-          If this policy changes, we will update this page and its date. For questions, open an issue on <a href={`${REPO_URL}/issues`}>GitHub</a>. See also our{" "}
+          If this policy changes, we will update this page and its date. For questions, email <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a>. See also our{" "}
           <Link href="/terms">Terms</Link>.
         </p>
       </div>

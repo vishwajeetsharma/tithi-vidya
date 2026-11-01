@@ -55,7 +55,7 @@ export default function TermsPage() {
 
         <h2>Changes and contact</h2>
         <p>
-          If these terms change, we will update this page and its date. For questions, open an issue on <a href={`${REPO_URL}/issues`}>GitHub</a>. See also our{" "}
+          If these terms change, we will update this page and its date. For questions, email <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a>. See also our{" "}
           <Link href="/privacy">Privacy Policy</Link>.
         </p>
       </div>
