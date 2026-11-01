@@ -3,7 +3,17 @@ name = "tithi"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+default = ["cli"]
+# The command line tool. The library builds without it for WebAssembly.
+cli = ["dep:clap", "chrono/clock"]
+
+[[bin]]
+name = "tithi"
+path = "src/main.rs"
+required-features = ["cli"]
+
 [dependencies]
-chrono = { version = "0.4.45", default-features = false, features = ["std", "clock"] }
+chrono = { version = "0.4.45", default-features = false, features = ["std"] }
 chrono-tz = "0.10.4"
-clap = { version = "4.6.7", features = ["derive"] }
+clap = { version = "4.6.7", features = ["derive"], optional = true }

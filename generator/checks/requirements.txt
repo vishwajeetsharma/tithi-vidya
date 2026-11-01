@@ -1,0 +1,5 @@
+# Only for the checks in this folder. The site does not ship or depend on these.
+astronomy-engine
+numpy
+pyswisseph
+skyfield==1.55

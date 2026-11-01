@@ -1,0 +1,32 @@
+{
+  "tithiIndex": {
+    "lang": "python",
+    "file": "generator/ephem.py",
+    "code": "def longitudes(self, t):\n    \"\"\"Apparent geocentric longitudes (degrees, true ecliptic and equinox of date).\"\"\"\n    e = self.earth.at(t)\n    _, sun, _ = e.observe(self.sun).apparent().frame_latlon(ecliptic_frame)\n    _, moon, _ = e.observe(self.moon).apparent().frame_latlon(ecliptic_frame)\n    return sun.degrees, moon.degrees\n\ndef tithi_index(self, t):\n    \"\"\"0..29: 0 is Shukla Pratipada, 14 Purnima, 29 Amavasya.\"\"\"\n    sun, moon = self.longitudes(t)\n    return (((moon - sun) % 360.0) // 12.0).astype(int)"
+  },
+  "findBoundaries": {
+    "lang": "python",
+    "file": "generator/generate_table.py",
+    "code": "def index(t):\n    return sky.tithi_index(t)\n\nindex.step_days = 0.5  # the shortest tithi is ~20 h, so 12 h steps cannot skip one\n\n# de440s covers 1849-12-26 to 2150-01-21; start early enough that 1900 has a\n# preceding new moon (needed for its lunar month).\nedges = [ts.utc(1899, 11, 1)] + [ts.utc(y, 1, 1) for y in range(1910, 2150, 10)] + [ts.utc(2150, 1, 15)]\ntts, values = [], []\nfor a, b in zip(edges, edges[1:]):\n    t, v = find_discrete(a, b, index)\n    tts.append(t.tt)\n    values.append(v)"
+  },
+  "tithiAt": {
+    "lang": "rust",
+    "file": "cli/src/table.rs",
+    "code": "/// The tithi in effect at `unix`.\npub fn tithi_at(&self, unix: i64) -> Option<TithiSpan> {\n    let i = self.times.partition_point(|&t| t <= unix);\n    (i > 0 && i < self.times.len()).then(|| self.span(i - 1))\n}"
+  },
+  "sunrise": {
+    "lang": "rust",
+    "file": "cli/src/sun.rs",
+    "code": "pub fn sunrise_near(lat_deg: f64, lon_deg: f64, guess: f64) -> Option<f64> {\n    let (sin_lat, cos_lat) = lat_deg.to_radians().sin_cos();\n    let sin_h0 = SUNRISE_ALTITUDE_DEG.to_radians().sin();\n    let mut t = guess;\n    for _ in 0..10 {\n        let (ra, dec, gast) = sun_equatorial(t / 86400.0 + 2440587.5);\n        let cos_h0 = (sin_h0 - sin_lat * dec.sin()) / (cos_lat * dec.cos());\n        if !(-1.0..=1.0).contains(&cos_h0) {\n            return None;\n        }\n        let rising_hour_angle = -cos_h0.acos().to_degrees();\n        let hour_angle = gast + lon_deg - ra.to_degrees();\n        // The Sun's hour angle advances about 360 degrees a day.\n        let step = wrap180(rising_hour_angle - hour_angle) / 360.0 * 86400.0;\n        t += step;\n        if step.abs() < 0.1 {\n            break;\n        }\n    }\n    Some(t)\n}"
+  },
+  "assignDate": {
+    "lang": "rust",
+    "file": "cli/src/panchang.rs",
+    "code": "/// The civil date an occurrence of a tithi is observed on: the day whose\n/// sunrise falls inside it.\npub fn assign_date(table: &Table, place: &Place, span: TithiSpan) -> Result<Occurrence, Error> {\n    let first = place.local(span.start).date_naive();\n    let mut inside = Vec::with_capacity(2);\n    for offset in 0..3 {\n        let day = first + Days::new(offset);\n        let sr = sunrise(table, place, day)?;\n        if sr >= span.end {\n            break;\n        }\n        if sr >= span.start {\n            inside.push(day);\n        }\n    }\n    let (date, kind) = match inside.as_slice() {\n        [day] => (*day, DayKind::Normal),\n        [day, second, ..] => (*day, DayKind::Vriddhi(*second)),\n        [] => {\n            let day = if sunrise(table, place, first)? <= span.start { first } else { first - Days::new(1) };\n            (day, DayKind::Kshaya)\n        }\n    };\n    Ok(Occurrence { span, date, kind })\n}"
+  },
+  "masaAt": {
+    "lang": "rust",
+    "file": "cli/src/table.rs",
+    "code": "/// The amanta month containing `unix`: named after the sidereal sign the Sun\n/// is in at the new moon that starts it, and adhika when the Sun is still in\n/// that sign at the next new moon (no sankranti in between).\npub fn masa_at(&self, unix: i64) -> Option<Masa> {\n    let i = self.times.partition_point(|&t| t <= unix).checked_sub(1)?;\n    let k = i.checked_sub(self.first_new_moon)? / 30;\n    let this = *self.new_moon_rashi.get(k)?;\n    let next = *self.new_moon_rashi.get(k + 1)?;\n    Some(Masa { index: (this as usize + 1) % 12, adhika: this == next })\n}"
+  }
+}

@@ -1,0 +1,31 @@
+.page {
+  min-height: 100svh;
+  padding-block: clamp(96px, 13svh, 150px) clamp(48px, 7vw, 96px);
+  background:
+    radial-gradient(70vmax 50vmax at 92% -6%, #c9d4ff 0%, rgb(201 212 255 / 0) 64%),
+    radial-gradient(60vmax 50vmax at 0% 30%, #eadbff 0%, rgb(234 219 255 / 0) 62%);
+}
+
+.inner {
+  max-width: 860px;
+}
+
+.head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: clamp(20px, 3vw, 36px);
+}
+
+.title {
+  font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+}
+
+.title em {
+  font-style: italic;
+}
+
+.lead {
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  max-width: 36rem;
+}

@@ -2,29 +2,44 @@
 
 Find the tithi (lunar day) for a birth moment, and the dates that tithi falls on at a place, from 1900 to 2149.
 
-There are three parts:
+There are four parts:
 
 - **`generator/`** (Python) uses JPL's DE440 ephemeris to compute every tithi boundary from 1900 to 2150 and writes `cli/data/tithi-table.bin`. You run it once, offline.
-- **`cli/`** (Rust) builds that table into the `tithi` binary and the `tithi` library. At runtime it only computes sunrise for your place.
-- **`web/`** (Rust) is a small web app on top of the same library.
+- **`cli/`** (Rust) is the `tithi` library and command line tool. The table is built in, so at runtime it only computes sunrise for your place.
+- **`wasm/`** (Rust) compiles that same library to WebAssembly for the website.
+- **`site/`** (Next.js) is the website. It is fully static, and the engine runs in the visitor's browser, so birth details never leave their device.
 
 This split works because a tithi starts and ends at the same instant everywhere on Earth. Only the date it lands on depends on the place, through local sunrise.
 
-## Using the web app
+## The website
 
 ```bash
-cd web && cargo run --release
+cd site && npm install && npm run dev
 ```
 
-Then open http://127.0.0.1:8080. Set `PORT` (and `HOST=0.0.0.0` to accept outside connections) to change where it listens.
+Then open http://localhost:3010.
 
-Enter a birth date, time and place to get:
-- the birth tithi, its lunar month and the panchang day;
-- the dates the tithi comes back on for the next 100 years, either once a year (the tithi birthday) or every time it returns.
+There are three pages: the animated home page, `/find` (the tool) and `/how-it-works` (the method, the real code and every accuracy test). The whole home page works without animation for visitors who ask for reduced motion.
 
-The next upcoming date is marked. The page address holds the inputs, so a result can be bookmarked or shared.
+### Deploying to Vercel
 
-The page is a single file, `web/static/index.html`, with no build step. It's compiled into the server, so restart the server after editing it. The JSON API it calls is described at the top of `web/src/lib.rs`.
+Import the repository into Vercel. No settings are needed: `vercel.json` at the repo root tells Vercel how to build `site/` and where the output is. Vercel does not need Rust, because the compiled engine is committed.
+
+Canonical links and the sitemap use Vercel's production address automatically. With a custom domain, set `NEXT_PUBLIC_SITE_URL` (for example `https://example.com`) in the Vercel project.
+
+### Changing the engine or the site's data
+
+After changing `cli/` or `wasm/`, rebuild the engine and refresh the generated files, then commit them:
+
+```bash
+rustup target add wasm32-unknown-unknown   # once
+./wasm/build.sh
+npm --prefix site run sync
+```
+
+`sync` copies the real source code shown on the How It Works page, so that page can't drift from the code. A test fails if you forget.
+
+To change how the moon looks, edit the shader in `site/scripts/bake-moon.mjs` and run `npm --prefix site run bake-moon` (needs Chrome).
 
 ## Using the CLI
 
@@ -74,16 +89,21 @@ These follow Drik Panchang:
 
 ## How it is checked
 
-`cargo test` in `web/` checks the API: the page, the place list, both listing modes and bad input. `cargo test` in `cli/` checks the calculations against two kinds of reference:
+Run `cargo test` in `cli/` and `wasm/`, and `npm test` in `site/`.
 
 - **Data computed directly from DE440** (`cli/tests/fixtures/`, written by `generator/make_fixtures.py`):
   - the tithi at 3,000+ instants, half of them within 10 minutes of a boundary;
-  - 5,800+ sunrises in 8 cities across 1900–2149, to within 10 s;
+  - 5,800+ sunrises in 8 cities across 1900–2149, to within 10 s (worst measured: 2.7 s);
   - New Delhi's sunrise tithi for every day of 1950, 2026 and 2100.
 - **Published panchang facts:**
   - Drik Panchang's 26 Oct 2026 sunrise and Purnima end time for New Delhi;
   - the adhika months of 2012, 2015, 2018, 2020, 2023 and 2026;
   - Ugadi dates for 2023–2026.
+
+Two one-off comparisons back the numbers on the How It Works page. They are in `generator/checks/` with their own `requirements.txt`, and are not part of the site:
+
+- `crosscheck_swiss.py` compares the table with Swiss Ephemeris: 92,839 boundaries (median 1.7 s apart), 3,095 lunar months (no differences) and 91,311 New Delhi sunrises (8 differ, all within 18 s of a boundary).
+- `compare_models.py` measures how far simpler models are from DE440.
 
 ## Limits
 

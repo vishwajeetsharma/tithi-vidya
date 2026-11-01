@@ -1,0 +1,1432 @@
+/* Home page. Keep the wide breakpoint in step with WIDE in motion.ts. */
+
+/* ---------- Backdrop ---------- */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sky > div {
+  position: absolute;
+  inset: 0;
+}
+
+.skyDawn {
+  background:
+    radial-gradient(70vmax 56vmax at 92% 8%, #c9d4ff 0%, rgb(201 212 255 / 0) 64%),
+    radial-gradient(70vmax 60vmax at 2% 96%, #eadbff 0%, rgb(234 219 255 / 0) 62%),
+    radial-gradient(46vmax 40vmax at 62% 108%, #d6e3ff 0%, rgb(214 227 255 / 0) 60%),
+    var(--paper);
+}
+
+.skyIris {
+  opacity: 0;
+  visibility: hidden;
+  background:
+    radial-gradient(80vmax 60vmax at 70% 44%, #d9ccff 0%, rgb(217 204 255 / 0) 62%),
+    linear-gradient(160deg, #c3d0ff 0%, #cfc4ff 55%, #e6cfff 100%);
+}
+
+.skyDusk {
+  opacity: 0;
+  visibility: hidden;
+  background:
+    radial-gradient(90vmax 64vmax at 50% 112%, #b7a4ff 0%, rgb(183 164 255 / 0) 66%),
+    linear-gradient(180deg, var(--paper) 0%, #dcd8ff 60%, #cdc5ff 100%);
+}
+
+/* ---------- The moon ---------- */
+
+.moon {
+  --hero-d: min(92vw, 44svh);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: calc(var(--hero-d) / 0.76);
+  height: calc(var(--hero-d) / 0.76);
+  pointer-events: none;
+  transform: translate(calc(64vw - 50%), calc(25svh - 50%));
+}
+
+:global(html[data-motion="on"]) .moon {
+  position: fixed;
+  will-change: transform;
+}
+
+.moonSvg,
+.moonCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.moonSvg {
+  filter: drop-shadow(0 0 clamp(16px, 5vmin, 44px) rgb(122 104 245 / 0.65));
+}
+
+.moonCanvas {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.moonCanvas[data-ready] {
+  opacity: 1;
+}
+
+.moon:has(.moonCanvas[data-ready]) .moonSvg {
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.moonOrbits {
+  position: absolute;
+  inset: -14%;
+  width: 128%;
+  height: 128%;
+  overflow: visible;
+  fill: none;
+  stroke: rgb(74 59 240 / 0.28);
+  stroke-width: 0.3;
+}
+
+.moonOrbits circle {
+  fill: var(--indigo);
+  stroke: none;
+}
+
+.orbitA {
+  rotate: -20deg;
+}
+
+.orbitB {
+  rotate: 28deg;
+}
+
+:global(html[data-motion="on"]) .orbitA {
+  animation: orbit 46s linear infinite;
+}
+
+:global(html[data-motion="on"]) .orbitB {
+  animation: orbit 64s linear infinite reverse;
+}
+
+@keyframes orbit {
+  to {
+    rotate: 340deg;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  padding-block: 92px clamp(20px, 5svh, 56px);
+  overflow: clip;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+}
+
+.heroGhost {
+  position: absolute;
+  top: 10svh;
+  left: -3vw;
+  width: clamp(26rem, 92vw, 74rem);
+  fill: var(--indigo);
+  opacity: 0.06;
+}
+
+.spark {
+  position: absolute;
+  color: var(--violet);
+  opacity: 0.55;
+}
+
+:global(html[data-motion="on"]) .spark {
+  animation: twinkle 4.6s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(0.65) rotate(0deg);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1) rotate(45deg);
+    opacity: 0.8;
+  }
+}
+
+.heroCopy {
+  max-width: 44rem;
+}
+
+.heroTitle {
+  margin-top: 10px;
+  font-size: clamp(3rem, 13.4vw, 8rem);
+  line-height: 0.98;
+}
+
+.line {
+  display: block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  padding-bottom: 0.22em;
+  margin-bottom: -0.22em;
+}
+
+/* Gradient text paints only inside its box, so the box must reach the descenders. */
+.line > * {
+  display: block;
+  padding-right: 0.08em;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
+}
+
+:global(html[data-motion="on"]) .line > * {
+  animation: lineUp 1.15s var(--ease-out) both;
+}
+
+:global(html[data-motion="on"]) .line + .line > * {
+  animation-delay: 0.1s;
+}
+
+@keyframes lineUp {
+  from {
+    transform: translateY(108%) rotate(2deg);
+  }
+}
+
+.heroAccent {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.heroLead {
+  margin-top: clamp(12px, 2svh, 22px);
+  max-width: 34rem;
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.3125rem);
+  line-height: 1.5;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(16px, 3svh, 30px);
+}
+
+@media (max-width: 520px) {
+  .heroActions > :last-child {
+    display: none;
+  }
+}
+
+:global(html[data-motion="on"]) .intro1,
+:global(html[data-motion="on"]) .intro2,
+:global(html[data-motion="on"]) .intro3,
+:global(html[data-motion="on"]) .intro4 {
+  animation: fadeUp 1s var(--ease-out) both;
+}
+
+:global(html[data-motion="on"]) .intro2 {
+  animation-delay: 0.32s;
+}
+
+:global(html[data-motion="on"]) .intro3 {
+  animation-delay: 0.44s;
+}
+
+:global(html[data-motion="on"]) .intro4 {
+  animation-delay: 0.56s;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.live {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 26px;
+  margin-top: clamp(12px, 2.4svh, 24px);
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.live[data-ready] {
+  opacity: 1;
+}
+
+.live strong {
+  color: var(--ink);
+}
+
+@media (max-height: 640px) {
+  .liveEnds {
+    display: none;
+  }
+}
+
+/* ---------- Plain statement ---------- */
+
+.statement {
+  position: relative;
+}
+
+:global(html[data-motion="on"]) .statement {
+  height: 240svh;
+}
+
+.statementStick {
+  display: grid;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: 88px 32px;
+}
+
+:global(html[data-motion="on"]) .statementStick {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.statementText {
+  margin-top: 16px;
+  max-width: 20em;
+  font-size: clamp(2.05rem, 1.1rem + 4.4vw, 5rem);
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+.statementAccent {
+  font-style: italic;
+}
+
+/* ---------- Curved ribbon of names ---------- */
+
+.ribbon {
+  position: relative;
+  height: clamp(130px, 21vw, 300px);
+  overflow: hidden;
+}
+
+.ribbon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ribbonText {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: 58px;
+  word-spacing: 6px;
+}
+
+/* ---------- Shared scene title ---------- */
+
+.sceneTitle {
+  font-size: clamp(2.1rem, 1.3rem + 3.6vw, 4.5rem);
+  font-weight: 540;
+  color: var(--ink);
+}
+
+.sceneTitle em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ---------- Tithi dial ---------- */
+
+.tithi {
+  position: relative;
+}
+
+:global(html[data-motion="on"]) .tithi {
+  height: 720svh;
+}
+
+.tithiStick {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: 78px 16px;
+}
+
+:global(html[data-motion="on"]) .tithiStick {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.tithiGrid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.8svh, 20px);
+}
+
+.tithiCopy {
+  display: contents;
+}
+
+.tithiCopy .sceneTitle {
+  order: 1;
+  text-align: center;
+  font-size: clamp(1.75rem, 1.3rem + 2.2vw, 3rem);
+}
+
+.dialColumn {
+  order: 2;
+  display: grid;
+  justify-items: center;
+  gap: clamp(4px, 1.2svh, 14px);
+}
+
+.stages {
+  order: 3;
+  position: relative;
+}
+
+:global(html[data-motion="on"]) .stages {
+  min-height: 10.6em;
+}
+
+.stage {
+  max-width: 34rem;
+  margin-inline: auto;
+  color: var(--ink-soft);
+  font-size: clamp(1rem, 0.93rem + 0.3vw, 1.1875rem);
+  line-height: 1.48;
+}
+
+.stage + .stage {
+  margin-top: 20px;
+}
+
+:global(html[data-motion="on"]) .stage {
+  position: absolute;
+  inset: 0 0 auto;
+  margin-top: 0;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.6s var(--ease-out);
+}
+
+:global(html[data-motion="on"]) .stage[data-active] {
+  opacity: 1;
+  transform: none;
+}
+
+.stageTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.3125rem, 1.1rem + 1vw, 2rem);
+  font-weight: 560;
+  line-height: 1.16;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.dial {
+  position: relative;
+  width: min(84vw, 42svh);
+  aspect-ratio: 1;
+}
+
+.dial svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dialLabel {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  fill: var(--ink-soft);
+}
+
+.segment {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.72);
+  stroke-width: 15;
+  stroke-linecap: round;
+  transition: stroke 0.3s ease;
+}
+
+.segment[data-on],
+:global(html:not([data-motion="on"])) .segment {
+  stroke: url(#segOn);
+}
+
+.dialSun circle {
+  fill: var(--sun);
+}
+
+.dialSun path {
+  stroke: var(--sun-deep);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.dialHead {
+  fill: #fff;
+  stroke: var(--indigo);
+  stroke-width: 6;
+  filter: drop-shadow(0 4px 8px rgb(52 36 170 / 0.45));
+}
+
+.dialStaticMoon {
+  position: absolute;
+  left: 20%;
+  top: 20%;
+  width: 60% !important;
+  height: 60% !important;
+}
+
+:global(html[data-motion="on"]) .dialStaticMoon {
+  display: none;
+}
+
+.readout {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  line-height: 1.2;
+}
+
+:global(html:not([data-motion="on"])) .readout {
+  display: none;
+}
+
+.readoutCount {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.readoutCount b {
+  font-variant-numeric: tabular-nums;
+}
+
+.readoutName {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  color: var(--ink);
+}
+
+.readoutGap {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.readoutGap b {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Why the date moves ---------- */
+
+.drift {
+  position: relative;
+}
+
+:global(html[data-motion="on"]) .drift {
+  height: 340svh;
+}
+
+.driftStick {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: 84px 24px;
+}
+
+:global(html[data-motion="on"]) .driftStick {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.driftGrid {
+  display: grid;
+  gap: clamp(14px, 3svh, 36px);
+}
+
+.driftCopy {
+  display: grid;
+  gap: clamp(8px, 1.6svh, 16px);
+  color: var(--ink-soft);
+}
+
+.driftCopy strong {
+  color: var(--ink);
+}
+
+.mark {
+  padding-inline: 0.12em;
+  border-radius: 0.2em;
+  background: linear-gradient(var(--lilac-200), var(--lilac-200)) no-repeat 0 100% / 100% 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.driftChart {
+  padding: clamp(14px, 2.4vw, 28px);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.chartTitle {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  margin-bottom: 26px;
+}
+
+.chart {
+  position: relative;
+}
+
+.chartPlot {
+  position: relative;
+  height: clamp(170px, 34svh, 380px);
+}
+
+.chartGrid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--line);
+}
+
+.chartGrid span {
+  position: absolute;
+  left: 0;
+  top: -1.5em;
+  font-size: 0.75rem;
+  color: var(--ink-mute);
+}
+
+.chartLine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chartLine path {
+  fill: none;
+  stroke: var(--indigo);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chartDotWrap {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.chartDot {
+  position: absolute;
+  left: -16px;
+  top: -16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: default;
+}
+
+.chartDot::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: var(--indigo);
+  box-shadow: 0 0 0 2px var(--card);
+  transition: transform 0.2s;
+}
+
+.chartDot:hover::after {
+  transform: scale(1.35);
+}
+
+.chartTip {
+  position: absolute;
+  z-index: 3;
+  padding: 5px 10px;
+  border-radius: 9px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 14px));
+}
+
+.chartNote {
+  position: absolute;
+  z-index: 2;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.chartNoteSoft {
+  color: var(--ink-soft);
+}
+
+.chartNoteJump {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--lilac-50);
+  color: var(--indigo);
+}
+
+.chartYears {
+  position: relative;
+  height: 1.6em;
+  margin-top: 10px;
+}
+
+.chartYears span {
+  position: absolute;
+  font-size: 0.75rem;
+  color: var(--ink-mute);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 640px) {
+  .chartYears span:nth-child(even) {
+    display: none;
+  }
+
+  .driftCopy {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .chartTitle {
+    margin-bottom: 20px;
+  }
+}
+
+/* ---------- Why the place matters ---------- */
+
+.sunrise {
+  position: relative;
+}
+
+:global(html[data-motion="on"]) .sunrise {
+  height: 400svh;
+}
+
+.sunriseStick {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding-block: 80px 20px;
+}
+
+:global(html[data-motion="on"]) .sunriseStick {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.sunriseInner {
+  display: grid;
+  gap: clamp(10px, 1.9svh, 22px);
+}
+
+.sunriseHead {
+  display: grid;
+  gap: clamp(6px, 1svh, 12px);
+  color: var(--ink-soft);
+}
+
+.sunriseHead strong {
+  color: var(--ink);
+}
+
+.clockBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 24px;
+  padding: 10px clamp(14px, 2vw, 24px);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.clockDate {
+  font-weight: 700;
+  font-size: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
+  line-height: 1.35;
+}
+
+.clockNow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+:global(html:not([data-motion="on"])) .clockNow {
+  display: none;
+}
+
+.clockTime {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  font-weight: 560;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.clockTithi {
+  display: grid;
+  font-size: 0.75rem;
+  color: var(--ink-mute);
+  line-height: 1.25;
+}
+
+.clockTithi b {
+  font-size: 0.9375rem;
+  color: var(--ink);
+}
+
+.clockTithi b[data-new] {
+  color: var(--indigo);
+}
+
+.cities {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px, 1.6vw, 22px);
+}
+
+.city {
+  --day: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(190px, 37svh, 390px);
+  padding: clamp(6px, 1vw, 12px);
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #4b45c6;
+}
+
+:global(html:not([data-motion="on"])) .city {
+  --day: 1;
+}
+
+.citySky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #3f3fb8 0%, #7d6fe3 62%, #ffae86 100%);
+}
+
+.cityDay {
+  position: absolute;
+  inset: 0;
+  opacity: var(--day);
+  background: linear-gradient(180deg, #9cc4ff 0%, #d3e3ff 60%, #ffe3c4 100%);
+}
+
+.citySky svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 72%;
+}
+
+.citySun {
+  --rise: 0;
+  position: absolute;
+  left: 62%;
+  bottom: 46%;
+  width: clamp(54px, 9vw, 104px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%, #fff6df 0%, #ffd27a 56%, #ff9f5e 100%);
+  box-shadow: 0 0 70px 26px rgb(255 192 116 / 0.55);
+  transform: translate(-50%, calc((0.5 - var(--rise)) * 340%));
+}
+
+:global(html:not([data-motion="on"])) .citySun {
+  --rise: 0.74;
+}
+
+.cityText {
+  position: relative;
+  padding: clamp(8px, 1.2vw, 14px) clamp(10px, 1.6vw, 18px);
+  border-radius: calc(var(--radius) - 8px);
+  background: rgb(255 255 255 / 0.94);
+  font-size: clamp(0.875rem, 0.82rem + 0.3vw, 1.0625rem);
+  line-height: 1.35;
+}
+
+.cityName {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.1875rem, 1rem + 0.9vw, 1.75rem);
+  font-weight: 580;
+  line-height: 1.15;
+}
+
+.cityDayName {
+  color: var(--ink-soft);
+  min-height: 2.7em;
+  transition: opacity 0.4s ease;
+}
+
+.cityDayName strong {
+  color: var(--indigo);
+}
+
+:global(html[data-motion="on"]) .cityDayName {
+  opacity: 0;
+}
+
+:global(html[data-motion="on"]) .cityDayName[data-show] {
+  opacity: 1;
+}
+
+.sunriseEnd {
+  font-size: clamp(1.4rem, 1rem + 2vw, 2.5rem);
+  text-align: center;
+  transition: opacity 0.5s ease, transform 0.7s var(--ease-out);
+}
+
+:global(html[data-motion="on"]) .sunriseEnd {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+:global(html[data-motion="on"]) .sunriseEnd[data-show] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Three things ---------- */
+
+.steps {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-block: clamp(84px, 11vw, 150px);
+}
+
+.stepsArea {
+  position: relative;
+  margin-top: clamp(28px, 4vw, 56px);
+}
+
+.stepCards {
+  position: relative;
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.stepCard {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: clamp(20px, 2.6vw, 30px);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  color: var(--ink-soft);
+  transition: transform 0.45s var(--ease-out);
+}
+
+.stepCard:hover {
+  transform: translateY(-6px);
+}
+
+.stepIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  background: var(--lilac-50);
+  color: var(--indigo);
+}
+
+.stepTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 580;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.stepAnswer {
+  background: var(--grad);
+  color: rgb(255 255 255 / 0.94);
+}
+
+.stepAnswer .stepTitle {
+  color: #fff;
+}
+
+.stepAnswer .stepIcon {
+  background: rgb(255 255 255 / 0.18);
+  color: #fff;
+}
+
+@media (min-width: 620px) {
+  .stepCards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .stepCards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stepCard:nth-child(even) {
+    margin-top: 48px;
+  }
+}
+
+/* ---------- Try it ---------- */
+
+.tryIt {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-block: 84px 28px;
+}
+
+.tryPanel {
+  display: grid;
+  gap: clamp(20px, 3vw, 44px);
+  align-items: center;
+  padding: clamp(22px, 4.6vw, 64px);
+  border-radius: clamp(28px, 4vw, 52px);
+  background:
+    radial-gradient(60% 90% at 88% 6%, rgb(166 120 255 / 0.65) 0%, rgb(166 120 255 / 0) 70%),
+    radial-gradient(60% 90% at 8% 100%, rgb(60 120 255 / 0.55) 0%, rgb(60 120 255 / 0) 70%),
+    linear-gradient(115deg, #2c49dc 0%, #4c33e0 50%, #7a2fdc 100%);
+  box-shadow: 0 50px 90px -46px rgb(52 36 170 / 0.8);
+  color: rgb(255 255 255 / 0.95);
+}
+
+.tryTitle {
+  color: #fff;
+  font-size: clamp(2.25rem, 1.4rem + 4vw, 4.5rem);
+}
+
+.tryCopy {
+  display: grid;
+  gap: 12px;
+}
+
+.tryPrivate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.tryForm {
+  min-width: 0;
+}
+
+@media (min-width: 1000px) {
+  .tryPanel {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- Proof ---------- */
+
+.proof {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-block: clamp(84px, 11vw, 130px) clamp(48px, 7vw, 90px);
+}
+
+.bento {
+  display: grid;
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-top: clamp(28px, 4vw, 52px);
+}
+
+.bentoCard {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: clamp(20px, 2.8vw, 34px);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  color: var(--ink-soft);
+}
+
+.bentoCard strong {
+  color: var(--ink);
+}
+
+.bentoNumber {
+  font-size: clamp(2.75rem, 2rem + 3.6vw, 5.25rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--ink);
+}
+
+.bentoPrivate {
+  background: var(--lilac-50);
+}
+
+.bentoLink {
+  background: var(--grad);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  justify-items: start;
+}
+
+.bentoLink .display {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  line-height: 1.14;
+}
+
+.bentoSpark {
+  position: absolute;
+  right: -30px;
+  top: -30px;
+  width: 170px;
+  height: 170px;
+  opacity: 0.16;
+}
+
+@media (min-width: 620px) {
+  .bento {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .bentoWide {
+    grid-column: span 2;
+  }
+}
+
+/* ---------- Questions ---------- */
+
+.faq {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-block: clamp(84px, 8vw, 110px) clamp(48px, 7vw, 100px);
+}
+
+.faqGrid {
+  display: grid;
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.faqList {
+  display: grid;
+  gap: 10px;
+}
+
+.faqItem {
+  border-radius: 22px;
+  background: var(--card);
+  box-shadow: 0 16px 40px -30px rgb(52 36 170 / 0.4);
+}
+
+.faqItem summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
+  padding: 14px 20px;
+  border-radius: 22px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.faqItem p {
+  padding: 0 20px 18px;
+  color: var(--ink-soft);
+}
+
+.faqMark {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--lilac-50);
+}
+
+.faqMark::before,
+.faqMark::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--indigo);
+  transition: rotate 0.35s var(--ease-out);
+}
+
+.faqMark::after {
+  rotate: 90deg;
+}
+
+.faqItem[open] .faqMark::after {
+  rotate: 0deg;
+}
+
+@media (min-width: 1000px) {
+  .faqGrid {
+    grid-template-columns: 4fr 8fr;
+  }
+}
+
+/* ---------- Credit ---------- */
+
+.credit {
+  position: relative;
+  min-height: 100svh;
+  padding-block: clamp(90px, 16svh, 170px) clamp(240px, 52svh, 480px);
+  overflow: clip;
+}
+
+.creditInner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 2.6svh, 28px);
+  text-align: center;
+}
+
+.creditText {
+  max-width: 15em;
+  font-size: clamp(2.5rem, 1.5rem + 5vw, 6rem);
+  line-height: 1.04;
+}
+
+.creditText em {
+  font-style: italic;
+}
+
+/* ---------- Wide screens ---------- */
+
+@media (min-width: 1000px) and (min-aspect-ratio: 11/10) {
+  .moon {
+    --hero-d: min(78svh, 44vw);
+    transform: translate(calc(78vw - 50%), calc(52svh - 50%));
+  }
+
+  .hero {
+    align-items: center;
+    padding-block: 104px 56px;
+  }
+
+  .heroTitle {
+    font-size: clamp(4.25rem, 6.6vw, 7.25rem);
+  }
+
+  .heroCopy {
+    max-width: 44vw;
+  }
+
+  .statementText {
+    max-width: min(62vw, 58rem);
+    font-size: clamp(2.5rem, 4.4vw, 4.75rem);
+  }
+
+  .tithiGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(24px, 4vw, 64px);
+    align-items: center;
+  }
+
+  .tithiCopy {
+    display: grid;
+    gap: 24px;
+  }
+
+  .tithiCopy .sceneTitle {
+    text-align: left;
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 4.25rem);
+  }
+
+  .stage {
+    margin-inline: 0;
+  }
+
+  :global(html[data-motion="on"]) .stages {
+    min-height: 14em;
+  }
+
+  .dial {
+    width: min(70svh, 40vw);
+  }
+
+  .driftGrid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: center;
+  }
+
+  .sunriseInner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+    gap: clamp(14px, 2.2svh, 24px) clamp(28px, 4vw, 64px);
+    align-items: center;
+  }
+
+  .sunriseHead {
+    grid-row: span 3;
+  }
+
+  .sunriseEnd {
+    text-align: left;
+  }
+}
+
+/* Tablets standing up have room for bigger type. */
+@media (min-width: 700px) and (max-aspect-ratio: 11/10) {
+  .heroCopy {
+    max-width: 38rem;
+  }
+
+  .heroTitle {
+    font-size: clamp(5rem, 11vw, 8rem);
+  }
+}
+
+/* Short phones, including tall ones with the browser's bars showing: every scene must fit. */
+@media (max-height: 720px) and (max-aspect-ratio: 11/10) {
+  .sceneTitle {
+    font-size: clamp(1.625rem, 7.4vw, 2rem);
+  }
+
+  .driftStick,
+  .sunriseStick {
+    padding-block: 70px 10px;
+  }
+
+  .driftCopy,
+  .sunriseHead p {
+    font-size: 0.9375rem;
+    line-height: 1.42;
+  }
+
+  .driftGrid,
+  .sunriseInner {
+    gap: 8px;
+  }
+
+  .driftChart {
+    padding: 10px 12px;
+  }
+
+  .chartTitle {
+    margin-bottom: 14px;
+    font-size: 0.875rem;
+  }
+
+  .chartPlot {
+    height: 25svh;
+  }
+
+  .chartYears {
+    margin-top: 4px;
+  }
+
+  .clockBar {
+    padding: 6px 12px;
+    border-radius: 18px;
+  }
+
+  .clockTime {
+    font-size: 1.5rem;
+  }
+
+  .city {
+    min-height: 25svh;
+    padding: 5px;
+  }
+
+  .cityDayName {
+    min-height: 0;
+  }
+
+  .sunriseEnd {
+    font-size: 1.1875rem;
+  }
+}
+
+/* Short phones: keep the hero's words on one screen, clear of the moon. */
+@media (max-height: 740px) and (max-aspect-ratio: 11/10) {
+  .moon {
+    --hero-d: min(84vw, 36svh);
+    transform: translate(calc(66vw - 50%), calc(22svh - 50%));
+  }
+
+  .heroTitle {
+    font-size: clamp(2.6rem, 12vw, 3.4rem);
+  }
+
+  .heroLead {
+    font-size: 1rem;
+  }
+}

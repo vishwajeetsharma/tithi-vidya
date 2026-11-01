@@ -1,0 +1,69 @@
+import type { Metadata } from "next";
+
+import { Credit } from "@/components/home/Credit";
+import { DriftScene } from "@/components/home/DriftScene";
+import { Faq } from "@/components/home/Faq";
+import { Hero } from "@/components/home/Hero";
+import { HomeMotion } from "@/components/home/HomeMotion";
+import { Proof } from "@/components/home/Proof";
+import { Ribbon } from "@/components/home/Ribbon";
+import { Statement } from "@/components/home/Statement";
+import { Steps } from "@/components/home/Steps";
+import { SunriseScene } from "@/components/home/SunriseScene";
+import { TithiScene } from "@/components/home/TithiScene";
+import { TryIt } from "@/components/home/TryIt";
+import { JsonLd } from "@/components/JsonLd";
+import { FAQ } from "@/lib/faq";
+import { AUTHOR, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+export default function HomePage() {
+  const url = siteUrl().origin;
+  return (
+    <>
+      <JsonLd
+        data={{
+          "@graph": [
+            {
+              "@type": "WebApplication",
+              name: SITE_NAME,
+              url,
+              description: SITE_DESCRIPTION,
+              applicationCategory: "LifestyleApplication",
+              operatingSystem: "Any",
+              browserRequirements: "Requires a modern web browser",
+              inLanguage: "en",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+              author: { "@type": "Person", name: AUTHOR },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: FAQ.map(({ q, a }) => ({
+                "@type": "Question",
+                name: q,
+                acceptedAnswer: { "@type": "Answer", text: a },
+              })),
+            },
+          ],
+        }}
+      />
+      <HomeMotion />
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <Hero />
+        <Statement />
+        <Ribbon />
+        <TithiScene />
+        <DriftScene />
+        <SunriseScene />
+        <Steps />
+        <TryIt />
+        <Proof />
+        <Faq />
+        <Credit />
+      </div>
+    </>
+  );
+}

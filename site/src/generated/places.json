@@ -1,0 +1,254 @@
+[
+  {
+    "name": "New Delhi",
+    "lat": 28.6139,
+    "lon": 77.209,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Mumbai",
+    "lat": 19.076,
+    "lon": 72.8777,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Kolkata",
+    "lat": 22.5726,
+    "lon": 88.3639,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Chennai",
+    "lat": 13.0827,
+    "lon": 80.2707,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Bengaluru",
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Hyderabad",
+    "lat": 17.385,
+    "lon": 78.4867,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Ahmedabad",
+    "lat": 23.0225,
+    "lon": 72.5714,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Pune",
+    "lat": 18.5204,
+    "lon": 73.8567,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Jaipur",
+    "lat": 26.9124,
+    "lon": 75.7873,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Lucknow",
+    "lat": 26.8467,
+    "lon": 80.9462,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Kanpur",
+    "lat": 26.4499,
+    "lon": 80.3319,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Varanasi",
+    "lat": 25.3176,
+    "lon": 82.9739,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Prayagraj",
+    "lat": 25.4358,
+    "lon": 81.8463,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Ujjain",
+    "lat": 23.1765,
+    "lon": 75.7885,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Indore",
+    "lat": 22.7196,
+    "lon": 75.8577,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Bhopal",
+    "lat": 23.2599,
+    "lon": 77.4126,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Nagpur",
+    "lat": 21.1458,
+    "lon": 79.0882,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Surat",
+    "lat": 21.1702,
+    "lon": 72.8311,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Patna",
+    "lat": 25.5941,
+    "lon": 85.1376,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Chandigarh",
+    "lat": 30.7333,
+    "lon": 76.7794,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Amritsar",
+    "lat": 31.634,
+    "lon": 74.8723,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Dehradun",
+    "lat": 30.3165,
+    "lon": 78.0322,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Haridwar",
+    "lat": 29.9457,
+    "lon": 78.1642,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Srinagar",
+    "lat": 34.0837,
+    "lon": 74.7973,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Guwahati",
+    "lat": 26.1445,
+    "lon": 91.7362,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Bhubaneswar",
+    "lat": 20.2961,
+    "lon": 85.8245,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Visakhapatnam",
+    "lat": 17.6868,
+    "lon": 83.2185,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Panaji",
+    "lat": 15.4909,
+    "lon": 73.8278,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Mysuru",
+    "lat": 12.2958,
+    "lon": 76.6394,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Kochi",
+    "lat": 9.9312,
+    "lon": 76.2673,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Thiruvananthapuram",
+    "lat": 8.5241,
+    "lon": 76.9366,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Madurai",
+    "lat": 9.9252,
+    "lon": 78.1198,
+    "tz": "Asia/Kolkata"
+  },
+  {
+    "name": "Kathmandu",
+    "lat": 27.7172,
+    "lon": 85.324,
+    "tz": "Asia/Kathmandu"
+  },
+  {
+    "name": "Dhaka",
+    "lat": 23.8103,
+    "lon": 90.4125,
+    "tz": "Asia/Dhaka"
+  },
+  {
+    "name": "Colombo",
+    "lat": 6.9271,
+    "lon": 79.8612,
+    "tz": "Asia/Colombo"
+  },
+  {
+    "name": "Singapore",
+    "lat": 1.3521,
+    "lon": 103.8198,
+    "tz": "Asia/Singapore"
+  },
+  {
+    "name": "Dubai",
+    "lat": 25.2048,
+    "lon": 55.2708,
+    "tz": "Asia/Dubai"
+  },
+  {
+    "name": "London",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "tz": "Europe/London"
+  },
+  {
+    "name": "New York",
+    "lat": 40.7128,
+    "lon": -74.006,
+    "tz": "America/New_York"
+  },
+  {
+    "name": "Toronto",
+    "lat": 43.6532,
+    "lon": -79.3832,
+    "tz": "America/Toronto"
+  },
+  {
+    "name": "San Francisco",
+    "lat": 37.7749,
+    "lon": -122.4194,
+    "tz": "America/Los_Angeles"
+  },
+  {
+    "name": "Sydney",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "tz": "Australia/Sydney"
+  }
+]
