@@ -19,7 +19,13 @@ cd site && npm install && npm run dev
 
 Then open http://localhost:3010.
 
-There are three pages: the animated home page, `/find` (the tool) and `/how-it-works` (the method, the real code and every accuracy test). The whole home page works without animation for visitors who ask for reduced motion.
+The pages are the animated home page, `/find` (the tool), `/how-it-works` (the method, the real code and every accuracy test), `/privacy` and `/terms`. The whole home page works without animation for visitors who ask for reduced motion.
+
+### Analytics and privacy
+
+Google Analytics and the Meta Pixel load only after a visitor clicks Accept in the cookie box (`site/src/components/CookieConsent.tsx`). Their IDs are in `site/src/lib/site.ts`.
+
+The site promises that birth details never leave the device, and analytics tags read the full page address. So birth details must never stay in the address: a script in `site/src/app/layout.tsx` moves them out of shared links before any tag loads, and the pixel's automatic form scanning is off. Keep Automatic Advanced Matching off in Meta Events Manager too.
 
 ### Deploying to Vercel
 

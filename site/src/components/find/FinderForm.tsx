@@ -6,7 +6,7 @@ import { useState, type FormEvent } from "react";
 import { ArrowIcon } from "@/components/Icons";
 import places from "@/generated/places.json";
 import type { BirthQuery } from "@/lib/engine";
-import { toHash } from "@/lib/query";
+import { holdQuery } from "@/lib/query";
 
 import s from "./find.module.css";
 
@@ -46,7 +46,10 @@ export function FinderForm({ compact = false, initial, busy = false, onFind }: P
     const when = { date, time: noTime ? NOON : time, yearly };
     const query: BirthQuery = custom ? { ...when, lat: Number(lat), lon: Number(lon), tz: tz.trim() } : { ...when, place };
     if (onFind) onFind(query);
-    else router.push(`/find#${toHash(query)}`);
+    else {
+      holdQuery(query);
+      router.push("/find");
+    }
   };
 
   return (

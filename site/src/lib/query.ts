@@ -1,9 +1,32 @@
 import type { BirthQuery } from "./engine";
 
+const STORE_KEY = "tithi-birth";
+let held = "";
+
 /**
- * Birth details travel in the part of the address after "#". Browsers never
- * send that part to any server, so shared links stay private too.
+ * Birth details never stay in the address bar, because analytics tags read the
+ * full address. Shared links carry them after the "#", which browsers do not
+ * send to servers, and a script in the page head moves them here before any
+ * tag loads (see STRIP_DETAILS in app/layout.tsx).
  */
+export function holdQuery(query: BirthQuery) {
+  held = toHash(query);
+  try {
+    sessionStorage.setItem(STORE_KEY, held);
+  } catch {
+    // Blocked storage: the copy in memory still carries it to the finder page.
+  }
+}
+
+export function heldQuery(): BirthQuery | null {
+  try {
+    held = sessionStorage.getItem(STORE_KEY) ?? held;
+  } catch {
+    // As above.
+  }
+  return fromHash(held);
+}
+
 export function toHash(query: BirthQuery): string {
   const params = new URLSearchParams({ date: query.date, time: query.time });
   if (query.place) params.set("place", query.place);

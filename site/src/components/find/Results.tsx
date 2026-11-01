@@ -77,10 +77,11 @@ type Props = {
   result: BirthResult;
   heading: RefObject<HTMLHeadingElement | null>;
   noon: boolean;
+  shareHash: string;
   onToggle: () => void;
 };
 
-export function Results({ result, heading, noon, onToggle }: Props) {
+export function Results({ result, heading, noon, shareHash, onToggle }: Props) {
   const { birth, dates, yearly, from, to, place } = result;
   const [copied, setCopied] = useState(false);
   const today = useMemo(() => new Date().toLocaleDateString("en-CA"), []);
@@ -95,7 +96,13 @@ export function Results({ result, heading, noon, onToggle }: Props) {
   const upcoming = useMemo(() => dates.filter((d) => d.date >= today), [dates, today]);
 
   const copy = async () => {
-    await navigator.clipboard.writeText(location.href);
+    const link = `${location.origin}/find#${shareHash}`;
+    try {
+      await navigator.clipboard.writeText(link);
+    } catch {
+      window.prompt("Copy this link:", link); // the browser blocked the clipboard
+      return;
+    }
     setCopied(true);
     window.setTimeout(() => setCopied(false), 2000);
   };

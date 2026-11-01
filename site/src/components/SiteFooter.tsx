@@ -2,6 +2,8 @@ import Link from "next/link";
 
 import { CREDIT, SITE_NAME } from "@/lib/site";
 
+import { CookieSettingsButton } from "./CookieSettingsButton";
+
 export function SiteFooter() {
   return (
     <footer className="siteFooter">
@@ -16,6 +18,9 @@ export function SiteFooter() {
             <Link href="/">Home</Link>
             <Link href="/find">Find my tithi</Link>
             <Link href="/how-it-works">How it works</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+            <CookieSettingsButton className="siteFooterButton" />
           </nav>
         </div>
       </div>

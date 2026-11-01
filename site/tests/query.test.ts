@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { fromHash, toHash } from "@/lib/query";
+import { fromHash, heldQuery, holdQuery, toHash } from "@/lib/query";
 
 describe("shareable links", () => {
   it("round trips a named place", () => {
@@ -17,5 +17,13 @@ describe("shareable links", () => {
     expect(fromHash("")).toBeNull();
     expect(fromHash("#date=2000-01-01")).toBeNull();
     expect(fromHash("#date=2000-01-01&time=06:30")).toBeNull();
+  });
+});
+
+describe("holding birth details", () => {
+  it("carries them to the finder without using the address", () => {
+    const query = { date: "2000-01-01", time: "06:30", place: "New Delhi", yearly: true };
+    holdQuery(query);
+    expect(heldQuery()).toEqual(query);
   });
 });

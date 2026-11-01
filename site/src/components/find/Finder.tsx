@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { findBirth, type BirthQuery, type BirthResult } from "@/lib/engine";
-import { fromHash, toHash } from "@/lib/query";
+import { heldQuery, holdQuery, toHash } from "@/lib/query";
 
 import { FinderForm } from "./FinderForm";
 import { Results } from "./Results";
@@ -28,7 +28,7 @@ export function Finder() {
       setResult(value);
       setQuery(next);
       moveFocus.current = true;
-      history.replaceState(null, "", `#${toHash(next)}`);
+      holdQuery(next);
     } catch (problem) {
       setResult(null);
       setError(problem instanceof Error ? problem.message : "Something went wrong. Please try again.");
@@ -40,14 +40,19 @@ export function Finder() {
   // A shared link, or the short form on the home page, fills everything in.
   useEffect(() => {
     const load = () => {
-      const fromLink = fromHash(location.hash);
-      if (!fromLink) return;
-      setInitial(fromLink);
+      const waiting = heldQuery();
+      if (!waiting) return;
+      setInitial(waiting);
       setFormKey((key) => key + 1);
-      void run(fromLink);
+      void run(waiting);
     };
     const timer = window.setTimeout(load, 0);
-    return () => window.clearTimeout(timer);
+    // A shared link pasted while already on this page does not reload it.
+    window.addEventListener("hashchange", load);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("hashchange", load);
+    };
   }, [run]);
 
   // Bring keyboard and screen reader users to the answer.
@@ -72,6 +77,7 @@ export function Finder() {
           result={result}
           heading={heading}
           noon={query.time === "12:00"}
+          shareHash={toHash(query)}
           onToggle={() => void run({ ...query, yearly: !query.yearly })}
         />
       )}

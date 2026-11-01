@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import type { ReactNode } from "react";
 
+import { CookieConsent } from "@/components/CookieConsent";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { AUTHOR, KEYWORDS, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, siteUrl } from "@/lib/site";
@@ -54,11 +55,16 @@ export const viewport: Viewport = {
 // have not asked for reduced motion; everyone else gets the plain page.
 const MOTION_SCRIPT = `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.dataset.motion="on"`;
 
+// Also runs first: moves birth details out of a shared link's address before
+// any analytics tag can read it, including a link pasted while already on the
+// page, which does not reload it. Must match STORE_KEY in lib/query.ts.
+const STRIP_DETAILS = `(function(){function s(){if(location.hash.includes("date=")){try{sessionStorage.setItem("tithi-birth",location.hash.slice(1))}catch(e){}history.replaceState(null,"",location.pathname+location.search)}}s();addEventListener("hashchange",s)})()`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: MOTION_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: `${STRIP_DETAILS};${MOTION_SCRIPT}` }} />
       </head>
       <body>
         <a className="skipLink" href="#main">
@@ -69,6 +75,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <SiteFooter />
+        <CookieConsent />
       </body>
     </html>
   );

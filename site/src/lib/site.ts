@@ -2,6 +2,8 @@ export const SITE_NAME = "Tithi Vidya";
 export const AUTHOR = "Vishwajeet Sharma";
 export const CREDIT = "Built using Claude Opus 5.5 by Vishwajeet Sharma";
 export const REPO_URL = "https://github.com/vishwajeetsharma/tithi-vidya";
+export const GOOGLE_ANALYTICS_ID = "G-EH6CQB4WNP";
+export const META_PIXEL_ID = "1817935669409933";
 export const SITE_TITLE = "Tithi Vidya: Find Your Tithi Birthday by Date of Birth";
 export const SITE_DESCRIPTION =
   "Find your tithi from your date, time and place of birth, and see your moon birthday for the next 100 years. Free, private and built on NASA JPL data.";
