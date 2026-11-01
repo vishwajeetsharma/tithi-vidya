@@ -29,6 +29,6 @@ export const FAQ = [
   },
   {
     q: "Do you save my birth details?",
-    a: "No. The whole calculation runs on your own phone or computer. Your details are never sent to us or to anyone else. If you accept cookies, we use Google Analytics and the Meta Pixel to count visits and measure our ads, but they do not receive your birth details.",
+    a: "No. The whole calculation runs on your own phone or computer. Your details are never sent to us or to anyone else. We use Google Analytics and the Meta Pixel to count visits and measure our ads, but they do not receive your birth details.",
   },
 ];

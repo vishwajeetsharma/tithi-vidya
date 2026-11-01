@@ -36,7 +36,7 @@ export default function PrivacyPage() {
 
         <h2>Analytics and advertising cookies</h2>
         <p>
-          If you click Accept in the cookie box, we load two services to count visits and measure our ads. If you click Decline, or make no choice, they do not load.
+          We load two services to count visits and measure our ads. They start when you open the site. We ask for your choice on the finder page, and if you click Decline, or decline later in Cookie settings, they stop and their cookies are cleared.
         </p>
         <ul>
           <li>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
                 <th scope="col">Name</th>
                 <th scope="col">From</th>
                 <th scope="col">What it does</th>
-                <th scope="col">Only if you accept?</th>
+                <th scope="col">Stops if you decline?</th>
               </tr>
             </thead>
             <tbody>
@@ -69,13 +69,13 @@ export default function PrivacyPage() {
                 <td>tithi-cookie-choice</td>
                 <td>This site</td>
                 <td>Remembers your cookie choice</td>
-                <td>No</td>
+                <td>Needed</td>
               </tr>
               <tr>
                 <td>tithi-birth</td>
                 <td>This site</td>
                 <td>Keeps your details in this tab only, and is never sent anywhere</td>
-                <td>No</td>
+                <td>Needed</td>
               </tr>
               <tr>
                 <td>_ga, _ga_*</td>
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
 
         <h2>Your choices</h2>
         <ul>
-          <li>Decline cookies, or change your mind with Cookie settings.</li>
+          <li>Decline cookies on the finder page, or change your mind with Cookie settings.</li>
           <li>Clear the site&apos;s data in your browser at any time.</li>
           <li>To ask about data held by Google or Meta, use the controls those companies provide.</li>
         </ul>

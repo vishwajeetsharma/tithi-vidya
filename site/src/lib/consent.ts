@@ -22,7 +22,8 @@ export function readConsent(): Consent {
 }
 
 export function chooseConsent(choice: "granted" | "denied") {
-  const withdrawn = readConsent() === "granted" && choice === "denied";
+  // Tags run until declined, so declining from "no choice yet" must stop them too.
+  const withdrawn = readConsent() !== "denied" && choice === "denied";
   try {
     localStorage.setItem(KEY, choice);
   } catch {

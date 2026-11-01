@@ -23,7 +23,7 @@ The pages are the animated home page, `/find` (the tool), `/how-it-works` (the m
 
 ### Analytics and privacy
 
-Google Analytics and the Meta Pixel load only after a visitor clicks Accept in the cookie box (`site/src/components/CookieConsent.tsx`). Their IDs are in `site/src/lib/site.ts`.
+Google Analytics and the Meta Pixel load by default so ad landings are measured, and stop if a visitor declines. The cookie box appears on `/find` (`site/src/components/CookieConsent.tsx`). Their IDs are in `site/src/lib/site.ts`.
 
 The site promises that birth details never leave the device, and analytics tags read the full page address. So birth details must never stay in the address: a script in `site/src/app/layout.tsx` moves them out of shared links before any tag loads, and the pixel's automatic form scanning is off. Keep Automatic Advanced Matching off in Meta Events Manager too.
 

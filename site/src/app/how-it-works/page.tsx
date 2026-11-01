@@ -313,7 +313,7 @@ export default function HowItWorksPage() {
             <p>
               There is no server doing the work. The engine is written in Rust and compiled to <strong>WebAssembly</strong>, so it runs inside your browser. Your birth details are never sent anywhere. When you share a result, the details sit after the # in the link, and browsers do not send that part to servers. The site then removes them from the address as soon as the link opens.
             </p>
-            <p>If you accept cookies, we use Google Analytics and the Meta Pixel to count visits and measure our ads. They see which pages are opened, but we keep your birth details out of their reach. If you decline, they do not load at all.</p>
+            <p>We use Google Analytics and the Meta Pixel to count visits and measure our ads. They see which pages are opened, but we keep your birth details out of their reach. You can decline them on the finder page or with Cookie settings in the footer.</p>
             <p>The site is built with Next.js and hosted on Vercel as plain files. The moon is drawn live with WebGL, and its light comes from the real angle between the sun and the moon.</p>
             <div className={s.cta}>
               <p className={`display ${s.ctaTitle}`}>{CREDIT}.</p>

@@ -5,9 +5,8 @@ import Script from "next/script";
 import { GOOGLE_ANALYTICS_ID, META_PIXEL_ID } from "@/lib/site";
 
 /**
- * Google Analytics and the Meta Pixel. Only mounted after a visitor accepts
- * cookies (CookieConsent.tsx), so there is no no-script fallback: without
- * script nobody can be asked. They must never receive birth details: the
+ * Google Analytics and the Meta Pixel. Mounted unless the visitor declines
+ * (CookieConsent.tsx). They must never receive birth details: the
  * address is kept clean (lib/query.ts) and the pixel's automatic form and
  * button scanning is off.
  */
