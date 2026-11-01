@@ -5,10 +5,10 @@ import Link from "next/link";
 import { CodeBlock } from "@/components/how/CodeBlock";
 import s from "@/components/how/how.module.css";
 import { TocSpy } from "@/components/how/TocSpy";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, ForkIcon, HeartIcon, StarIcon } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
 import { MoonPhase } from "@/components/MoonPhase";
-import { AUTHOR, CREDIT, SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, CREDIT, REPO_URL, SITE_NAME, siteUrl } from "@/lib/site";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
@@ -36,6 +36,7 @@ const SECTIONS = [
   { id: "limits", label: "Where it can be wrong" },
   { id: "choices", label: "Choices we made" },
   { id: "privacy", label: "How the site runs" },
+  { id: "open-source", label: "Open for everyone" },
 ];
 
 const TESTS = [
@@ -53,6 +54,12 @@ const BARS = [
   { label: "A simple moon formula with 6 terms", value: 429 },
   { label: "The same data, but sunrise taken at the sun's centre, not its top edge", value: 222 },
   { label: "astronomy-engine, a good free library", value: 20 },
+];
+
+const OPEN_SOURCE = [
+  { href: REPO_URL, icon: StarIcon, title: "Star it", body: "Like this project? A star on GitHub helps more people find it." },
+  { href: `${REPO_URL}/fork`, icon: ForkIcon, title: "Fork it", body: "Make your own copy and build something new with it." },
+  { href: `${REPO_URL}/issues`, icon: HeartIcon, title: "Contribute", body: "We are open for contributions. Share an idea, report a bug, or send a fix." },
 ];
 
 const PHASES = Array.from({ length: 30 }, (_, i) => (i + 0.5) * 12);
@@ -314,6 +321,24 @@ export default function HowItWorksPage() {
                 <ArrowIcon />
               </Link>
             </div>
+          </section>
+
+          <section id="open-source" className={s.section}>
+            <h2 className={`display ${s.h2}`}>Open for everyone</h2>
+            <p>
+              All the code is on <a href={REPO_URL}>GitHub</a>. Star it, fork it, or help make it better.
+            </p>
+            <ul className={s.openCards}>
+              {OPEN_SOURCE.map((card) => (
+                <li key={card.title}>
+                  <a className={s.openCard} href={card.href}>
+                    <card.icon />
+                    <strong>{card.title}</strong>
+                    <span>{card.body}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </div>

@@ -77,3 +77,30 @@ export function LinkIcon(props: SVGProps<SVGSVGElement>) {
     </Icon>
   );
 }
+
+export function StarIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Icon {...props}>
+      <path d="m12 3 2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8L12 3Z" />
+    </Icon>
+  );
+}
+
+export function ForkIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Icon {...props}>
+      <circle cx="6.5" cy="5.5" r="2.5" />
+      <circle cx="17.5" cy="5.5" r="2.5" />
+      <circle cx="12" cy="18.5" r="2.5" />
+      <path d="M6.5 8v1.5c0 1.7 1.3 3 3 3h5c1.7 0 3-1.3 3-3V8M12 12.5V16" />
+    </Icon>
+  );
+}
+
+export function HeartIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Icon {...props}>
+      <path d="M12 20.5s-8.5-5-8.5-11A4.8 4.8 0 0 1 12 6.6a4.8 4.8 0 0 1 8.5 2.9c0 6-8.5 11-8.5 11Z" />
+    </Icon>
+  );
+}

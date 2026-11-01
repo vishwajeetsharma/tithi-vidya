@@ -386,6 +386,46 @@
   font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
 }
 
+.section > .openCards {
+  display: grid;
+  gap: 12px;
+  max-width: none;
+}
+
+.section a.openCard {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  height: 100%;
+  padding: 20px;
+  border-radius: 22px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  color: var(--ink-soft);
+  font-weight: 400;
+  text-decoration: none;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+
+.openCard:hover {
+  transform: translateY(-4px);
+}
+
+.openCard svg {
+  color: var(--indigo);
+  margin-bottom: 6px;
+}
+
+.openCard strong {
+  font-size: 1.125rem;
+}
+
+@media (min-width: 720px) {
+  .section > .openCards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Gentle fade-ins, in browsers that can tie them to scrolling without script. */
 @supports (animation-timeline: view()) {
   :global(html[data-motion="on"]) .section,
