@@ -55,7 +55,7 @@ Every page is built ahead of time. The only code that runs on Vercel is `site/sr
 
 For local testing, put the same names in `site/.env`, which git ignores.
 
-Canonical links and the sitemap use Vercel's production address automatically. With a custom domain, set `NEXT_PUBLIC_SITE_URL` (for example `https://example.com`) in the Vercel project.
+The site lives at https://tithividya.org. Canonical links, the sitemap and the feeds use `SITE_ORIGIN` in `site/src/lib/site.ts` on every Vercel build, previews included, and localhost on your computer. `NEXT_PUBLIC_SITE_URL` overrides both. `site/vercel.json` permanently redirects the old address, tithi-vidya.thevishwa.in, and www.tithividya.org to it, as long as both stay added to the Vercel project.
 
 ### Changing the engine or the site's data
 
@@ -70,6 +70,10 @@ npm --prefix site run sync
 `sync` copies the real source code shown on the How It Works page, so that page can't drift from the code. A test fails if you forget.
 
 To change how the moon looks, edit the shader in `site/scripts/bake-moon.mjs` and run `npm --prefix site run bake-moon` (needs Chrome).
+
+## Contributing
+
+Articles, fixes and algorithm improvements are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) explains how, and the website shows the same guide at `/contribute`, built from that file.
 
 ## Using the CLI
 

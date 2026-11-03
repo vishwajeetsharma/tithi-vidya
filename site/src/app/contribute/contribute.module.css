@@ -1,0 +1,142 @@
+/* Contribute: four ways to help, then the guide from CONTRIBUTING.md. */
+
+.page {
+  min-height: 100svh;
+  padding-block: clamp(100px, 14svh, 150px) clamp(48px, 7vw, 96px);
+  background:
+    radial-gradient(70vmax 46vmax at 90% -4%, #c9d4ff 0%, rgb(201 212 255 / 0) 64%),
+    radial-gradient(60vmax 46vmax at 0% 14%, #eadbff 0%, rgb(234 219 255 / 0) 62%);
+  background-repeat: no-repeat;
+  color: var(--ink-soft);
+}
+
+.hero {
+  display: grid;
+  gap: 14px;
+  max-width: 900px;
+}
+
+.title {
+  color: var(--ink);
+  font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+}
+
+.title em {
+  font-style: italic;
+}
+
+.lead {
+  max-width: 44rem;
+  font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.3125rem);
+}
+
+.lead a {
+  color: #3b2fc4;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ways {
+  display: grid;
+  gap: clamp(12px, 1.8vw, 20px);
+  margin-block: clamp(36px, 5vw, 64px);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 620px) {
+  .ways {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .ways {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.way {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  height: 100%;
+  padding: clamp(20px, 2.4vw, 26px);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.way:hover {
+  transform: translateY(-4px);
+}
+
+.wayIcon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
+  border-radius: 16px;
+  background: var(--grad);
+  color: #fff;
+}
+
+.wayTitle {
+  color: var(--ink);
+  font-size: 1.1875rem;
+  font-weight: 700;
+}
+
+.wayText {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+/* The guide, with a sticky "On this page" list on wide screens. */
+
+.layout {
+  display: grid;
+  gap: 32px;
+}
+
+.rail {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 760px) clamp(250px, 22vw, 320px);
+    justify-content: space-between;
+    column-gap: clamp(32px, 5vw, 80px);
+  }
+
+  .rail {
+    display: block;
+  }
+
+  .rail nav {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100svh - 120px);
+    overflow-y: auto;
+  }
+}
+
+.guide {
+  min-width: 0;
+}
+
+.guide h2,
+.guide h3 {
+  scroll-margin-top: 100px;
+}

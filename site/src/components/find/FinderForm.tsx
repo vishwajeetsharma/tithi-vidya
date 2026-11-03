@@ -53,7 +53,8 @@ export function FinderForm({ compact = false, initial, busy = false, onFind }: P
   };
 
   return (
-    <form className={s.form} onSubmit={submit}>
+    // autoComplete="off" stops Firefox refilling the fields after a refresh, which should start over.
+    <form className={s.form} onSubmit={submit} autoComplete="off">
       <div className={s.fields}>
         <div className={s.field}>
           <label htmlFor={`${id}-date`}>Birth date</label>

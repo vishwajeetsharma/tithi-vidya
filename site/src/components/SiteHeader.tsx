@@ -18,6 +18,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const lit = useRef<SVGPathElement>(null);
   const bar = useRef<HTMLDivElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
@@ -40,10 +41,15 @@ export function SiteHeader() {
     };
   }, [pathname]);
 
-  // The phone menu closes on Escape or a tap anywhere else.
+  // The phone menu closes on Escape or a tap anywhere else. Escape puts focus
+  // back on the Menu button, so keyboard users don't lose their place.
   useEffect(() => {
     if (!menu) return;
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setMenu(false);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setMenu(false);
+      menuButton.current?.focus();
+    };
     const onPointer = (event: PointerEvent) => !bar.current?.contains(event.target as Node) && setMenu(false);
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onPointer);
@@ -83,6 +89,7 @@ export function SiteHeader() {
             Find my tithi
           </Link>
           <button
+            ref={menuButton}
             className="siteMenuButton"
             type="button"
             aria-expanded={menu}

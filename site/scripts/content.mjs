@@ -12,6 +12,7 @@
 //   .content/blog.json     every post's details and HTML, read by the pages
 //   public/blog-media/     resized WebP images, with content hashes in their names
 //   public/blog/<slug>.md  a plain Markdown copy of each post, for AI tools
+//   .content/contribute.json  ../CONTRIBUTING.md as HTML, for the /contribute page
 //
 // Each image is processed once: results are kept in .next/cache/blog-media,
 // which Vercel keeps between builds, so only new or changed images cost time.
@@ -224,8 +225,7 @@ async function renderPost({ slug, file }, processImage, problems) {
       .use(remarkRehype)
       .use(rehypeSlug)
       .use(rehypeArticle({ file, slug, processImage, images, toc, problems }))
-      // Grammars load only for languages a post actually uses; loading them all takes seconds.
-      .use(rehypeShiki, { theme: codeTheme, langs: [], lazy: true, defaultLanguage: "text", fallbackLanguage: "text" })
+      .use(rehypeShiki, SHIKI)
       .use(rehypeStringify)
       .process(content),
   );
@@ -270,6 +270,93 @@ function markdownCopy(post) {
   return lines.join("\n");
 }
 
+// Grammars load only for languages a page actually uses; loading them all takes
+// seconds. Each code block becomes a labelled group that the keyboard can
+// reach, so code wider than a phone can still be scrolled. A group, not a
+// region, so many code blocks don't crowd the page's list of landmarks.
+const SHIKI = {
+  theme: codeTheme,
+  langs: [],
+  lazy: true,
+  defaultLanguage: "text",
+  fallbackLanguage: "text",
+  transformers: [
+    {
+      pre(node) {
+        const lang = this.options.lang;
+        Object.assign(node.properties, { tabindex: 0, role: "group", "aria-label": lang && lang !== "text" ? `Code example, ${lang}` : "Code example" });
+      },
+    },
+  ],
+};
+
+// Keep in step with SITE_ORIGIN and REPO_URL in src/lib/site.ts.
+const LIVE_ORIGIN = "https://tithividya.org";
+const REPO_FILES = "https://github.com/vishwajeetsharma/tithi-vidya/blob/main/";
+
+/**
+ * Links in CONTRIBUTING.md are written to work on GitHub. On the site, links
+ * to the live site become local, and paths in the repository go to GitHub.
+ * The opening title and the "this guide is also on the website" line go,
+ * since the page has its own.
+ */
+function rehypeGuide({ toc }) {
+  return () => (tree) => {
+    visit(tree, "element", (node, index, parent) => {
+      if (node.tagName === "h1" && parent && index !== undefined) {
+        parent.children.splice(index, 1);
+        return index;
+      }
+      if (node.tagName === "a") {
+        const href = String(node.properties.href ?? "");
+        if (href.startsWith(LIVE_ORIGIN)) node.properties.href = href.slice(LIVE_ORIGIN.length) || "/";
+        else if (!/^(https?:|mailto:|#)/.test(href)) node.properties.href = REPO_FILES + href;
+        if (node.properties.href === "/contribute" && parent?.type === "element" && parent.tagName === "p") parent.properties.dataDrop = "";
+      }
+      if (node.tagName === "table" && parent && index !== undefined && !(parent.type === "element" && parent.properties?.dataTable)) {
+        parent.children[index] = {
+          type: "element",
+          tagName: "div",
+          properties: { dataTable: "", tabIndex: 0, role: "region", ariaLabel: "Table" },
+          children: [node],
+        };
+      }
+    });
+    visit(tree, "element", (node, index, parent) => {
+      if (node.properties?.dataDrop !== undefined && parent && index !== undefined) {
+        parent.children.splice(index, 1);
+        return index;
+      }
+      if (node.tagName === "h2" && node.properties.id) toc.push({ id: String(node.properties.id), text: hastText(node) });
+    });
+  };
+}
+
+/** The contributing guide at the repository root, for the /contribute page. One source, so the two never differ. */
+async function buildGuide(site, outDir) {
+  const file = join(site, "..", "CONTRIBUTING.md");
+  const out = join(outDir, "contribute.json");
+  if (!existsSync(file)) {
+    // Vercel includes files outside the Root Directory unless that setting is turned off.
+    console.warn("blog: CONTRIBUTING.md was not found next to site/, so /contribute links to GitHub instead");
+    await writeFile(out, JSON.stringify(null));
+    return;
+  }
+  const toc = [];
+  const html = String(
+    await unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkRehype)
+      .use(rehypeSlug)
+      .use(rehypeGuide({ toc }))
+      .use(rehypeShiki, SHIKI)
+      .use(rehypeStringify)
+      .process(await readFile(file, "utf8")),
+  );
+  await writeFile(out, JSON.stringify({ html, toc }));
+}
+
 export async function buildContent({ site = SITE, drafts = false, now = new Date() } = {}) {
   const started = performance.now();
   const contentDir = join(site, "content/blog");
@@ -301,6 +388,7 @@ export async function buildContent({ site = SITE, drafts = false, now = new Date
   // builtAt lets every page agree on which posts were live when the HTML was made.
   await writeFile(join(outDir, "blog.json"), JSON.stringify({ builtAt: now.toISOString(), posts }));
   await Promise.all(posts.map((post) => writeFile(join(copyDir, `${post.slug}.md`), markdownCopy(post))));
+  await buildGuide(site, outDir);
 
   const images = (await readdir(mediaDir)).length;
   console.log(`blog: ${posts.length} post${posts.length === 1 ? "" : "s"}, ${images} image files, ${Math.round(performance.now() - started)} ms`);

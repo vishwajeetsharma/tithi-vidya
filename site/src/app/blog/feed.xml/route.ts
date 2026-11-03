@@ -1,6 +1,6 @@
 import { getLivePosts } from "@/lib/blog";
 import { absoluteHtml, escape } from "@/lib/feeds";
-import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, AUTHOR_EMAIL, SITE_NAME, siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -30,7 +30,7 @@ ${post.tags.map((tag) => `      <category>${escape(tag)}</category>`).join("\n")
     <atom:link href="${origin}/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Simple guides to tithis, moon birthdays and the Hindu calendar.</description>
     <language>en</language>
-    <managingEditor>contact@thevishwa.in (${AUTHOR})</managingEditor>
+    <managingEditor>${AUTHOR_EMAIL} (${AUTHOR})</managingEditor>
 ${posts[0] ? `    <lastBuildDate>${new Date(`${posts[0].updated}T00:00:00Z`).toUTCString()}</lastBuildDate>\n` : ""}${items}
   </channel>
 </rss>

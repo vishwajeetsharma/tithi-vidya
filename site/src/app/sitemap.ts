@@ -21,6 +21,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
       ...(post.cover ? { images: [`${origin}${post.cover.largest}`] } : {}),
     })),
+    { url: `${origin}/about`, lastModified: built, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${origin}/contribute`, lastModified: built, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${origin}/contact`, lastModified: built, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${origin}/disclaimer`, lastModified: built, changeFrequency: "yearly", priority: 0.3 },
     { url: `${origin}/privacy`, lastModified: built, changeFrequency: "yearly", priority: 0.2 },
     { url: `${origin}/terms`, lastModified: built, changeFrequency: "yearly", priority: 0.2 },
   ];

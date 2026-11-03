@@ -1,7 +1,7 @@
 import { getLivePosts } from "./blog";
 import { FAQ } from "./faq";
 import { postMarkdown } from "./feeds";
-import { AUTHOR, REPO_URL, SITE_NAME, siteUrl } from "./site";
+import { AUTHOR, AUTHOR_EMAIL, CONTACT_EMAIL, REPO_URL, SITE_NAME, siteUrl } from "./site";
 
 /**
  * What AI tools read about the site: llms.txt (a map, see llmstxt.org) and
@@ -23,7 +23,7 @@ export function llmsIntro(origin: string): string[] {
     "- Accuracy: checked against Swiss Ephemeris over 1900 to 2149. All 3,095 moon months matched, and only 8 of 91,311 days at New Delhi differed, each within 18 seconds of a tithi change.",
     "- Coverage: years 1900 to 2149, anywhere on Earth (built-in cities, or any latitude, longitude and time zone).",
     "- Privacy: birth details stay on the device. The site uses Google Analytics and the Meta Pixel to count visits, and they do not receive birth details.",
-    `- Made by: ${AUTHOR}. Contact: contact@thevishwa.in`,
+    `- Made by: ${AUTHOR} (${AUTHOR_EMAIL}). Questions about the site: ${CONTACT_EMAIL}`,
     "",
   ];
 }
@@ -47,6 +47,9 @@ export function llmsTxt(): string {
     "",
     `- [Everything in one file](${origin}/llms-full.txt): this summary, the questions and answers, and every blog post in full.`,
     `- [Source code](${REPO_URL}): MIT License.`,
+    `- [About](${origin}/about): who made the site and why`,
+    `- [Contribute](${origin}/contribute): how to write for the blog, or improve the code and the algorithm`,
+    `- [Contact](${origin}/contact) and [Disclaimer](${origin}/disclaimer)`,
     `- [Privacy Policy](${origin}/privacy) and [Terms](${origin}/terms)`,
     "",
   ].join("\n");

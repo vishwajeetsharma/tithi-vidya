@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { REPO_URL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, REPO_URL, SITE_NAME } from "@/lib/site";
 
 import s from "../legal.module.css";
 
@@ -54,7 +54,7 @@ export default function TermsPage() {
         <p>
           The site may show ads from Google and its partners. Advertisers are responsible for their ads and what they offer. An ad is not a recommendation from us,
           and we are not part of anything you buy or sign up for through one. If you see an ad that looks wrong or harmful, please tell us at{" "}
-          <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a>. How ads use data is explained in our <Link href="/privacy">Privacy Policy</Link>.
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. How ads use data is explained in our <Link href="/privacy">Privacy Policy</Link>.
         </p>
 
         <h2>Newsletter</h2>
@@ -65,7 +65,7 @@ export default function TermsPage() {
 
         <h2>Changes and contact</h2>
         <p>
-          If these terms change, we will update this page and its date. For questions, email <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a>. See also our{" "}
+          If these terms change, we will update this page and its date. For questions, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also our{" "}
           <Link href="/privacy">Privacy Policy</Link>.
         </p>
       </div>

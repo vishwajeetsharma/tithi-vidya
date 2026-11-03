@@ -16,6 +16,8 @@ export async function CodeBlock({ name, label }: { name: keyof typeof snippets; 
     transformers: [
       {
         pre(node) {
+          // A labelled region, so screen readers name it and keyboards can scroll it.
+          node.properties.role = "region";
           node.properties["aria-label"] = `${label}. Code from ${snippet.file}`;
         },
       },

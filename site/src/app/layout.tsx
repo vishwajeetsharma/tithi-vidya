@@ -62,8 +62,13 @@ const MOTION_SCRIPT = `if(!matchMedia("(prefers-reduced-motion: reduce)").matche
 // page, which does not reload it. Must match STORE_KEY in lib/query.ts.
 const STRIP_DETAILS = `(function(){function s(){if(location.hash.includes("date=")){try{sessionStorage.setItem("tithi-birth",location.hash.slice(1))}catch(e){}history.replaceState(null,"",location.pathname+location.search)}}s();addEventListener("hashchange",s)})()`;
 
-// In this order: the address must be clean before any tag can read it.
-const HEAD_SCRIPT = [STRIP_DETAILS, MOTION_SCRIPT, ...(process.env.NODE_ENV === "production" ? [ANALYTICS_SCRIPT] : [])].join(";");
+// Refreshing starts over: a reload forgets the details kept for this tab. A
+// shared link or the home page form still carries them to the finder, since
+// those are not reloads. Must match STORE_KEY in lib/query.ts.
+const RESET_ON_RELOAD = `try{if(performance.getEntriesByType("navigation")[0]?.type==="reload")sessionStorage.removeItem("tithi-birth")}catch(e){}`;
+
+// In this order: forget old details, then clean the address before any tag can read it.
+const HEAD_SCRIPT = [RESET_ON_RELOAD, STRIP_DETAILS, MOTION_SCRIPT, ...(process.env.NODE_ENV === "production" ? [ANALYTICS_SCRIPT] : [])].join(";");
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

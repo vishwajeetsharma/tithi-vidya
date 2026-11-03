@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
-import { SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
 
 import s from "../legal.module.css";
 
@@ -30,7 +30,7 @@ export default function PrivacyPage() {
           them on any server. There are no accounts.
         </p>
         <p>
-          While you use the site, your browser keeps your details for that tab so a refresh still works. They are removed when you close the tab. If you use Copy
+          While you use the site, your browser keeps your details for that tab, so they can move from the home page to the finder. They are removed when you refresh the page or close the tab. If you use Copy
           link, the details are inside that link, so anyone you share it with can see them.
         </p>
 
@@ -79,6 +79,16 @@ export default function PrivacyPage() {
           <a href="https://optout.aboutads.info/">aboutads.info</a> or, in Europe, <a href="https://www.youronlinechoices.eu/">youronlinechoices.eu</a>.
         </p>
 
+        <h2>Translating and listening to the blog</h2>
+        <p>
+          The Translate button on the blog opens the page in Google Translate. Only if you use it, Google receives the page&apos;s address and text, and handles
+          your visit under its <a href="https://policies.google.com/privacy">privacy policy</a>. The button is only on the blog, never on the finder.
+        </p>
+        <p>
+          The Listen button reads an article aloud with your device&apos;s own voices. Some browsers use online voices from their maker, such as Google or
+          Microsoft, which then receive the article&apos;s text. Your birth details are never read or sent.
+        </p>
+
         <h2>The newsletter</h2>
         <p>
           If you subscribe, we keep your email address and, if you give it, your first name. They are stored by{" "}
@@ -86,7 +96,7 @@ export default function PrivacyPage() {
           never sell them. Brevo can record whether an email was opened or a link in it was clicked.
         </p>
         <p>
-          Every email has an unsubscribe link. You can also email <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a> and we will remove you.
+          Every email has an unsubscribe link. You can also email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and we will remove you.
         </p>
 
         <h2>Cookies and browser storage</h2>
@@ -162,7 +172,7 @@ export default function PrivacyPage() {
 
         <h2>Changes and contact</h2>
         <p>
-          If this policy changes, we will update this page and its date. For questions, email <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a>. See also our{" "}
+          If this policy changes, we will update this page and its date. For questions, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See also our{" "}
           <Link href="/terms">Terms</Link>.
         </p>
       </div>

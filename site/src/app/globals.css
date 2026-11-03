@@ -5,11 +5,13 @@
 
   --ink: #15113d;
   --ink-soft: #3d3870;
-  --ink-mute: #575189;
+  --ink-mute: #524b84;
   --paper: #f8f7ff;
   --card: #ffffff;
   --line: #e3dffb;
   --line-strong: #cdc6f5;
+  /* Text box borders: the only outline of a white box on a near-white page, so they need 3:1. */
+  --field-line: #8a80cf;
 
   --blue: #2758ec;
   --indigo: #4a3bf0;
@@ -141,6 +143,16 @@ select {
   color: transparent;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+/* The letters themselves are see-through, so when selected the highlight
+   would cover the gradient and the words would vanish. Give them a solid
+   colour while they are selected. */
+.gradientText::selection,
+.gradientText *::selection {
+  color: #3b2fc4;
+  -webkit-text-fill-color: #3b2fc4;
+  background: var(--lilac-200);
 }
 
 .eyebrow {
@@ -468,25 +480,56 @@ select {
 }
 
 .siteFooterRow {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px 32px;
-  padding-top: 20px;
+  display: grid;
+  gap: 28px 40px;
+  padding-top: 24px;
   border-top: 1px solid rgb(255 255 255 / 0.28);
   font-size: 0.9375rem;
 }
 
+@media (min-width: 900px) {
+  .siteFooterRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+.siteFooterAbout {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.siteFooterAbout a {
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+/* Three short columns of links: two side by side on phones. */
 .siteFooterLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 22px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 28px;
+}
+
+@media (min-width: 620px) {
+  .siteFooterLinks {
+    grid-template-columns: repeat(3, auto);
+    gap: 22px clamp(36px, 6vw, 88px);
+  }
+}
+
+.siteFooterHeading {
+  margin-bottom: 6px;
+  color: rgb(255 255 255 / 0.85);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .siteFooterLinks a {
   display: inline-block;
-  padding-block: 6px;
+  padding-block: 5px;
   font-weight: 600;
   text-underline-offset: 4px;
 }

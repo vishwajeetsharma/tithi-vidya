@@ -5,7 +5,9 @@ import { notFound } from "next/navigation";
 
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { ReadingRail } from "@/components/blog/ReadingRail";
+import { ListenButton } from "@/components/blog/ListenButton";
 import { RecentPosts } from "@/components/blog/RecentPosts";
+import { TranslateMenu } from "@/components/blog/TranslateMenu";
 import s from "@/components/blog/blog.module.css";
 import { ArrowIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
@@ -161,7 +163,9 @@ export default async function PostPage({ params }: Params) {
             </nav>
             <header className={s.head}>
               <h1 className={`display ${s.articleTitle}`}>{post.title}</h1>
-              <p className={s.lead}>{post.description}</p>
+              <p className={s.lead} data-listen-lead>
+                {post.description}
+              </p>
               <p className={s.meta}>
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 {post.updated !== post.date && (
@@ -173,6 +177,10 @@ export default async function PostPage({ params }: Params) {
                 · {post.minutes} min read · {post.author}
                 {PREVIEW && liveAt > Date.parse(builtAt) && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
               </p>
+              <div className={s.headTools}>
+                <ListenButton />
+                <TranslateMenu url={`${origin}/blog/${post.slug}`} />
+              </div>
             </header>
 
             {post.cover && (
@@ -206,14 +214,14 @@ export default async function PostPage({ params }: Params) {
               </ul>
             )}
 
-            <aside className={s.cta}>
+            <div className={s.cta}>
               <p className={`display ${s.ctaTitle}`}>When is your moon birthday?</p>
               <p>Enter your birth date, time and place. Free, private and open source.</p>
               <Link className="btn btnLight" href="/find">
                 Find my moon birthday
                 <ArrowIcon />
               </Link>
-            </aside>
+            </div>
           </article>
 
           {/* Wide screens: a sticky copy on the right. Only one copy is ever shown,
