@@ -212,6 +212,193 @@
   color: var(--indigo);
 }
 
+/* Sharing the calendar: a night-sky panel with the moon month, a timeline and four numbers. */
+
+.sky {
+  display: grid;
+  gap: clamp(32px, 5vw, 56px);
+  margin-top: clamp(56px, 8vw, 104px);
+  padding: clamp(26px, 5vw, 64px);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(50% 70% at 100% 0%, rgb(143 53 232 / 0.45) 0%, rgb(143 53 232 / 0) 70%),
+    radial-gradient(40% 60% at 0% 100%, rgb(39 88 236 / 0.4) 0%, rgb(39 88 236 / 0) 70%),
+    #15113d;
+  color: rgb(255 255 255 / 0.82);
+}
+
+.skyIntro {
+  display: grid;
+  gap: 18px;
+  max-width: 920px;
+}
+
+.skyEyebrow {
+  color: #b9b0ff;
+}
+
+.skyTitle {
+  color: #fff;
+  font-size: clamp(2rem, 1.3rem + 3vw, 3.5rem);
+}
+
+.skyTitle em {
+  font-style: italic;
+  background: linear-gradient(100deg, #9fb6ff 0%, #c9a6ff 60%, #ffb25e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.skyText {
+  display: grid;
+  gap: 14px;
+  max-width: 44rem;
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+}
+
+/* The moon month: each half is one row of 15 moons, and wraps on small phones. */
+.month {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: calc(var(--radius) - 8px);
+  background: rgb(255 255 255 / 0.05);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.half {
+  display: grid;
+  gap: 10px;
+}
+
+.halfName {
+  font-size: 0.9375rem;
+}
+
+.halfName strong {
+  color: #fff;
+}
+
+.moons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px clamp(4px, 1.2vw, 14px);
+  padding: 0;
+  list-style: none;
+}
+
+.moons li {
+  display: grid;
+}
+
+.moons li:last-child svg {
+  filter: drop-shadow(0 0 10px rgb(201 166 255 / 0.7));
+}
+
+.month figcaption {
+  color: rgb(255 255 255 / 0.6);
+  font-size: 0.875rem;
+}
+
+.skyGrid {
+  display: grid;
+  gap: clamp(32px, 5vw, 56px);
+}
+
+@media (min-width: 980px) {
+  .skyGrid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+}
+
+.skyHeading {
+  margin-bottom: 20px;
+  color: #fff;
+  font-size: 1.1875rem;
+  font-weight: 700;
+}
+
+/* A line down the left, with a dot at each step. */
+.timeline {
+  display: grid;
+  gap: 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--grad);
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.08);
+}
+
+.timeline li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  bottom: -18px;
+  left: 5px;
+  width: 2px;
+  background: rgb(255 255 255 / 0.14);
+}
+
+.when {
+  margin-bottom: 4px;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Two by two, so the four never split three and one. */
+.numbers {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+@media (min-width: 560px) {
+  .numbers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.numbers div {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.06);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.numbers dt {
+  color: #fff;
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.numbers dd {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.sky :focus-visible {
+  outline-color: #fff;
+}
+
 /* The goal */
 
 .goal {

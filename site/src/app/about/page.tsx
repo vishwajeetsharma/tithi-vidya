@@ -32,6 +32,40 @@ const STORY = [
   },
 ];
 
+/** The tithis of the two halves of a moon month. The 15th is the full moon in the first half, and the new moon in the second. */
+const TITHIS = ["Pratipada", "Dwitiya", "Tritiya", "Chaturthi", "Panchami", "Shashthi", "Saptami", "Ashtami", "Navami", "Dashami", "Ekadashi", "Dwadashi", "Trayodashi", "Chaturdashi"];
+const HALVES = [
+  { name: "Shukla paksha", note: "the moon grows", last: "Purnima", start: 0 },
+  { name: "Krishna paksha", note: "the moon shrinks", last: "Amavasya", start: 180 },
+];
+
+const TIMELINE = [
+  {
+    when: "Over 2,000 years ago",
+    text: "The Vedanga Jyotisha, one of India's oldest texts on time, explains how to follow the sun and moon to set the days of rituals.",
+  },
+  {
+    when: "499 CE",
+    text: "Aryabhata, aged 23, finishes the Aryabhatiya. His figures for the sun and moon guide Indian astronomers for centuries.",
+  },
+  {
+    when: "Today",
+    text: "Panchangs are printed every year in many languages. Hundreds of millions of people use them to choose days for festivals, fasts and weddings.",
+  },
+  {
+    when: SITE_NAME,
+    text: "The same rules, with NASA's positions for the sun and moon, worked out in your browser for any place on Earth.",
+  },
+];
+
+/** The calendar in four numbers. Keep in step with the How it works page. */
+const NUMBERS = [
+  { figure: "12°", text: "The moon moves this much further from the sun in one tithi. Thirty tithis make a moon month." },
+  { figure: "20–27 h", text: "How long a tithi lasts. So one can be skipped on the calendar, or fill two days." },
+  { figure: "11 days", text: "How much shorter twelve moon months are than a year of seasons." },
+  { figure: "+1 month", text: "Added about every three years, adhika masa keeps Diwali in autumn and Holi in spring." },
+];
+
 const VALUES = [
   { icon: HeartIcon, title: "Free, with no sign-up", text: "No account, no payment, no app to install. Open the page and use it." },
   { icon: LockIcon, title: "Private", text: "Your birth details are worked out inside your own browser. They are never sent to me or anyone else." },
@@ -117,6 +151,81 @@ export default function AboutPage() {
                 <Link href="/how-it-works">How it works</Link> page shows the real code and every test.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section className={s.sky} aria-labelledby="culture-title">
+          <div className={s.skyIntro}>
+            <p className={`eyebrow ${s.skyEyebrow}`}>Why I want to share it</p>
+            <h2 id="culture-title" className={`display ${s.skyTitle}`}>
+              India has timed its festivals by the moon for over 2,000 years. <em>I want the world to see how.</em>
+            </h2>
+            <div className={s.skyText}>
+              <p>
+                When my family told me about tithis, I was surprised by how clever the idea is. The calendar was worked out by watching the sky, written down by
+                astronomers, and is still printed in panchangs found in millions of homes. It decides when Diwali, Holi and Navratri fall, and when your moon
+                birthday comes round.
+              </p>
+              <p>
+                Yet most people outside India have never heard of it, and many of us who use it couldn&apos;t explain it. {SITE_NAME} is my way of changing that:
+                plain words, real astronomy, and a free tool anyone in the world can use.
+              </p>
+            </div>
+          </div>
+
+          <figure className={s.month}>
+            {HALVES.map((half) => (
+              <div key={half.name} className={s.half}>
+                <p className={s.halfName}>
+                  <strong>{half.name}</strong> {half.note}
+                </p>
+                <ol className={s.moons}>
+                  {[...TITHIS, half.last].map((name, i) => (
+                    <li key={name} title={name}>
+                      <MoonPhase elongation={half.start + i * 12 + 6} size={26} />
+                      <span className="visuallyHidden">{name}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+            <figcaption>One moon month, from new moon to new moon: 30 tithis.</figcaption>
+          </figure>
+
+          <div className={s.skyGrid}>
+            <div>
+              <h3 className={s.skyHeading}>From the sky to your screen</h3>
+              <ol className={s.timeline}>
+                {TIMELINE.map((step) => (
+                  <li key={step.when}>
+                    <p className={s.when}>{step.when}</p>
+                    <p>{step.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div>
+              <h3 className={s.skyHeading}>The idea in four numbers</h3>
+              <dl className={s.numbers}>
+                {NUMBERS.map((n) => (
+                  <div key={n.figure}>
+                    <dt className="display">{n.figure}</dt>
+                    <dd>{n.text}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+
+          <div className={s.actions}>
+            <Link className="btn btnLight" href="/how-it-works">
+              See how it works
+              <ArrowIcon />
+            </Link>
+            <Link className={`btn ${s.btnOutline}`} href="/blog">
+              Read the blog
+              <ArrowIcon />
+            </Link>
           </div>
         </section>
 
