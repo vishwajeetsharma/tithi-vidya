@@ -1,6 +1,6 @@
 export const SITE_NAME = "Tithi Vidya";
 export const AUTHOR = "Vishwajeet Sharma";
-export const CREDIT = "Built using Claude Opus 5.5 by Vishwajeet Sharma";
+export const CREDIT = "Built with belief and love by Vishwajeet Sharma";
 export const REPO_URL = "https://github.com/vishwajeetsharma/tithi-vidya";
 export const GOOGLE_ANALYTICS_ID = "G-EH6CQB4WNP";
 export const META_PIXEL_ID = "1817935669409933";

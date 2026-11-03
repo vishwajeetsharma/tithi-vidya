@@ -12,7 +12,7 @@ export function Credit() {
           Who made this?
         </h2>
         <p className={`display ${s.creditText}`} data-reveal>
-          Built using <em className="gradientText">Claude Opus 5.5</em> by <em className="gradientText">Vishwajeet Sharma</em>.
+          Built with <em className="gradientText">belief and love</em> by <em className="gradientText">Vishwajeet Sharma</em>.
         </p>
         <div data-reveal>
           <Link className="btn btnGhost" href="/how-it-works">

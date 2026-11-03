@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Credit } from "@/components/home/Credit";
 import { DriftScene } from "@/components/home/DriftScene";
 import { Faq } from "@/components/home/Faq";
+import { FromTheBlog } from "@/components/home/FromTheBlog";
 import { Hero } from "@/components/home/Hero";
 import { HomeMotion } from "@/components/home/HomeMotion";
 import { Proof } from "@/components/home/Proof";
@@ -61,6 +62,7 @@ export default function HomePage() {
         <Steps />
         <TryIt />
         <Proof />
+        <FromTheBlog />
         <Faq />
         <Credit />
       </div>

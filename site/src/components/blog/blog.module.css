@@ -1,0 +1,655 @@
+/* The blog: an index of cards, and a calm reading page. */
+
+.page {
+  min-height: 100svh;
+  padding-block: clamp(100px, 14svh, 150px) clamp(48px, 7vw, 96px);
+  background:
+    radial-gradient(70vmax 46vmax at 90% -4%, #c9d4ff 0%, rgb(201 212 255 / 0) 64%),
+    radial-gradient(60vmax 46vmax at 0% 14%, #eadbff 0%, rgb(234 219 255 / 0) 62%);
+  background-repeat: no-repeat;
+}
+
+.head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: clamp(24px, 4vw, 48px);
+}
+
+.title {
+  font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+}
+
+.title em {
+  font-style: italic;
+}
+
+.lead {
+  max-width: 38rem;
+  color: var(--ink-soft);
+  font-size: clamp(1.0625rem, 1rem + 0.5vw, 1.3125rem);
+}
+
+.empty {
+  color: var(--ink-soft);
+}
+
+.grid {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+@media (min-width: 620px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* A whole card is clickable through its title link. */
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card:focus-within {
+  outline: 3px solid var(--indigo);
+  outline-offset: 3px;
+}
+
+.cardImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--lilac-50);
+}
+
+.cardBody {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: clamp(18px, 2.4vw, 26px);
+  color: var(--ink-soft);
+}
+
+.cardTitle {
+  color: var(--ink);
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  line-height: 1.15;
+}
+
+.cardLink {
+  text-decoration: none;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.cardLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.meta {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink-mute);
+}
+
+/* Article */
+
+.article {
+  max-width: 760px;
+}
+
+.crumbs {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.crumbs a {
+  color: #3b2fc4;
+  text-underline-offset: 3px;
+}
+
+.articleTitle {
+  font-size: clamp(2.25rem, 1.4rem + 4vw, 4.25rem);
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-block: clamp(20px, 3vw, 32px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: var(--lilac-50);
+}
+
+.toc {
+  margin-block: 8px 28px;
+  padding: 16px 20px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 16px 40px -30px rgb(52 36 170 / 0.45);
+}
+
+.toc p {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+}
+
+.toc ol {
+  display: grid;
+  gap: 4px;
+  padding-left: 1.2em;
+  list-style: decimal;
+}
+
+.toc a {
+  color: #3b2fc4;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.toc a[aria-current] {
+  text-decoration-thickness: 2px;
+  color: var(--ink);
+}
+
+/* The post body comes from Markdown, so it is styled by element. */
+.prose {
+  color: #2c2759;
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  line-height: 1.75;
+}
+
+.prose > * + * {
+  margin-top: 1.1em;
+}
+
+.prose h2 {
+  margin-top: 1.9em;
+  color: var(--ink);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem);
+  font-weight: 560;
+  line-height: 1.15;
+  scroll-margin-top: 96px;
+}
+
+.prose h3 {
+  margin-top: 1.6em;
+  color: var(--ink);
+  font-size: 1.25rem;
+  line-height: 1.3;
+  scroll-margin-top: 96px;
+}
+
+.prose a {
+  color: #3b2fc4;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.prose ul,
+.prose ol {
+  display: grid;
+  gap: 0.4em;
+  padding-left: 1.3em;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose blockquote {
+  margin-inline: 0;
+  padding: 14px 20px;
+  border-left: 4px solid var(--indigo);
+  border-radius: 0 16px 16px 0;
+  background: var(--lilac-50);
+  color: var(--ink-soft);
+}
+
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  background: var(--lilac-50);
+}
+
+.prose figure {
+  display: grid;
+  gap: 8px;
+}
+
+.prose figcaption {
+  font-size: 0.9375rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+
+.prose :not(pre) > code {
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  background: var(--lilac-50);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  overflow-x: auto;
+  padding: 16px 18px;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.prose [data-table] {
+  overflow-x: auto;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.prose th,
+.prose td {
+  padding: 10px 14px;
+  text-align: left;
+  border-top: 1px solid var(--line);
+}
+
+.prose thead th {
+  border-top: 0;
+  color: var(--ink);
+}
+
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: var(--line-strong);
+  margin-block: 2em;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.tag {
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--lilac-100);
+  color: #3b2fc4;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.cta {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  margin-top: clamp(36px, 5vw, 56px);
+  padding: clamp(22px, 4vw, 40px);
+  border-radius: clamp(26px, 3.4vw, 40px);
+  background:
+    radial-gradient(60% 120% at 92% 0%, rgb(166 120 255 / 0.6) 0%, rgb(166 120 255 / 0) 70%),
+    linear-gradient(115deg, #2c49dc 0%, #4c33e0 50%, #7a2fdc 100%);
+  color: rgb(255 255 255 / 0.95);
+}
+
+.ctaTitle {
+  color: #fff;
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+}
+
+/* Recent articles, below every post */
+
+.recent {
+  max-width: 1540px;
+  margin: clamp(48px, 7vw, 88px) auto 0;
+}
+
+.recentHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: clamp(18px, 2.4vw, 28px);
+}
+
+.moreTitle {
+  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem);
+}
+
+.recentGrid {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+@media (min-width: 620px) {
+  .recentGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .recentGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* The article page: one column on phones and tablets; contents on the right
+   from 1024 px; and a reading rail on the left from 1280 px. One DOM order:
+   article, contents, rail. */
+
+/* Wider than the site's usual 1320 px, so big screens are not mostly margin. */
+.postWrap {
+  width: min(100% - 2 * var(--gutter), 1900px);
+  margin-inline: auto;
+}
+
+.postLayout {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.postMain {
+  min-width: 0;
+}
+
+.leftRail,
+.rightRail {
+  display: none;
+}
+
+/* The side columns grow with the screen; the article stays at a comfortable
+   reading width (about 70 characters a line). */
+@media (min-width: 1024px) {
+  .postLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 720px) clamp(250px, 24vw, 300px);
+    justify-content: center;
+    column-gap: clamp(32px, 4vw, 64px);
+    max-width: none;
+  }
+
+  .tocInline {
+    display: none;
+  }
+
+  .rightRail {
+    display: block;
+  }
+
+  .rightRail .toc {
+    position: sticky;
+    top: 100px;
+    margin-top: 0;
+    max-height: calc(100svh - 120px);
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .postLayout {
+    grid-template-columns: clamp(220px, 17vw, 300px) minmax(0, 720px) clamp(250px, 19vw, 320px);
+    column-gap: clamp(28px, 3vw, 64px);
+  }
+
+  .leftRail {
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .postMain {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .rightRail {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+@media (min-width: 1700px) {
+  .postLayout {
+    grid-template-columns: 300px minmax(0, 760px) 320px;
+    column-gap: 80px;
+  }
+
+  .toc {
+    padding: 20px 24px;
+  }
+
+  .toc a {
+    font-size: 1.0625rem;
+  }
+}
+
+/* 27-inch and larger screens. */
+@media (min-width: 2100px) {
+  .postLayout {
+    grid-template-columns: 340px minmax(0, 800px) 360px;
+    column-gap: 104px;
+  }
+
+  .prose {
+    font-size: 1.25rem;
+  }
+}
+
+/* 27-inch screens at full resolution (about 2560 px wide). */
+@media (min-width: 2400px) {
+  .postLayout {
+    grid-template-columns: 390px minmax(0, 860px) 410px;
+    column-gap: 120px;
+  }
+
+  .prose {
+    font-size: 1.3125rem;
+  }
+
+  .articleTitle {
+    font-size: 4.75rem;
+  }
+
+  .toc a {
+    font-size: 1.125rem;
+  }
+}
+
+.railSticky {
+  position: sticky;
+  top: 100px;
+  display: grid;
+  gap: 14px;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 16px 40px -30px rgb(52 36 170 / 0.45);
+}
+
+.progress svg {
+  flex: none;
+}
+
+.progress p {
+  display: grid;
+  line-height: 1.3;
+}
+
+.progress strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.progress span {
+  font-size: 0.8125rem;
+  color: var(--ink-mute);
+}
+
+.railBlock {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 16px 40px -30px rgb(52 36 170 / 0.45);
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.railLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* Two buttons a row, growing to fill the rail. */
+.shareList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 6px;
+}
+
+.shareLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lilac-50);
+  color: #3b2fc4;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.shareLink:hover {
+  background: var(--lilac-100);
+}
+
+.railCta {
+  background: var(--grad);
+  color: rgb(255 255 255 / 0.92);
+}
+
+.railCta .railLabel {
+  color: rgb(255 255 255 / 0.8);
+}
+
+.railButton {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--indigo);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.railCta :focus-visible {
+  outline-color: #fff;
+}
+
+/* The rail's contents grow with it. These come last so they win. */
+@media (min-width: 1700px) {
+  .progress svg {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+@media (min-width: 2100px) {
+  .progress svg {
+    width: 76px;
+    height: 76px;
+  }
+
+  .railBlock,
+  .progress {
+    padding: 18px 20px;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 2400px) {
+  .progress svg {
+    width: 84px;
+    height: 84px;
+  }
+
+  .railBlock,
+  .progress {
+    padding: 20px 24px;
+    font-size: 1.0625rem;
+  }
+
+  .shareLink {
+    min-height: 42px;
+    font-size: 0.9375rem;
+  }
+}
+

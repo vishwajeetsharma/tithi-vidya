@@ -40,6 +40,15 @@
 
 /* ---------- The moon ---------- */
 
+/* Without motion the moon scrolls with the hero instead of staying fixed.
+   It hangs past the right edge, so clip it sideways here, or phones zoom
+   the whole page out to fit it. A fixed moon is not clipped by this. */
+.moonStage {
+  position: absolute;
+  inset: 0 0 auto;
+  overflow-x: clip;
+}
+
 .moon {
   --hero-d: min(92vw, 44svh);
   position: absolute;
@@ -1249,6 +1258,13 @@
   overflow: clip;
 }
 
+/* The tall section and the space at the bottom are for the moon rising in
+   the motion version. */
+:global(html:not([data-motion="on"])) .credit {
+  min-height: 0;
+  padding-bottom: clamp(90px, 16svh, 170px);
+}
+
 .creditInner {
   display: grid;
   justify-items: center;
@@ -1428,5 +1444,41 @@
 
   .heroLead {
     font-size: 1rem;
+  }
+}
+
+/* ---------- From the blog ---------- */
+
+.fromBlog {
+  padding-block: clamp(48px, 7vw, 100px);
+}
+
+.fromBlogHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: clamp(20px, 3vw, 36px);
+}
+
+.fromBlogGrid {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+.fromBlogGrid > div {
+  display: grid;
+}
+
+@media (min-width: 620px) {
+  .fromBlogGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .fromBlogGrid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }

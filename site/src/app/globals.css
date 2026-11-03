@@ -129,7 +129,12 @@ select {
   line-height: 1.04;
 }
 
+/* The padding makes room for italic letters that lean past the word's edges,
+   which background-clip: text would otherwise cut off. The negative margin
+   keeps the spacing as it was. */
 .gradientText {
+  padding-inline: 0.1em;
+  margin-inline: -0.1em;
   background: var(--grad-text);
   -webkit-background-clip: text;
   background-clip: text;
@@ -319,6 +324,74 @@ select {
   color: var(--indigo);
 }
 
+.siteNavLinks {
+  display: flex;
+  align-items: center;
+  gap: clamp(2px, 1vw, 10px);
+}
+
+.siteMenuButton {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--lilac-50);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.siteHeaderBar {
+  position: relative;
+}
+
+.siteMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  min-width: 200px;
+  padding: 8px;
+  border-radius: 22px;
+  background: rgb(255 255 255 / 0.96);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 50px -24px rgb(30 20 110 / 0.5), inset 0 0 0 1px var(--line);
+}
+
+.siteMenuLink {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.siteMenuLink:hover,
+.siteMenuLink[aria-current="page"] {
+  background: var(--lilac-50);
+  color: #3b2fc4;
+}
+
+@media (max-width: 619.98px) {
+  .siteNavLinks {
+    display: none;
+  }
+
+  .siteMenuButton {
+    display: grid;
+  }
+}
+
+@media (min-width: 620px) {
+  .siteMenu {
+    display: none;
+  }
+}
+
 .siteNavCta {
   min-height: 44px;
   padding: 0 1.15em;
@@ -362,20 +435,25 @@ select {
 
 /* Footer */
 
+/* The wave is cut out of the footer with a mask, so whatever is behind it
+   shows above the curve: plain page colour on most pages, the moonlit sky
+   on the home page. The second mask layer is the solid footer below it,
+   overlapping by a pixel so no seam shows. */
 .siteFooter {
+  --wave: clamp(36px, 7vw, 90px);
+  --wave-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 90' preserveAspectRatio='none'%3E%3Cpath fill-rule='evenodd' d='M0 0h1440v90H0zM0 0h1440v30c-180 50-360 60-560 34S420 18 240 34 60 76 0 62Z'/%3E%3C/svg%3E");
   position: relative;
   z-index: 2;
   overflow: clip;
+  padding-top: var(--wave);
   color: #fff;
   background: linear-gradient(115deg, #2546cf 0%, #4a32dc 46%, #7f2fd6 100%);
-}
-
-.siteFooterWave {
-  display: block;
-  width: 100%;
-  height: clamp(36px, 7vw, 90px);
-  margin-bottom: -1px;
-  color: var(--paper);
+  -webkit-mask:
+    var(--wave-shape) top / 100% var(--wave) no-repeat,
+    linear-gradient(#000, #000) 0 calc(var(--wave) - 1px) / 100% calc(100% - var(--wave) + 1px) no-repeat;
+  mask:
+    var(--wave-shape) top / 100% var(--wave) no-repeat,
+    linear-gradient(#000, #000) 0 calc(var(--wave) - 1px) / 100% calc(100% - var(--wave) + 1px) no-repeat;
 }
 
 .siteFooterInner {

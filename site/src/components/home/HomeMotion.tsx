@@ -22,7 +22,9 @@ export function HomeMotion() {
         <div className={s.skyIris} data-sky="iris" />
         <div className={s.skyDusk} data-sky="dusk" />
       </div>
-      <Moon wrapRef={moon} />
+      <div className={s.moonStage}>
+        <Moon wrapRef={moon} />
+      </div>
     </>
   );
 }

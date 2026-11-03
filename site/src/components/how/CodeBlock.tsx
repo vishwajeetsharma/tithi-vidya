@@ -1,25 +1,12 @@
 import { codeToHtml, type ThemeRegistrationRaw } from "shiki";
 
 import snippets from "@/generated/snippets.json";
+import codeTheme from "@/lib/code-theme.json";
 
 import s from "./how.module.css";
 
-/** Light only, and every colour passes AA contrast on its background. */
-const THEME: ThemeRegistrationRaw = {
-  name: "tithi-light",
-  type: "light",
-  colors: { "editor.background": "#fbfaff", "editor.foreground": "#231e52" },
-  settings: [
-    { settings: { foreground: "#231e52" } },
-    { scope: ["comment", "punctuation.definition.comment"], settings: { foreground: "#615c8c", fontStyle: "italic" } },
-    { scope: ["keyword", "storage", "storage.type", "storage.modifier"], settings: { foreground: "#6426d8" } },
-    { scope: ["entity.name.function", "support.function", "meta.function-call"], settings: { foreground: "#1f49d6" } },
-    { scope: ["string", "string.quoted"], settings: { foreground: "#0b6e5a" } },
-    { scope: ["constant.numeric", "constant.language", "constant.character"], settings: { foreground: "#a11f73" } },
-    { scope: ["entity.name.type", "support.type", "entity.name.class", "support.class"], settings: { foreground: "#0f6596" } },
-    { scope: ["variable.language", "variable.parameter"], settings: { foreground: "#8a3a12" } },
-  ],
-};
+/** Light only, and every colour passes AA contrast on its background. Shared with blog posts. */
+const THEME = codeTheme as ThemeRegistrationRaw;
 
 export async function CodeBlock({ name, label }: { name: keyof typeof snippets; label: string }) {
   const snippet = snippets[name];

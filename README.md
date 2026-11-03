@@ -2,7 +2,7 @@
 
 Find the tithi (lunar day) for a birth moment, and the dates that tithi falls on at a place, from 1900 to 2149.
 
-There are four parts:
+There are four parts, plus the blog:
 
 - **`generator/`** (Python) uses JPL's DE440 ephemeris to compute every tithi boundary from 1900 to 2150 and writes `cli/data/tithi-table.bin`. You run it once, offline.
 - **`cli/`** (Rust) is the `tithi` library and command line tool. The table is built in, so at runtime it only computes sunrise for your place.
@@ -20,6 +20,19 @@ cd site && npm install && npm run dev
 Then open http://localhost:3010.
 
 The pages are the animated home page, `/find` (the tool), `/how-it-works` (the method, the real code and every accuracy test), `/privacy` and `/terms`. The whole home page works without animation for visitors who ask for reduced motion.
+
+### The blog
+
+Posts are Markdown files in `site/content/blog/`. Add one on GitHub and the next deploy publishes it. Step-by-step instructions, a template and the image rules are in [`site/content/blog/README.md`](site/content/blog/README.md).
+
+Before every build, `site/scripts/content.mjs` turns the posts into data the pages read. It also resizes images to WebP in three widths and writes a Markdown copy of each post. Every post becomes a plain HTML file at build time; nothing is rendered when someone visits. Images are cached between builds, so only new or changed ones are processed.
+
+Each post is automatically included in:
+- `/sitemap.xml` and `/robots.txt`
+- the RSS feed at `/blog/feed.xml`
+- `/llms.txt` and `/llms-full.txt` for AI tools
+
+A plain Markdown copy of each post is at `/blog/<name>.md`. `robots.txt` welcomes all crawlers, and names the main AI crawlers to make that explicit.
 
 ### Analytics and privacy
 

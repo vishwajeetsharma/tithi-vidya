@@ -70,6 +70,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: HEAD_SCRIPT }} />
+        <link rel="alternate" type="application/rss+xml" title="Tithi Vidya Blog" href="/blog/feed.xml" />
       </head>
       <body>
         <a className="skipLink" href="#main">

@@ -2,16 +2,23 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { litPath } from "@/lib/moon";
 
 const START = 30; // a thin crescent at the top of the page
 
+const LINKS = [
+  { href: "/blog", label: "Blog" },
+  { href: "/how-it-works", label: "How it works" },
+];
+
 /** The logo's moon runs through its phases as you read down the page. */
 export function SiteHeader() {
   const pathname = usePathname();
   const lit = useRef<SVGPathElement>(null);
+  const bar = useRef<HTMLDivElement>(null);
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     if (document.documentElement.dataset.motion !== "on") return;
@@ -33,9 +40,24 @@ export function SiteHeader() {
     };
   }, [pathname]);
 
+  // The phone menu closes on Escape or a tap anywhere else.
+  useEffect(() => {
+    if (!menu) return;
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setMenu(false);
+    const onPointer = (event: PointerEvent) => !bar.current?.contains(event.target as Node) && setMenu(false);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [menu]);
+
+  const current = (href: string) => (pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined);
+
   return (
     <header className="siteHeader">
-      <div className="siteHeaderBar">
+      <div className="siteHeaderBar" ref={bar}>
         <Link className="logo" href="/" aria-label="Tithi Vidya home">
           <svg width="30" height="30" viewBox="-52 -52 104 104" aria-hidden="true">
             <defs>
@@ -50,13 +72,38 @@ export function SiteHeader() {
           <span className="logoWord">Tithi Vidya</span>
         </Link>
         <nav className="siteNav" aria-label="Main">
-          <Link className="siteNavLink" href="/how-it-works" aria-current={pathname === "/how-it-works" ? "page" : undefined}>
-            How it works
-          </Link>
-          <Link className="btn btnPrimary siteNavCta" href="/find" aria-current={pathname === "/find" ? "page" : undefined}>
+          <div className="siteNavLinks">
+            {LINKS.map((link) => (
+              <Link key={link.href} className="siteNavLink" href={link.href} aria-current={current(link.href)}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <Link className="btn btnPrimary siteNavCta" href="/find" aria-current={current("/find")}>
             Find my tithi
           </Link>
+          <button
+            className="siteMenuButton"
+            type="button"
+            aria-expanded={menu}
+            aria-controls="site-menu"
+            aria-label="Menu"
+            onClick={() => setMenu((open) => !open)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+              {menu ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 8h16M4 16h16" />}
+            </svg>
+          </button>
         </nav>
+        {menu && (
+          <div id="site-menu" className="siteMenu">
+            {LINKS.map((link) => (
+              <Link key={link.href} className="siteMenuLink" href={link.href} aria-current={current(link.href)} onClick={() => setMenu(false)}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </header>
   );
