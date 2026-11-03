@@ -16,12 +16,12 @@ export default function TermsPage() {
     <div className={s.page}>
       <div className={`wrap ${s.inner}`}>
         <h1 className={`display ${s.title}`}>Terms of Use</h1>
-        <p className={s.updated}>Last updated: 2 November 2026</p>
+        <p className={s.updated}>Last updated: 3 November 2026</p>
 
         <p>By using {SITE_NAME}, you agree to these terms. If you do not agree, please do not use the site.</p>
 
         <h2>What this site is</h2>
-        <p>{SITE_NAME} is a free tool that works out tithis and moon birthdays from astronomy data. There is no account and nothing to buy.</p>
+        <p>{SITE_NAME} is a free tool that works out tithis and moon birthdays from astronomy data. There is no account and nothing to buy. It may show ads to help pay for it.</p>
 
         <h2>For general information</h2>
         <p>
@@ -50,8 +50,18 @@ export default function TermsPage() {
         <h2>Fair use</h2>
         <p>Please do not try to break, overload or misuse the site.</p>
 
+        <h2>Ads</h2>
+        <p>
+          The site may show ads from Google and its partners. Advertisers are responsible for their ads and what they offer. An ad is not a recommendation from us,
+          and we are not part of anything you buy or sign up for through one. If you see an ad that looks wrong or harmful, please tell us at{" "}
+          <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a>. How ads use data is explained in our <Link href="/privacy">Privacy Policy</Link>.
+        </p>
+
+        <h2>Newsletter</h2>
+        <p>The newsletter is free. You can unsubscribe at any time with the link in every email, and we may stop or change it at any time.</p>
+
         <h2>Other websites</h2>
-        <p>Links to other websites are for convenience. We do not control those sites.</p>
+        <p>Links to other websites, including ads, are for convenience. We do not control those sites.</p>
 
         <h2>Changes and contact</h2>
         <p>

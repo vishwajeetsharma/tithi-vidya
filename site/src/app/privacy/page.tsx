@@ -36,7 +36,7 @@ export default function PrivacyPage() {
 
         <h2>Analytics and advertising cookies</h2>
         <p>
-          We load two services to count visits and measure our ads. They start when you open the site. We ask for your choice on the finder page, and if you click Decline, or decline later in Cookie settings, they stop and their cookies are cleared.
+          We load two services to count visits and measure our own ads. They start when you open the site. We ask for your choice on the finder page, and if you click Decline, or decline later in Cookie settings, they stop and their cookies are cleared.
         </p>
         <ul>
           <li>
@@ -51,6 +51,32 @@ export default function PrivacyPage() {
           data under their own privacy policies:{" "}
           <a href="https://policies.google.com/privacy">Google</a> and <a href="https://www.facebook.com/privacy/policy">Meta</a>. We set up the site so they do not
           receive your birth details.
+        </p>
+
+        <h2>Ads on this site</h2>
+        <p>
+          To keep the site free, we may show ads from Google (Google AdSense) on some pages. Ads are always marked as ads. We do not choose the individual ads you
+          see, and showing an ad does not mean we recommend it.
+        </p>
+        <ul>
+          <li>
+            Google and other ad companies working with Google use cookies to show ads. These can be based on your earlier visits to this site and to other websites.
+          </li>
+          <li>
+            Google&apos;s advertising cookies let Google and its partners show you ads based on those visits. Google explains this in{" "}
+            <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from sites that use its services</a>.
+          </li>
+          <li>
+            Ad services can receive the same kind of data as above: the page, your device and browser, your IP address and a rough location. They never receive your
+            birth details or your email address.
+          </li>
+          <li>
+            If you decline cookies, you will see only general ads that are not based on your visits, or no ads at all.
+          </li>
+        </ul>
+        <p>
+          You can turn off personalised ads from Google in <a href="https://myadcenter.google.com/">My Ad Center</a>, and from many other ad companies at{" "}
+          <a href="https://optout.aboutads.info/">aboutads.info</a> or, in Europe, <a href="https://www.youronlinechoices.eu/">youronlinechoices.eu</a>.
         </p>
 
         <h2>The newsletter</h2>
@@ -94,6 +120,12 @@ export default function PrivacyPage() {
                 <td>Yes</td>
               </tr>
               <tr>
+                <td>__gads, __gpi, __eoi</td>
+                <td>Google ads (when ads are on)</td>
+                <td>Shows ads, limits how often you see the same one, and measures them</td>
+                <td>Yes, for ads based on your visits</td>
+              </tr>
+              <tr>
                 <td>_fbp, _fbc</td>
                 <td>Meta Pixel</td>
                 <td>Measures ads and tells one visitor from another</td>
@@ -117,8 +149,13 @@ export default function PrivacyPage() {
           <li>Decline cookies on the finder page, or change your mind with Cookie settings.</li>
           <li>Clear the site&apos;s data in your browser at any time.</li>
           <li>Unsubscribe from the newsletter with the link in any email.</li>
+          <li>Turn off personalised ads in Google&apos;s My Ad Center, or at aboutads.info.</li>
           <li>To ask about data held by Google or Meta, use the controls those companies provide.</li>
+          <li>Email us to ask what we hold about you, or to have it removed. The only data we can hold about you is your newsletter signup.</li>
         </ul>
+
+        <h2>What we never do</h2>
+        <p>We never sell your email address, and we never receive your birth details, so we can not sell or share them.</p>
 
         <h2>Children</h2>
         <p>The site is not aimed at children, and we do not knowingly collect their data.</p>
