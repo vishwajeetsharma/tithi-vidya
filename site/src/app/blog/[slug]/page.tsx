@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
+import Form from "next/form";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { ReadingRail } from "@/components/blog/ReadingRail";
-import { ListenButton } from "@/components/blog/ListenButton";
 import { RecentPosts } from "@/components/blog/RecentPosts";
-import { TranslateMenu } from "@/components/blog/TranslateMenu";
 import s from "@/components/blog/blog.module.css";
-import { ArrowIcon } from "@/components/Icons";
+import { ArrowIcon, SearchIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
 import { JsonLd } from "@/components/JsonLd";
 import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, type Post } from "@/lib/blog";
@@ -24,15 +23,22 @@ type Params = { params: Promise<{ slug: string }> };
 /** The article column: 720 px, then 760, 800 and 860 px on 1700, 2100 and 2400 px screens. Keep in step with SIZES in scripts/content.mjs. */
 const IMAGE_SIZES = "(min-width: 2400px) 860px, (min-width: 2100px) 800px, (min-width: 1700px) 760px, (min-width: 760px) 720px, calc(100vw - 32px)";
 
-// Every post is built into a plain HTML file ahead of time; nothing renders on request.
-export const dynamicParams = false;
+/** How many of the newest posts are built into HTML at deploy, including scheduled ones. */
+const BUILT_AT_DEPLOY = 20;
 
-// A static export needs at least one page here, so an empty blog still builds.
+// Older posts are built the first time someone opens them, and that HTML is
+// kept and served to everyone after, so deploys stay quick as the blog grows.
+// The posts never change between deploys, so the HTML is never rebuilt
+// (revalidate = false). A deploy starts afresh, with the newest posts built.
+export const dynamicParams = true;
+export const revalidate = false;
+
+// The route needs at least one page here, so an empty blog still builds.
 const NO_POSTS = "no-posts-yet";
 
 export function generateStaticParams() {
   const posts = getPosts();
-  return posts.length ? posts.map((post) => ({ slug: post.slug })) : [{ slug: NO_POSTS }];
+  return posts.length ? posts.slice(0, BUILT_AT_DEPLOY).map((post) => ({ slug: post.slug })) : [{ slug: NO_POSTS }];
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
@@ -163,7 +169,7 @@ export default async function PostPage({ params }: Params) {
             </nav>
             <header className={s.head}>
               <h1 className={`display ${s.articleTitle}`}>{post.title}</h1>
-              <p className={s.lead} data-listen-lead>
+              <p className={s.lead}>
                 {post.description}
               </p>
               <p className={s.meta}>
@@ -177,10 +183,6 @@ export default async function PostPage({ params }: Params) {
                 · {post.minutes} min read · {post.author}
                 {PREVIEW && liveAt > Date.parse(builtAt) && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
               </p>
-              <div className={s.headTools}>
-                <ListenButton />
-                <TranslateMenu url={`${origin}/blog/${post.slug}`} />
-              </div>
             </header>
 
             {post.cover && (
@@ -250,6 +252,22 @@ export default async function PostPage({ params }: Params) {
             </Link>
           </div>
           <RecentPosts posts={latestPosts(3, post.slug)} builtAt={builtAt} />
+          <Form className={s.findMore} action="/blog" role="search" aria-label="Articles">
+            <p className={s.findMoreTitle}>Looking for something else?</p>
+            <div className={s.search}>
+              <SearchIcon />
+              <input
+                className={s.field}
+                type="search"
+                name="q"
+                required
+                placeholder="Search by word, festival or topic"
+                aria-label="Search articles"
+                enterKeyHint="search"
+                autoComplete="off"
+              />
+            </div>
+          </Form>
           <NewsletterSignup />
         </section>
       </div>

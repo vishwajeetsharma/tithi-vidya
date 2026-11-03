@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { isLive } from "@/lib/posts";
 
@@ -28,5 +28,6 @@ export function useLivePosts<T extends { liveAt: string }>(posts: T[], builtAt: 
     return () => window.clearTimeout(timer);
   }, [times]);
 
-  return posts.filter((post) => isLive(post, now));
+  // The same list until the posts or the clock change, so work done on it can be kept.
+  return useMemo(() => posts.filter((post) => isLive(post, now)), [posts, now]);
 }

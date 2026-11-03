@@ -9,13 +9,15 @@
 // clock. The sitemap, feed and llms.txt add it at the first build after that.
 //
 // Writes:
-//   .content/blog.json     every post's details and HTML, read by the pages
-//   public/blog-media/     resized WebP images, with content hashes in their names
-//   public/blog/<slug>.md  a plain Markdown copy of each post, for AI tools
-//   .content/contribute.json  ../CONTRIBUTING.md as HTML, for the /contribute page
+//   .content/blog.json          every post's details without its text, for lists, the sitemap and search
+//   .content/posts/<slug>.json  one post with its HTML and Markdown, read by its page
+//   public/blog-media/          resized WebP images, with content hashes in their names
+//   public/blog/<slug>.md       a plain Markdown copy of each post, for AI tools
+//   .content/contribute.json    ../CONTRIBUTING.md as HTML, for the /contribute page
 //
-// Each image is processed once: results are kept in .next/cache/blog-media,
-// which Vercel keeps between builds, so only new or changed images cost time.
+// Each image and each post is processed once: results are kept in
+// .next/cache/blog-media and .next/cache/blog-posts, which Vercel keeps between
+// builds, so only new or changed posts and images cost time.
 import { createHash } from "node:crypto";
 import { existsSync, watch } from "node:fs";
 import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
@@ -210,8 +212,7 @@ function rehypeArticle({ file, slug, processImage, images, toc, problems }) {
   };
 }
 
-async function renderPost({ slug, file }, processImage, problems) {
-  const source = await readFile(file, "utf8");
+async function renderPost({ slug, file, source }, processImage, problems) {
   const { data, content } = matter(source);
   const before = problems.length;
   checkFrontMatter(slug, data, problems);
@@ -261,6 +262,49 @@ async function renderPost({ slug, file }, processImage, problems) {
     html,
     markdown,
   };
+}
+
+/**
+ * What every post's HTML depends on besides its own files: this script, the
+ * code colours and the installed packages. Changing any of them builds every
+ * post again.
+ */
+async function rendererKey() {
+  const hash = createHash("sha1");
+  for (const file of [fileURLToPath(import.meta.url), join(SITE, "src/lib/code-theme.json"), join(SITE, "package-lock.json")]) {
+    if (existsSync(file)) hash.update(await readFile(file));
+  }
+  return hash.digest("hex");
+}
+
+/**
+ * Turning Markdown into HTML is most of the blog's build time, so each post's
+ * result is kept in the cache and reused while the post, its images and the
+ * renderer are unchanged. A post with a problem is never kept.
+ */
+async function cachedRender({ slug, file }, { site, cacheDir, renderer, processImage, problems }) {
+  const source = await readFile(file, "utf8");
+  const key = createHash("sha1").update(renderer).update(source).digest("hex");
+  const store = join(cacheDir, `${slug}.json`);
+  try {
+    const saved = JSON.parse(await readFile(store, "utf8"));
+    if (saved.key === key) {
+      // Processing an image again is quick, checks it hasn't changed, and copies it into public/blog-media.
+      const images = await Promise.all(saved.images.map((image) => processImage(join(site, image.file), slug)));
+      if (images.every((image, i) => image.src === saved.images[i].src)) return saved.post;
+    }
+  } catch {
+    // Not kept yet, or an image went missing: build the post, which names any problem.
+  }
+  const used = [];
+  const track = (path, slug) =>
+    processImage(path, slug).then((image) => {
+      used.push({ file: relative(site, path), src: image.src });
+      return image;
+    });
+  const post = await renderPost({ slug, file, source }, track, problems);
+  if (post) await writeFile(store, JSON.stringify({ key, images: used, post }));
+  return post;
 }
 
 function markdownCopy(post) {
@@ -362,22 +406,27 @@ export async function buildContent({ site = SITE, drafts = false, now = new Date
   const contentDir = join(site, "content/blog");
   const outDir = join(site, ".content");
   const mediaDir = join(site, "public/blog-media");
+  const postsDir = join(outDir, "posts");
   const copyDir = join(site, "public/blog");
   const cacheDir = join(site, ".next/cache/blog-media");
+  const postCacheDir = join(site, ".next/cache/blog-posts");
 
   await rm(mediaDir, { recursive: true, force: true });
   await rm(copyDir, { recursive: true, force: true });
-  await Promise.all([outDir, mediaDir, copyDir, cacheDir].map((dir) => mkdir(dir, { recursive: true })));
+  await Promise.all([outDir, postsDir, mediaDir, copyDir, cacheDir, postCacheDir].map((dir) => mkdir(dir, { recursive: true })));
 
   const problems = [];
   const processImage = imageProcessor({ mediaDir, cacheDir });
+  const renderer = await rendererKey();
   const found = await findPosts(contentDir);
   const slugs = new Set();
   for (const { slug } of found) {
     if (slugs.has(slug)) problems.push(`${slug}: two posts share this name; rename one`);
     slugs.add(slug);
   }
-  const rendered = await Promise.all(found.map((post) => renderPost(post, processImage, problems)));
+  const rendered = await Promise.all(
+    found.map((post) => cachedRender(post, { site, cacheDir: postCacheDir, renderer, processImage, problems })),
+  );
   if (problems.length) {
     throw new Error(`The blog could not be built. Please fix:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
   }
@@ -386,8 +435,21 @@ export async function buildContent({ site = SITE, drafts = false, now = new Date
     .filter((post) => post && (drafts || !post.draft))
     .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
   // builtAt lets every page agree on which posts were live when the HTML was made.
-  await writeFile(join(outDir, "blog.json"), JSON.stringify({ builtAt: now.toISOString(), posts }));
-  await Promise.all(posts.map((post) => writeFile(join(copyDir, `${post.slug}.md`), markdownCopy(post))));
+  const TEXT = new Set(["html", "markdown"]);
+  const details = posts.map((post) => Object.fromEntries(Object.entries(post).filter(([key]) => !TEXT.has(key))));
+  await writeFile(join(outDir, "blog.json"), JSON.stringify({ builtAt: now.toISOString(), posts: details }));
+  await Promise.all(
+    posts.flatMap((post) => [
+      writeFile(join(postsDir, `${post.slug}.json`), JSON.stringify(post)),
+      writeFile(join(copyDir, `${post.slug}.md`), markdownCopy(post)),
+    ]),
+  );
+  // Written over in place, not emptied first, so a running dev server never finds a post missing.
+  // Then deleted, renamed and draft posts go, here and in the cache.
+  const files = (list) => new Set(list.map((post) => `${post.slug}.json`));
+  for (const [dir, wanted] of [[postsDir, files(posts)], [postCacheDir, files(found)]]) {
+    await Promise.all((await readdir(dir)).filter((name) => !wanted.has(name)).map((name) => rm(join(dir, name), { force: true })));
+  }
   await buildGuide(site, outDir);
 
   const images = (await readdir(mediaDir)).length;

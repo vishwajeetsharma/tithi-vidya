@@ -79,138 +79,12 @@
   transform: none;
 }
 
-.translate summary svg {
-  color: var(--indigo);
-}
-
-/* The two header buttons sit side by side; an open panel pushes the page down. */
+/* The header buttons sit side by side; an open panel pushes the page down. */
 .headTools {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   gap: 0 10px;
-}
-
-.languages {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
-  gap: 8px;
-  padding: 0;
-  list-style: none;
-}
-
-.languages a {
-  display: grid;
-  gap: 1px;
-  padding: 8px 12px;
-  border-radius: 14px;
-  background: var(--lilac-50);
-  box-shadow: inset 0 0 0 1.5px var(--line);
-  color: var(--ink);
-  font-weight: 700;
-  line-height: 1.3;
-  text-decoration: none;
-}
-
-.languages a:hover {
-  background: var(--lilac-100);
-}
-
-.languages span {
-  color: var(--ink-mute);
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-/* Listen: the device reads the article aloud, one paragraph at a time. */
-
-/* Its parts join the row of header buttons, so Translate stays beside them
-   and the hint wraps onto its own line below. */
-.listen {
-  display: contents;
-}
-
-.listen > :global(.btn),
-.listenStop,
-.listenSpeed,
-.listenPart {
-  margin-top: 8px;
-}
-
-.listen > :global(.btn) {
-  min-height: 46px;
-  padding: 0.6em 1.25em;
-  font-size: 1rem;
-}
-
-.listenStop {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border: 0;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.8);
-  box-shadow: inset 0 0 0 1.5px var(--line-strong);
-  color: var(--ink);
-  cursor: pointer;
-}
-
-.listenSpeed {
-  min-width: 64px;
-  min-height: 46px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 0.8);
-  box-shadow: inset 0 0 0 1.5px var(--line-strong);
-  color: var(--ink);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  cursor: pointer;
-}
-
-.listenStop:hover,
-.listenSpeed:hover {
-  background: #fff;
-  box-shadow: inset 0 0 0 1.5px #a79cf0;
-}
-
-.listenHint,
-.listenProblem {
-  order: 1;
-  flex-basis: 100%;
-  margin-top: 10px;
-}
-
-.listenHint {
-  max-width: 34rem;
-  color: var(--ink-mute);
-  font-size: 0.875rem;
-}
-
-.listenPart {
-  display: inline-flex;
-  align-items: center;
-  min-height: 46px;
-  color: var(--ink-mute);
-  font-size: 0.875rem;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.listenProblem {
-  color: #b42318;
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
-
-/* The paragraph being read. */
-.page [data-speaking] {
-  border-radius: 10px;
-  background: var(--lilac-100);
-  box-shadow: 0 0 0 6px var(--lilac-100);
-  transition: background 0.3s, box-shadow 0.3s;
 }
 
 .follow[open] summary {
@@ -329,7 +203,65 @@
 }
 
 .search .field {
+  padding-right: 52px;
   padding-left: 48px;
+}
+
+/* Our own clear button, the same in every browser. */
+.search .field::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clear {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--lilac-50);
+  color: var(--ink-soft);
+  font-size: 1.375rem;
+  line-height: 1;
+  translate: 0 -50%;
+  cursor: pointer;
+}
+
+.clear:hover {
+  background: var(--lilac-100);
+  color: var(--ink);
+}
+
+.slashHint {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  color: var(--ink-mute);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+.field:focus ~ .slashHint {
+  display: none;
+}
+
+/* Only for keyboards: phones and tablets have none to press it on. */
+@media (hover: none) {
+  .slashHint {
+    display: none;
+  }
 }
 
 .sort {
@@ -400,11 +332,215 @@
   color: #fff;
 }
 
+.moreTopics {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--field-line);
+  color: var(--indigo);
+}
+
+.moreTopics[aria-expanded="true"] {
+  background: var(--lilac-50);
+}
+
+.topicPanel {
+  display: grid;
+  gap: 14px;
+  padding: clamp(14px, 2vw, 20px);
+  border-radius: var(--radius);
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: var(--shadow);
+}
+
+.topicFind {
+  max-width: 340px;
+  min-height: 46px;
+}
+
+/* A to Z in columns, scrolling inside the panel once there are many. */
+.topicIndex {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 8px;
+  max-height: min(52svh, 420px);
+  margin: 0;
+  padding: 2px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.topicIndex .topic {
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+}
+
+.topicNone {
+  color: var(--ink-mute);
+}
+
+/* Phones show fewer topic buttons, so they take two rows at most. */
+@media (max-width: 559px) {
+  .topicWide {
+    display: none;
+  }
+}
+
+@media (min-width: 560px) {
+  .topicPhone {
+    display: none;
+  }
+}
+
 .count {
+  min-height: 1.5em;
   margin-bottom: clamp(14px, 2vw, 20px);
   color: var(--ink-mute);
   font-size: 0.9375rem;
   font-weight: 600;
+}
+
+/* Focused when the page changes, so screen readers start from the results. */
+.count:focus {
+  outline: none;
+}
+
+.loading {
+  min-height: 40svh;
+  color: var(--ink-mute);
+}
+
+.noMatchActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Search words in a result. */
+.card mark {
+  border-radius: 3px;
+  background: rgb(255 178 94 / 0.38);
+  color: inherit;
+}
+
+.cardSection {
+  color: var(--ink-mute);
+  font-size: 0.9375rem;
+}
+
+.cardSection > span {
+  font-weight: 700;
+}
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: clamp(28px, 4vw, 44px);
+}
+
+.pageStep,
+.pageNumber {
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  color: var(--ink-soft);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.pageStep {
+  grid-auto-flow: column;
+  gap: 8px;
+  padding: 0 18px;
+  color: var(--indigo);
+}
+
+a.pageStep:hover,
+.pageNumber:hover {
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px #a79cf0;
+  color: var(--ink);
+}
+
+.pageStep[aria-disabled="true"] {
+  opacity: 0.45;
+}
+
+.pageNumber[aria-current="page"] {
+  background: var(--grad);
+  box-shadow: 0 10px 22px -12px rgb(74 59 240 / 0.8);
+  color: #fff;
+}
+
+.pageList {
+  display: flex;
+  gap: 6px;
+  margin: 0 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.pageGap {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  color: var(--ink-mute);
+}
+
+.pageOf {
+  display: none;
+  margin: 0 8px;
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+/* Phones: "Page 2 of 9" between the arrows, in place of the numbers, on one line. */
+@media (max-width: 559px) {
+  .pager {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .pageStep {
+    padding: 0 14px;
+  }
+
+  .pageList {
+    display: none;
+  }
+
+  .pageOf {
+    display: block;
+    margin: 0;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+  }
+
+  .countPage {
+    display: none;
+  }
+}
+
+/* The search box under an article's recent posts. */
+.findMore {
+  display: grid;
+  gap: 12px;
+  max-width: 560px;
+  margin-top: clamp(32px, 4vw, 48px);
+}
+
+.findMoreTitle {
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
 .noMatch {

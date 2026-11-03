@@ -1,42 +1,52 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { isLive, summarise, type Post, type PostSummary } from "./posts";
+import { isLive, summarise, type Post, type PostDetails, type PostSummary } from "./posts";
 
-export { formatDate, type BlogImage, type Post } from "./posts";
+export { formatDate, type BlogImage, type Post, type PostDetails } from "./posts";
 
-type Content = { builtAt: string; posts: Post[] };
+type Content = { builtAt: string; posts: PostDetails[] };
 
 let content: Content | null = null;
 
 /**
- * The posts, built ahead of time by scripts/content.mjs, which runs before
- * `npm run build` and `npm run dev`, so pages only read a file.
+ * Reads a file built ahead of time by scripts/content.mjs, which runs before
+ * `npm run build` and `npm run dev`, so pages only read files.
  */
-function read(): Content {
-  if (content && process.env.NODE_ENV === "production") return content;
+function readBuilt<T>(path: string): T {
   try {
-    content = JSON.parse(readFileSync(join(process.cwd(), ".content/blog.json"), "utf8")) as Content;
+    return JSON.parse(readFileSync(join(process.cwd(), ".content", path), "utf8")) as T;
   } catch {
     throw new Error("Blog content is missing. Run `npm run content` in site/ (it normally runs before build and dev).");
   }
+}
+
+/** Every post's details, without the text: .content/blog.json. */
+function read(): Content {
+  if (content && process.env.NODE_ENV === "production") return content;
+  content = readBuilt<Content>("blog.json");
   return content;
 }
 
 /** Every built post, newest first, including posts scheduled for later. */
-export const getPosts = (): Post[] => read().posts;
+export const getPosts = (): PostDetails[] => read().posts;
 
 /** When the posts were built. The HTML shows what was live then, and the page's script catches up from there. */
 export const getBuiltAt = (): string => read().builtAt;
 
 /** Posts that were live when the site was built. For files that can't check the clock: the sitemap, feed and llms.txt. */
-export function getLivePosts(): Post[] {
+export function getLivePosts(): PostDetails[] {
   const builtAt = Date.parse(getBuiltAt());
   return getPosts().filter((post) => isLive(post, builtAt));
 }
 
+/**
+ * One post with its HTML and Markdown, from .content/posts/<slug>.json. Only
+ * names listed in blog.json are read, so an address can't reach other files.
+ */
 export function getPost(slug: string): Post | undefined {
-  return getPosts().find((post) => post.slug === slug);
+  if (!getPosts().some((post) => post.slug === slug)) return undefined;
+  return readBuilt<Post>(join("posts", `${slug}.json`));
 }
 
 /**

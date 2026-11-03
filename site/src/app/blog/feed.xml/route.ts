@@ -1,13 +1,18 @@
-import { getLivePosts } from "@/lib/blog";
+import { getLivePosts, getPost } from "@/lib/blog";
 import { absoluteHtml, escape } from "@/lib/feeds";
 import { AUTHOR, AUTHOR_EMAIL, SITE_NAME, siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
 
+/** How many of the newest posts the feed carries. Readers only need recent ones; llms-full.txt has every post. */
+const FEED_POSTS = 20;
+
 /** RSS with each post's full text, so feed readers and AI tools get the whole article. */
 export function GET() {
   const origin = siteUrl().origin;
-  const posts = getLivePosts();
+  const posts = getLivePosts()
+    .slice(0, FEED_POSTS)
+    .flatMap((post) => getPost(post.slug) ?? []);
   const items = posts
     .map(
       (post) => `    <item>

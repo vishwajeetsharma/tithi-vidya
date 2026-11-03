@@ -41,7 +41,7 @@ More text. **Bold**, *italic* and [links](/find) all work.
 | `description` | Yes | A short summary for Google, social media and the blog page. Aim for under 160 characters. |
 | `date` | Yes | The publish date, as `YYYY-MM-DD`. Posts are listed newest first. A future date schedules the post (see below). |
 | `updated` | No | Add this when you change an old post, as `YYYY-MM-DD`. |
-| `tags` | No | A list of topics. |
+| `tags` | No | A list of topics, in lowercase. Reuse the topic names other posts use, so readers find related posts together. |
 | `cover` | No | An image file in the post's folder. It appears at the top, on the blog page and when the post is shared. |
 | `coverAlt` | With a cover | A few words describing the cover, for people who can't see it. |
 | `author` | No | Defaults to Vishwajeet Sharma. |
@@ -80,7 +80,7 @@ The build stops, and the live site keeps the last good version. Vercel's build l
 
 ## What you get for each post
 
-- A page at `/blog/your-post-name`, built once into plain HTML.
-- An entry in `/sitemap.xml`, the RSS feed at `/blog/feed.xml`, and `/llms.txt` for AI tools.
+- A page at `/blog/your-post-name`, built once into plain HTML: at deploy for the 20 newest posts, and on the first visit for older ones.
+- An entry in `/sitemap.xml` and `/llms.txt` for AI tools, and in the RSS feed at `/blog/feed.xml` while it is one of the 20 newest.
 - A plain Markdown copy at `/blog/your-post-name.md`, and the full text in `/llms-full.txt`.
 - Article details for Google (structured data), and a 1200 x 630 share image made from the cover.

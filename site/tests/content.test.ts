@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -76,9 +76,62 @@ describe("the blog build", () => {
     expect(copy).toMatch(/!\[A photo\]\(\/blog-media\/with-image-photo-[0-9a-f]+-1600\.webp/);
   });
 
+  it("lists posts without their text, and writes each post's text to its own file", () => {
+    const index = JSON.parse(readFileSync(join(root, ".content/blog.json"), "utf8"));
+    expect(index.posts.map((p: Built) => p.slug).sort()).toEqual(["plain-file", "with-image"]);
+    expect(index.posts.some((p: Record<string, unknown>) => "html" in p || "markdown" in p)).toBe(false);
+    expect(readdirSync(join(root, ".content/posts")).sort()).toEqual(["plain-file.json", "with-image.json"]);
+    const one = JSON.parse(readFileSync(join(root, ".content/posts/with-image.json"), "utf8"));
+    expect(one.html).toBe(posts.find((p) => p.slug === "with-image")!.html);
+  });
+
   it("includes drafts when asked", async () => {
     const all = (await buildContent({ site: root, drafts: true })) as Built[];
     expect(all.find((p) => p.slug === "secret")?.draft).toBe(true);
+  });
+});
+
+describe("building again", () => {
+  const cached = (root: string, slug: string) => join(root, ".next/cache/blog-posts", `${slug}.json`);
+  const html = (root: string, slug: string) => JSON.parse(readFileSync(join(root, ".content/posts", `${slug}.json`), "utf8")).html;
+
+  it("reuses unchanged posts, and builds changed ones again", async () => {
+    const { root } = site({ "same.md": post(), "edited.md": post() });
+    await buildContent({ site: root });
+    // Mark both kept copies, so a reused post shows the mark.
+    for (const slug of ["same", "edited"]) {
+      const saved = JSON.parse(readFileSync(cached(root, slug), "utf8"));
+      saved.post.html = "<p>kept</p>";
+      writeFileSync(cached(root, slug), JSON.stringify(saved));
+    }
+    writeFileSync(join(root, "content/blog/edited.md"), post("", "Changed."));
+    await buildContent({ site: root });
+    expect(html(root, "same")).toBe("<p>kept</p>");
+    expect(html(root, "edited")).toBe("<p>Changed.</p>");
+  });
+
+  it("builds a post again when one of its images changes, and still copies its images", async () => {
+    const { root } = site({ "pic/index.md": post("", "![A dot](dot.png)") });
+    const dot = (background: string) =>
+      sharp({ create: { width: 20, height: 10, channels: 3, background } }).png().toFile(join(root, "content/blog/pic/dot.png"));
+    await dot("#000000");
+    await buildContent({ site: root });
+    const first = html(root, "pic");
+    await buildContent({ site: root });
+    expect(html(root, "pic")).toBe(first);
+    expect(readdirSync(join(root, "public/blog-media"))).toHaveLength(2);
+    await dot("#ffffff");
+    await buildContent({ site: root });
+    expect(html(root, "pic")).not.toBe(first);
+  }, 30_000);
+
+  it("drops deleted posts", async () => {
+    const { root } = site({ "stays.md": post(), "goes.md": post() });
+    await buildContent({ site: root });
+    rmSync(join(root, "content/blog/goes.md"));
+    await buildContent({ site: root });
+    expect(readdirSync(join(root, ".content/posts"))).toEqual(["stays.json"]);
+    expect(existsSync(cached(root, "goes"))).toBe(false);
   });
 });
 

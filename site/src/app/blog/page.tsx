@@ -4,10 +4,9 @@ import { BlogBrowser } from "@/components/blog/BlogBrowser";
 import s from "@/components/blog/blog.module.css";
 import { FollowFeed } from "@/components/blog/FollowFeed";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
-import { TranslateMenu } from "@/components/blog/TranslateMenu";
 import { JsonLd } from "@/components/JsonLd";
-import { getBuiltAt, getLivePosts, getPosts } from "@/lib/blog";
-import { summarise } from "@/lib/posts";
+import { getBuiltAt, getLivePosts, latestPosts } from "@/lib/blog";
+import { PAGE_SIZE, topics } from "@/lib/posts";
 import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
 
 const TITLE = "Blog: Tithis, Moon Birthdays and the Hindu Calendar";
@@ -33,7 +32,7 @@ export default function BlogIndex() {
           url: `${origin}/blog`,
           inLanguage: "en",
           author: { "@type": "Person", name: AUTHOR },
-          blogPost: posts.map((post) => ({
+          blogPost: posts.slice(0, PAGE_SIZE).map((post) => ({
             "@type": "BlogPosting",
             headline: post.title,
             description: post.description,
@@ -52,11 +51,10 @@ export default function BlogIndex() {
           <p className={s.lead}>Short, plain guides to tithis, moon birthdays and the Hindu calendar.</p>
           <div className={s.headTools}>
             <FollowFeed feed={`${origin}/blog/feed.xml`} />
-            <TranslateMenu url={`${origin}/blog`} />
           </div>
         </header>
-        {/* Scheduled posts come too, and show once they go live. */}
-        <BlogBrowser posts={getPosts().map(summarise)} builtAt={getBuiltAt()} />
+        {/* The first page is in the HTML, with scheduled posts, which show once they go live. The rest load from /blog/posts.json. */}
+        <BlogBrowser firstPage={latestPosts(PAGE_SIZE)} total={posts.length} topics={topics(posts)} builtAt={getBuiltAt()} />
         <NewsletterSignup />
       </div>
     </div>
