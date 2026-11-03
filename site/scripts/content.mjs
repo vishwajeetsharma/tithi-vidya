@@ -291,7 +291,7 @@ const SHIKI = {
 };
 
 // Keep in step with SITE_ORIGIN and REPO_URL in src/lib/site.ts.
-const LIVE_ORIGIN = "https://tithividya.org";
+const LIVE_ORIGIN = "https://www.tithividya.org";
 const REPO_FILES = "https://github.com/vishwajeetsharma/tithi-vidya/blob/main/";
 
 /**

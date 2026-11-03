@@ -2,7 +2,8 @@ export const SITE_NAME = "Tithi Vidya";
 export const AUTHOR = "Vishwajeet Sharma";
 export const CREDIT = "Built with belief and love by Vishwajeet Sharma";
 export const REPO_URL = "https://github.com/vishwajeetsharma/tithi-vidya";
-export const SITE_ORIGIN = "https://tithividya.org";
+// The main address, as set in Vercel: tithividya.org redirects here.
+export const SITE_ORIGIN = "https://www.tithividya.org";
 export const CONTACT_EMAIL = "contact@tithividya.org";
 /** Vishwajeet's own address, used only where he is credited as the maker. */
 export const AUTHOR_EMAIL = "contact@thevishwa.in";

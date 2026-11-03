@@ -55,7 +55,7 @@ Every page is built ahead of time. The only code that runs on Vercel is `site/sr
 
 For local testing, put the same names in `site/.env`, which git ignores.
 
-The site lives at https://tithividya.org. Canonical links, the sitemap and the feeds use `SITE_ORIGIN` in `site/src/lib/site.ts` on every Vercel build, previews included, and localhost on your computer. `NEXT_PUBLIC_SITE_URL` overrides both. `site/vercel.json` permanently redirects the old address, tithi-vidya.thevishwa.in, and www.tithividya.org to it, as long as both stay added to the Vercel project.
+The site lives at https://www.tithividya.org; Vercel's domain settings redirect tithividya.org there. Canonical links, the sitemap and the feeds use `SITE_ORIGIN` in `site/src/lib/site.ts` on every Vercel build, previews included, and localhost on your computer. `NEXT_PUBLIC_SITE_URL` overrides both. Keep `SITE_ORIGIN` the same as the main domain in Vercel, or the two redirects can loop. `site/vercel.json` also permanently redirects the old address, tithi-vidya.thevishwa.in, as long as it stays added to the Vercel project.
 
 ### Changing the engine or the site's data
 

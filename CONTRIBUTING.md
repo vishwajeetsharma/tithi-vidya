@@ -2,7 +2,7 @@
 
 Thank you for wanting to help. Tithi Vidya is free and open source, and every kind of help is welcome: a bug report, a fix, a better algorithm, or an article for the blog.
 
-This guide is also on the website at [tithividya.org/contribute](https://tithividya.org/contribute).
+This guide is also on the website at [tithividya.org/contribute](https://www.tithividya.org/contribute).
 
 ## Ways to help
 
@@ -119,7 +119,7 @@ Commit the rebuilt `site/src/engine/tithi.wasm` too. Vercel can't build Rust, so
 
 ## Improving the algorithm
 
-The engine follows the conventions of most modern panchangs, listed in the [README](README.md#conventions). The [How it works](https://tithividya.org/how-it-works) page shows the method, the real code and every accuracy test.
+The engine follows the conventions of most modern panchangs, listed in the [README](README.md#conventions). The [How it works](https://www.tithividya.org/how-it-works) page shows the method, the real code and every accuracy test.
 
 A change to results is welcome when it is backed by evidence. Please:
 
@@ -155,7 +155,7 @@ Anyone can write for the blog. Good topics are tithis, the panchang, moon birthd
 
 - **Original.** Written by you, not copied.
 - **Plain English.** Short sentences and everyday words. Explain any Sanskrit term the first time you use it.
-- **Accurate.** Check facts, and link to your sources. You can check dates with [Find my tithi](https://tithividya.org/find).
+- **Accurate.** Check facts, and link to your sources. You can check dates with [Find my tithi](https://www.tithividya.org/find).
 - **Your own images**, or images you are allowed to use. Say where an image comes from in its caption.
 - **No adverts** or links that are there only to promote something.
 
@@ -210,7 +210,7 @@ Follow [Set up](#set-up), then open http://localhost:3010/blog/your-article-name
 - what Tithi Vidya showed;
 - what your panchang says, and which panchang it is.
 
-Only share birth details you are happy to make public, since issues are public. A made-up example that shows the same problem works just as well. The [Disclaimer](https://tithividya.org/disclaimer) lists common reasons results differ.
+Only share birth details you are happy to make public, since issues are public. A made-up example that shows the same problem works just as well. The [Disclaimer](https://www.tithividya.org/disclaimer) lists common reasons results differ.
 
 ## After you open a pull request
 

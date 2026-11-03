@@ -15,18 +15,7 @@
           "value": "tithi-vidya.thevishwa.in"
         }
       ],
-      "destination": "https://tithividya.org/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.tithividya.org"
-        }
-      ],
-      "destination": "https://tithividya.org/:path*",
+      "destination": "https://www.tithividya.org/:path*",
       "permanent": true
     }
   ],
