@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { browsePosts, isLive, readBrowse, SHOW_ALL, topics, withBrowse, type PostSummary } from "@/lib/posts";
+import { browsePosts, isLive, pageList, readBrowse, SHOW_ALL, sortOf, topics, withBrowse, type Browse, type PostSummary } from "@/lib/posts";
+import { bestMatch, highlights, searchPosts, searchTerms } from "@/lib/search";
 
 const post = (slug: string, extra: Partial<PostSummary> = {}): PostSummary => ({
   slug,
@@ -31,20 +32,20 @@ describe("searching and sorting the blog", () => {
     post("adhika", { title: "The extra month", description: "Adhika masa explained", date: "2026-10-01", minutes: 3, tags: ["tithi"] }),
     post("sunrise", { title: "Days start at sunrise", date: "2026-12-01", minutes: 7, tags: ["panchang"], headings: ["Why Delhi and Chennai differ"] }),
   ];
+  const find = (browse: Partial<Browse>) => slugs(browsePosts(posts, { ...SHOW_ALL, ...browse }).posts);
 
   it("shows everything, newest first, by default", () => {
-    expect(slugs(browsePosts(posts, SHOW_ALL))).toEqual(["sunrise", "moves", "adhika"]);
+    expect(find({})).toEqual(["sunrise", "moves", "adhika"]);
   });
 
   it("needs every word, from the title, description, topics or headings, in any case", () => {
-    expect(slugs(browsePosts(posts, { ...SHOW_ALL, q: "ADHIKA month" }))).toEqual(["adhika"]);
-    expect(slugs(browsePosts(posts, { ...SHOW_ALL, q: "chennai" }))).toEqual(["sunrise"]);
-    expect(slugs(browsePosts(posts, { ...SHOW_ALL, q: "birthday sunrise" }))).toEqual([]);
+    expect(find({ q: "ADHIKA month" })).toEqual(["adhika"]);
+    expect(find({ q: "chennai" })).toEqual(["sunrise"]);
   });
 
   it("filters by topic and sorts", () => {
-    expect(slugs(browsePosts(posts, { ...SHOW_ALL, tag: "tithi", sort: "oldest" }))).toEqual(["adhika", "moves"]);
-    expect(slugs(browsePosts(posts, { ...SHOW_ALL, sort: "quickest" }))).toEqual(["adhika", "moves", "sunrise"]);
+    expect(find({ tag: "tithi", sort: "oldest" })).toEqual(["adhika", "moves"]);
+    expect(find({ sort: "quickest" })).toEqual(["adhika", "moves", "sunrise"]);
   });
 
   it("counts topics, most used first", () => {
@@ -56,8 +57,77 @@ describe("searching and sorting the blog", () => {
   });
 
   it("keeps choices in the address, leaving defaults and other parts alone", () => {
-    expect(readBrowse("tag=hindu+calendar&sort=toString")).toEqual({ q: "", tag: "hindu calendar", sort: "newest" });
-    expect(withBrowse("utm_source=x&tag=old", { q: " moon ", tag: "", sort: "oldest" })).toBe("utm_source=x&q=moon&sort=oldest");
-    expect(withBrowse("q=moon", SHOW_ALL)).toBe("");
+    expect(readBrowse("tag=hindu+calendar&sort=toString&page=x")).toEqual({ q: "", tag: "hindu calendar", sort: "", page: 1 });
+    expect(readBrowse("q=moon&page=3")).toEqual({ q: "moon", tag: "", sort: "", page: 3 });
+    expect(withBrowse("utm_source=x&tag=old", { q: " moon ", tag: "", sort: "oldest", page: 2 })).toBe("utm_source=x&q=moon&sort=oldest&page=2");
+    expect(withBrowse("q=moon&page=4", SHOW_ALL)).toBe("");
+  });
+
+  it("orders by best match while searching, and newest first otherwise", () => {
+    expect(sortOf({ q: "", sort: "" })).toBe("newest");
+    expect(sortOf({ q: "moon", sort: "" })).toBe("best");
+    expect(sortOf({ q: "", sort: "best" })).toBe("newest");
+    expect(sortOf({ q: "moon", sort: "oldest" })).toBe("oldest");
+  });
+});
+
+describe("blog search", () => {
+  const posts = [
+    post("ekadashi", { title: "Ekādaśī: the eleventh day", date: "2026-01-01", tags: ["fasting"] }),
+    post("purnima", { title: "Pūrṇimā and the full moon", date: "2026-02-01", tags: ["moon"] }),
+    post("dwadashi", { title: "Breaking the fast on Dwadashi", date: "2026-03-01" }),
+    post("birthday", { title: "Why your birthday moves", description: "A full moon birthday explained", date: "2026-04-01", tags: ["birthday"] }),
+    post("calendar", { title: "Reading a panchang", description: "Mentions a birthday once", date: "2026-05-01", headings: ["Birthday dates"] }),
+  ];
+  const find = (q: string) => slugs(searchPosts(posts, q).posts);
+
+  it("forgives accents and the usual English spellings of Indian words", () => {
+    expect(find("ekadashi")).toEqual(["ekadashi"]);
+    expect(find("EKADASI")).toEqual(["ekadashi"]);
+    expect(find("poornima")).toEqual(["purnima"]);
+    expect(find("dvadasi")).toEqual(["dwadashi"]);
+  });
+
+  it("forgives a typing slip in a longer word, and finds words still being typed", () => {
+    expect(find("ekadsahi")).toEqual(["ekadashi"]);
+    expect(find("purnma")).toEqual(["purnima"]);
+    expect(find("birthd")).toEqual(["birthday", "calendar"]);
+    expect(find("ekdsh")).toEqual([]);
+  });
+
+  it("puts title matches first, and newer posts first among equals", () => {
+    expect(find("birthday")).toEqual(["birthday", "calendar"]);
+    expect(find("full moon")).toEqual(["purnima", "birthday"]);
+  });
+
+  it("drops common words, and falls back to some of the words when no post has them all", () => {
+    expect(find("why does my birthday move")).toEqual(["birthday"]);
+    const found = searchPosts(posts, "birthday zodiac");
+    expect(found.partial).toBe(true);
+    expect(slugs(found.posts)).toEqual(["birthday", "calendar"]);
+    expect(searchPosts(posts, "zodiac").posts).toEqual([]);
+  });
+
+  it("marks the words found, in the original text", () => {
+    const terms = searchTerms("ekadashi");
+    const title = "Ekādaśī: the eleventh day";
+    expect(highlights(title, terms).map(([a, b]) => title.slice(a, b))).toEqual(["Ekādaśī"]);
+    const moon = "Pūrṇimā and the full moon";
+    expect(highlights(moon, searchTerms("purnma moon")).map(([a, b]) => moon.slice(a, b))).toEqual(["Pūrṇimā", "moon"]);
+  });
+
+  it("names the section or topic a match came from", () => {
+    expect(bestMatch(["Intro", "Birthday dates"], searchTerms("birthday"))).toBe("Birthday dates");
+    expect(bestMatch(["Intro"], searchTerms("birthday"))).toBeUndefined();
+  });
+});
+
+describe("pages", () => {
+  it("offers the first, the last and the pages around the current one", () => {
+    expect(pageList(1, 1)).toEqual([1]);
+    expect(pageList(1, 5)).toEqual([1, 2, null, 5]);
+    expect(pageList(3, 5)).toEqual([1, 2, 3, 4, 5]);
+    expect(pageList(6, 20)).toEqual([1, null, 5, 6, 7, null, 20]);
+    expect(pageList(20, 20)).toEqual([1, null, 19, 20]);
   });
 });

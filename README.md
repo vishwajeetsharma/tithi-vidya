@@ -7,7 +7,7 @@ There are four parts, plus the blog:
 - **`generator/`** (Python) uses JPL's DE440 ephemeris to compute every tithi boundary from 1900 to 2150 and writes `cli/data/tithi-table.bin`. You run it once, offline.
 - **`cli/`** (Rust) is the `tithi` library and command line tool. The table is built in, so at runtime it only computes sunrise for your place.
 - **`wasm/`** (Rust) compiles that same library to WebAssembly for the website.
-- **`site/`** (Next.js) is the website. Every page is built ahead of time, and the engine runs in the visitor's browser, so birth details never leave their device. The only server code is the newsletter signup.
+- **`site/`** (Next.js) is the website. Pages are built ahead of time, and the engine runs in the visitor's browser, so birth details never leave their device. The only server code is the newsletter signup and the first visit to an older blog post (see [How posts are built](#how-posts-are-built)).
 
 This split works because a tithi starts and ends at the same instant everywhere on Earth. Only the date it lands on depends on the place, through local sunrise.
 
@@ -23,18 +23,75 @@ The pages are the animated home page, `/find` (the tool), `/how-it-works` (the m
 
 ### The blog
 
-Posts are Markdown files in `site/content/blog/`. Add one on GitHub and the next deploy publishes it. Step-by-step instructions, a template and the image rules are in [`site/content/blog/README.md`](site/content/blog/README.md).
+Posts are Markdown files in `site/content/blog/`, one folder per post. Add one on GitHub and the next deploy publishes it. All the fields, scheduling and the image rules are in [`site/content/blog/README.md`](site/content/blog/README.md).
 
-Before every build, `site/scripts/content.mjs` turns the posts into data the pages read. It also resizes images to WebP in three widths and writes a Markdown copy of each post. Every post becomes a plain HTML file at build time; nothing is rendered when someone visits. Images are cached between builds, so only new or changed ones are processed.
+#### Adding an article
+
+1. On GitHub, open `site/content/blog`, click **Add file**, then **Create new file**.
+2. Name it `your-article-name/index.md`. Typing the `/` makes the folder. The name becomes the address, `/blog/your-article-name`, so use lowercase letters, numbers and hyphens only.
+3. Paste this, write the article, and click **Commit changes**:
+
+   ```markdown
+   ---
+   title: Your article title
+   description: One or two sentences, under 160 characters. Google and social media show this.
+   date: 2026-11-03
+   tags: [tithi, birthday]
+   cover: cover.jpg
+   coverAlt: A few words describing the cover image
+   ---
+
+   Your first paragraph.
+
+   ## A section heading
+
+   ![A few words describing the image](photo.jpg "An optional caption")
+   ```
+
+4. Upload the images: open the new `your-article-name` folder on GitHub, click **Add file**, then **Upload files**, drop in `cover.jpg`, `photo.jpg` and any others, and commit. The file names must match the ones in the article.
+
+Vercel deploys a minute or two later. A future `date` schedules the post for 6:00 AM IST that day. To check an article on your computer first, run the site and open http://localhost:3010/blog/your-article-name.
+
+The folder ends up like this:
+
+```text
+site/content/blog/your-article-name/
+├── index.md
+├── cover.jpg
+└── photo.jpg
+```
+
+About images:
+
+- **Any size works**, even a photo straight from a phone. Each one is resized to WebP in three widths, and the cover also becomes a 1200 x 630 share image.
+- **Formats:** JPG, PNG, WebP, AVIF, GIF or SVG.
+- **Every image needs a description** inside the `[ ]`, and the cover needs `coverAlt`. The build stops and says so if one is missing, or if a file name doesn't match.
+- Keep each post's images in its own folder. Image addresses include the post's name and a hash of the file, so two posts can both have a `cover.jpg`.
+
+#### How posts are built
+
+Before every build, `site/scripts/content.mjs` turns the posts into files the pages read: `.content/blog.json` lists every post's details without its text, and `.content/posts/<name>.json` holds each post's HTML and Markdown. It also resizes the images and writes a Markdown copy of each post. Converted posts and images are kept in `.next/cache`, which Vercel keeps between builds, so a deploy only converts posts and images that are new or changed.
+
+The 20 newest posts are built into HTML at deploy. An older post is built the first time someone opens it, which takes about a second, and that HTML is then kept and served to everyone (`site/src/app/blog/[slug]/page.tsx`). Posts don't change between deploys, so the kept HTML is never rebuilt. A new deploy starts afresh, so each older post is built again on its first visit after it. This keeps deploys quick as the blog grows to hundreds of posts.
 
 Each post is automatically included in:
 - `/sitemap.xml` and `/robots.txt`
-- the RSS feed at `/blog/feed.xml`
+- the RSS feed at `/blog/feed.xml`, which carries the 20 newest posts in full
 - `/llms.txt` and `/llms-full.txt` for AI tools
 
 A plain Markdown copy of each post is at `/blog/<name>.md`. `robots.txt` welcomes all crawlers, and names the main AI crawlers to make that explicit.
 
-The blog page has search, topics and sorting, all in the browser, and keeps them in the address (`/blog?tag=tithi`), which is where each article's topic links go. Its "Follow with RSS" button offers the feed address and one-click Feedly and Inoreader links.
+The blog page shows 12 articles a page, with search, topics and sorting, all in the browser. Its HTML holds only the first page; the rest of the list loads from `/blog/posts.json`, so the page stays small as the blog grows. Every choice is kept in the address (`/blog?q=moon&tag=tithi&page=2`), so topic links from articles, shared links and the back button all work. Its "Follow with RSS" button offers the feed address and one-click Feedly and Inoreader links.
+
+Search (`site/src/lib/search.ts`) looks at each article's title, topics, section headings and description, and:
+- forgives accents and the usual English spellings of Indian words: "ekadashi", "ekadasi" and "Ekādaśī" all match, as do "poornima" and "Pūrṇimā"
+- forgives a typing slip in longer words, and finds words still being typed
+- ignores common words, so "why does my birthday move" works, and shows articles with some of the words when none has them all
+- puts title matches first, highlights the words found, and names the section or topic that matched
+
+Press `/` to jump to the search box. Each article also has a search box under its recent posts. Google Analytics records searches as `view_search_results`, so you can see what readers look for.
+
+The eight most used topics show as buttons (four on phones), and the rest are under "All topics", A to Z, with a box to find one.
 
 **Scheduled posts:** a post with a future `date` is built now and goes live at 6:00 AM IST that day. The pages decide by the visitor's clock (`site/src/components/blog/useLivePosts.ts`), so no build is needed at that moment. The sitemap, feed and llms.txt can't check the clock, so they add the post at the next deploy after that.
 
@@ -48,7 +105,7 @@ The site promises that birth details never leave the device, and analytics tags 
 
 Import the repository into Vercel and set **Root Directory** to `site`. Vercel reads `site/vercel.json` for the rest. Vercel does not need Rust, because the compiled engine is committed.
 
-Every page is built ahead of time. The only code that runs on Vercel is `site/src/app/api/subscribe/route.ts`, the newsletter signup, which keeps the Brevo key off the browser. It needs these environment variables, described in `site/.env.example`:
+Pages are built ahead of time. Two things run on Vercel: the first visit to an older blog post, which builds its HTML once (see [How posts are built](#how-posts-are-built)), and `site/src/app/api/subscribe/route.ts`, the newsletter signup, which keeps the Brevo key off the browser. The signup needs these environment variables, described in `site/.env.example`:
 
 - `BREVO_API_KEY` and `BREVO_LIST_ID`: required for signups. Without them the form says signups are not open yet.
 - `BREVO_DOI_TEMPLATE_ID`: optional. When set, people confirm by email first and land on `/subscribed`.

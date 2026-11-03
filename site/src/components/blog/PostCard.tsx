@@ -1,14 +1,45 @@
 import Link from "next/link";
 
 import { formatDate, type Post } from "@/lib/posts";
+import { bestMatch, highlights } from "@/lib/search";
 
 import s from "./blog.module.css";
 
-type CardPost = Pick<Post, "slug" | "title" | "description" | "date" | "minutes" | "cover">;
+type CardPost = Pick<Post, "slug" | "title" | "description" | "date" | "minutes" | "cover"> & { headings?: string[]; tags?: string[] };
 
-/** `priority` is for a card at the top of the page, whose image should load first. */
-export function PostCard({ post, headingLevel = 2, priority = false }: { post: CardPost; headingLevel?: 2 | 3; priority?: boolean }) {
+/** `text` with the parts that match the search terms marked. */
+function Marked({ text, terms }: { text: string; terms: string[] }) {
+  const ranges = highlights(text, terms);
+  if (!ranges.length) return text;
+  const parts = [];
+  let at = 0;
+  for (const [start, end] of ranges) {
+    parts.push(text.slice(at, start), <mark key={start}>{text.slice(start, end)}</mark>);
+    at = end;
+  }
+  parts.push(text.slice(at));
+  return parts;
+}
+
+/**
+ * `priority` is for a card at the top of the page, whose image should load first.
+ * `terms` are search terms to mark. A section or topic that matches shows too,
+ * so it's clear why a post was found.
+ */
+export function PostCard({
+  post,
+  headingLevel = 2,
+  priority = false,
+  terms = [],
+}: {
+  post: CardPost;
+  headingLevel?: 2 | 3;
+  priority?: boolean;
+  terms?: string[];
+}) {
   const Heading = `h${headingLevel}` as const;
+  const section = terms.length ? bestMatch(post.headings ?? [], terms) : undefined;
+  const topic = terms.length && !section ? bestMatch(post.tags ?? [], terms) : undefined;
   return (
     <article className={s.card}>
       {post.cover && (
@@ -32,10 +63,17 @@ export function PostCard({ post, headingLevel = 2, priority = false }: { post: C
         </p>
         <Heading className={`display ${s.cardTitle}`}>
           <Link className={s.cardLink} href={`/blog/${post.slug}`}>
-            {post.title}
+            <Marked text={post.title} terms={terms} />
           </Link>
         </Heading>
-        <p>{post.description}</p>
+        <p>
+          <Marked text={post.description} terms={terms} />
+        </p>
+        {(section || topic) && (
+          <p className={s.cardSection}>
+            <span>{section ? "Section:" : "Topic:"}</span> <Marked text={(section || topic)!} terms={terms} />
+          </p>
+        )}
       </div>
     </article>
   );

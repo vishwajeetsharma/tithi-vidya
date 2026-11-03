@@ -79,16 +79,6 @@ export default function PrivacyPage() {
           <a href="https://optout.aboutads.info/">aboutads.info</a> or, in Europe, <a href="https://www.youronlinechoices.eu/">youronlinechoices.eu</a>.
         </p>
 
-        <h2>Translating and listening to the blog</h2>
-        <p>
-          The Translate button on the blog opens the page in Google Translate. Only if you use it, Google receives the page&apos;s address and text, and handles
-          your visit under its <a href="https://policies.google.com/privacy">privacy policy</a>. The button is only on the blog, never on the finder.
-        </p>
-        <p>
-          The Listen button reads an article aloud with your device&apos;s own voices. Some browsers use online voices from their maker, such as Google or
-          Microsoft, which then receive the article&apos;s text. Your birth details are never read or sent.
-        </p>
-
         <h2>The newsletter</h2>
         <p>
           If you subscribe, we keep your email address and, if you give it, your first name. They are stored by{" "}
