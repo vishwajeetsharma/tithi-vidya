@@ -1,11 +1,13 @@
 import Link from "next/link";
 
-import { formatDate, type Post } from "@/lib/blog";
+import { formatDate, type Post } from "@/lib/posts";
 
 import s from "./blog.module.css";
 
+type CardPost = Pick<Post, "slug" | "title" | "description" | "date" | "minutes" | "cover">;
+
 /** `priority` is for a card at the top of the page, whose image should load first. */
-export function PostCard({ post, headingLevel = 2, priority = false }: { post: Post; headingLevel?: 2 | 3; priority?: boolean }) {
+export function PostCard({ post, headingLevel = 2, priority = false }: { post: CardPost; headingLevel?: 2 | 3; priority?: boolean }) {
   const Heading = `h${headingLevel}` as const;
   return (
     <article className={s.card}>

@@ -7,7 +7,7 @@ There are four parts, plus the blog:
 - **`generator/`** (Python) uses JPL's DE440 ephemeris to compute every tithi boundary from 1900 to 2150 and writes `cli/data/tithi-table.bin`. You run it once, offline.
 - **`cli/`** (Rust) is the `tithi` library and command line tool. The table is built in, so at runtime it only computes sunrise for your place.
 - **`wasm/`** (Rust) compiles that same library to WebAssembly for the website.
-- **`site/`** (Next.js) is the website. It is fully static, and the engine runs in the visitor's browser, so birth details never leave their device.
+- **`site/`** (Next.js) is the website. Every page is built ahead of time, and the engine runs in the visitor's browser, so birth details never leave their device. The only server code is the newsletter signup.
 
 This split works because a tithi starts and ends at the same instant everywhere on Earth. Only the date it lands on depends on the place, through local sunrise.
 
@@ -34,6 +34,10 @@ Each post is automatically included in:
 
 A plain Markdown copy of each post is at `/blog/<name>.md`. `robots.txt` welcomes all crawlers, and names the main AI crawlers to make that explicit.
 
+The blog page has search, topics and sorting, all in the browser, and keeps them in the address (`/blog?tag=tithi`), which is where each article's topic links go. Its "Follow with RSS" button offers the feed address and one-click Feedly and Inoreader links.
+
+**Scheduled posts:** a post with a future `date` is built now and goes live at 6:00 AM IST that day. The pages decide by the visitor's clock (`site/src/components/blog/useLivePosts.ts`), so no build is needed at that moment. The sitemap, feed and llms.txt can't check the clock, so they add the post at the next deploy after that.
+
 ### Analytics and privacy
 
 Google Analytics and the Meta Pixel load by default so ad landings are measured, and stop if a visitor declines. The cookie box appears on `/find` (`site/src/components/CookieConsent.tsx`). Their IDs are in `site/src/lib/site.ts`.
@@ -42,7 +46,14 @@ The site promises that birth details never leave the device, and analytics tags 
 
 ### Deploying to Vercel
 
-Import the repository into Vercel. No settings are needed, and either Root Directory works: Vercel reads `vercel.json` at the repo root when it is empty, and `site/vercel.json` when it is `site`. Keep the two files' `headers` the same. Vercel does not need Rust, because the compiled engine is committed.
+Import the repository into Vercel and set **Root Directory** to `site`. Vercel reads `site/vercel.json` for the rest. Vercel does not need Rust, because the compiled engine is committed.
+
+Every page is built ahead of time. The only code that runs on Vercel is `site/src/app/api/subscribe/route.ts`, the newsletter signup, which keeps the Brevo key off the browser. It needs these environment variables, described in `site/.env.example`:
+
+- `BREVO_API_KEY` and `BREVO_LIST_ID`: required for signups. Without them the form says signups are not open yet.
+- `BREVO_DOI_TEMPLATE_ID`: optional. When set, people confirm by email first and land on `/subscribed`.
+
+For local testing, put the same names in `site/.env`, which git ignores.
 
 Canonical links and the sitemap use Vercel's production address automatically. With a custom domain, set `NEXT_PUBLIC_SITE_URL` (for example `https://example.com`) in the Vercel project.
 

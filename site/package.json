@@ -7,7 +7,7 @@
     "predev": "node scripts/content.mjs --drafts",
     "build": "next build",
     "prebuild": "node scripts/content.mjs",
-    "start": "npx serve out",
+    "start": "next start -p 3010",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

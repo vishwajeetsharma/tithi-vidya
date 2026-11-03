@@ -25,6 +25,24 @@ export function ArrowIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function SearchIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Icon {...props}>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m15.5 15.5 5 5" />
+    </Icon>
+  );
+}
+
+export function RssIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <Icon {...props}>
+      <path d="M5 11a8 8 0 0 1 8 8M5 4.5A14.5 14.5 0 0 1 19.5 19" />
+      <circle cx="6" cy="18" r="1.6" fill="currentColor" stroke="none" />
+    </Icon>
+  );
+}
+
 export function CalendarIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <Icon {...props}>

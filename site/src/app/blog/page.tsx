@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 
-import { PostCard } from "@/components/blog/PostCard";
+import { BlogBrowser } from "@/components/blog/BlogBrowser";
 import s from "@/components/blog/blog.module.css";
+import { FollowFeed } from "@/components/blog/FollowFeed";
+import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { JsonLd } from "@/components/JsonLd";
-import { getPosts } from "@/lib/blog";
+import { getBuiltAt, getLivePosts, getPosts } from "@/lib/blog";
+import { summarise } from "@/lib/posts";
 import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
 
 const TITLE = "Blog: Tithis, Moon Birthdays and the Hindu Calendar";
@@ -17,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default function BlogIndex() {
-  const posts = getPosts();
+  const posts = getLivePosts();
   const origin = siteUrl().origin;
   return (
     <div className={s.page}>
@@ -46,16 +49,11 @@ export default function BlogIndex() {
             Moon days, <em className="gradientText">made simple</em>
           </h1>
           <p className={s.lead}>Short, plain guides to tithis, moon birthdays and the Hindu calendar.</p>
+          <FollowFeed feed={`${origin}/blog/feed.xml`} />
         </header>
-        {posts.length === 0 ? (
-          <p className={s.empty}>New posts are on their way.</p>
-        ) : (
-          <div className={s.grid}>
-            {posts.map((post, i) => (
-              <PostCard key={post.slug} post={post} priority={i === 0} />
-            ))}
-          </div>
-        )}
+        {/* Scheduled posts come too, and show once they go live. */}
+        <BlogBrowser posts={getPosts().map(summarise)} builtAt={getBuiltAt()} />
+        <NewsletterSignup />
       </div>
     </div>
   );

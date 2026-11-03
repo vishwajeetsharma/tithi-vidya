@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
-// A fully static site: pages are built ahead of time and the tithi engine
-// runs as WebAssembly in the visitor's browser, so Vercel needs no server.
+// Every page is built ahead of time, and the tithi engine runs as WebAssembly
+// in the visitor's browser. The one thing that runs on Vercel is
+// app/api/subscribe, which keeps the Brevo key off the browser.
 const nextConfig: NextConfig = {
-  output: "export",
   images: { unoptimized: true },
 };
 

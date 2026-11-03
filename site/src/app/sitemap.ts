@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getPosts } from "@/lib/blog";
+import { getLivePosts } from "@/lib/blog";
 import { siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -8,7 +8,7 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = siteUrl().origin;
   const built = new Date();
-  const posts = getPosts();
+  const posts = getLivePosts();
   return [
     { url: origin, lastModified: built, changeFrequency: "monthly", priority: 1 },
     { url: `${origin}/find`, lastModified: built, changeFrequency: "monthly", priority: 0.9 },

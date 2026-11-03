@@ -14,6 +14,7 @@ import { SunriseScene } from "@/components/home/SunriseScene";
 import { TithiScene } from "@/components/home/TithiScene";
 import { TryIt } from "@/components/home/TryIt";
 import { JsonLd } from "@/components/JsonLd";
+import { getBuiltAt, latestPosts } from "@/lib/blog";
 import { FAQ } from "@/lib/faq";
 import { AUTHOR, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/lib/site";
 
@@ -62,7 +63,7 @@ export default function HomePage() {
         <Steps />
         <TryIt />
         <Proof />
-        <FromTheBlog />
+        <FromTheBlog posts={latestPosts(3)} builtAt={getBuiltAt()} />
         <Faq />
         <Credit />
       </div>

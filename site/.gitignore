@@ -44,3 +44,6 @@ next-env.d.ts
 /.content/
 /public/blog-media/
 /public/blog/
+
+# The example env file is safe to commit: it has no values.
+!.env.example

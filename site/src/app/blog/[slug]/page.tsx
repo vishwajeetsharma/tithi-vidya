@@ -3,13 +3,15 @@ import { JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { PostCard } from "@/components/blog/PostCard";
+import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { ReadingRail } from "@/components/blog/ReadingRail";
+import { RecentPosts } from "@/components/blog/RecentPosts";
 import s from "@/components/blog/blog.module.css";
 import { ArrowIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
 import { JsonLd } from "@/components/JsonLd";
-import { formatDate, getPost, getPosts, type Post } from "@/lib/blog";
+import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, type Post } from "@/lib/blog";
+import { isLive, PREVIEW } from "@/lib/posts";
 import { SITE_NAME, siteUrl } from "@/lib/site";
 
 // Only downloaded by pages that show code.
@@ -95,12 +97,34 @@ export default async function PostPage({ params }: Params) {
   if (!post) notFound();
   const origin = siteUrl().origin;
   const hasContents = post.toc.length >= 3;
-  const recent = getPosts()
-    .filter((other) => other.slug !== post.slug)
-    .slice(0, 3);
+  const builtAt = getBuiltAt();
+  const liveAt = Date.parse(post.liveAt);
+  const scheduled = !isLive(post, Date.parse(builtAt));
 
   return (
-    <div className={`${s.page} ${mono.variable}`}>
+    // The notice's script marks this element, so the attribute it adds is expected.
+    <div className={`${s.page} ${mono.variable}`} suppressHydrationWarning={scheduled}>
+      {scheduled && (
+        <>
+          {/* Runs as the page loads, before the article is drawn. Until the post
+              goes live it shows the notice instead, and swaps back on time if
+              the page is left open. */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){var e=document.currentScript.parentElement,t=${liveAt}-Date.now();if(t>0){e.dataset.notYet="";if(t<2147483647)setTimeout(function(){delete e.dataset.notYet},t)}})()`,
+            }}
+          />
+          <div className={s.notYet}>
+            <p className="eyebrow">Coming soon</p>
+            <p className={`display ${s.notYetTitle}`}>This article is not out yet</p>
+            <p className={s.lead}>It goes live on {formatDate(post.date)} at 6:00 AM India time.</p>
+            <Link className="btn btnPrimary" href="/blog">
+              Read other articles
+              <ArrowIcon />
+            </Link>
+          </div>
+        </>
+      )}
       <JsonLd
         data={{
           "@graph": [
@@ -147,6 +171,7 @@ export default async function PostPage({ params }: Params) {
                   </>
                 )}{" "}
                 · {post.minutes} min read · {post.author}
+                {PREVIEW && liveAt > Date.parse(builtAt) && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
               </p>
             </header>
 
@@ -172,8 +197,10 @@ export default async function PostPage({ params }: Params) {
             {post.tags.length > 0 && (
               <ul className={s.tags} aria-label="Topics">
                 {post.tags.map((tag) => (
-                  <li key={tag} className={s.tag}>
-                    {tag}
+                  <li key={tag}>
+                    <Link className={s.tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                      {tag}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -214,15 +241,8 @@ export default async function PostPage({ params }: Params) {
               <ArrowIcon />
             </Link>
           </div>
-          {recent.length > 0 ? (
-            <div className={s.recentGrid}>
-              {recent.map((other) => (
-                <PostCard key={other.slug} post={other} headingLevel={3} />
-              ))}
-            </div>
-          ) : (
-            <p className={s.empty}>This is our first article. More are on the way.</p>
-          )}
+          <RecentPosts posts={latestPosts(3, post.slug)} builtAt={builtAt} />
+          <NewsletterSignup />
         </section>
       </div>
     </div>

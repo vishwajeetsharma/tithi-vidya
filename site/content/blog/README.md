@@ -39,13 +39,24 @@ More text. **Bold**, *italic* and [links](/find) all work.
 | --- | --- | --- |
 | `title` | Yes | The post's title. |
 | `description` | Yes | A short summary for Google, social media and the blog page. Aim for under 160 characters. |
-| `date` | Yes | The publish date, as `YYYY-MM-DD`. Posts are listed newest first. |
+| `date` | Yes | The publish date, as `YYYY-MM-DD`. Posts are listed newest first. A future date schedules the post (see below). |
 | `updated` | No | Add this when you change an old post, as `YYYY-MM-DD`. |
 | `tags` | No | A list of topics. |
 | `cover` | No | An image file in the post's folder. It appears at the top, on the blog page and when the post is shared. |
 | `coverAlt` | With a cover | A few words describing the cover, for people who can't see it. |
 | `author` | No | Defaults to Vishwajeet Sharma. |
 | `draft` | No | `draft: true` hides the post on the live site, but still shows it when running the site on your computer. |
+
+## Scheduling a post
+
+Give the post a future `date` and commit it as normal. It goes live at **6:00 AM India time** on that date. You don't need to do anything else.
+
+- The post is built straight away, so it is ready. Until 6:00 AM that day it doesn't appear on the blog page, the home page or under "Recent articles", and its own address shows "This article is not out yet".
+- At 6:00 AM the lists and the page show it, by the visitor's clock, with no new build.
+- The sitemap, the RSS feed and `llms.txt` are fixed files, so they add the post at the first deploy after it goes live. Any commit starts a deploy, or click **Redeploy** in Vercel.
+- When you run the site on your computer, scheduled posts show straight away, marked "Scheduled", so you can check them.
+
+The files are public on GitHub, so anyone looking at the repository can read a scheduled post early.
 
 ## Images
 

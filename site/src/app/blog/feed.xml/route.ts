@@ -1,4 +1,4 @@
-import { getPosts } from "@/lib/blog";
+import { getLivePosts } from "@/lib/blog";
 import { absoluteHtml, escape } from "@/lib/feeds";
 import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
 
@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 /** RSS with each post's full text, so feed readers and AI tools get the whole article. */
 export function GET() {
   const origin = siteUrl().origin;
-  const posts = getPosts();
+  const posts = getLivePosts();
   const items = posts
     .map(
       (post) => `    <item>

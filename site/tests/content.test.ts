@@ -5,9 +5,16 @@ import { join } from "node:path";
 import sharp from "sharp";
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { buildContent } from "../scripts/content.mjs";
+import { buildContent, liveAt } from "../scripts/content.mjs";
 
-type Built = { slug: string; html: string; draft: boolean; toc: { id: string }[]; cover: { src: string; width: number; height: number; og: string } | null };
+type Built = {
+  slug: string;
+  html: string;
+  draft: boolean;
+  liveAt: string;
+  toc: { id: string }[];
+  cover: { src: string; width: number; height: number; og: string } | null;
+};
 
 function site(posts: Record<string, string>, images: string[] = []) {
   const root = mkdtempSync(join(tmpdir(), "tithi-blog-"));
@@ -72,6 +79,20 @@ describe("the blog build", () => {
   it("includes drafts when asked", async () => {
     const all = (await buildContent({ site: root, drafts: true })) as Built[];
     expect(all.find((p) => p.slug === "secret")?.draft).toBe(true);
+  });
+});
+
+describe("scheduled posts", () => {
+  it("go live at 6:00 AM India time on their date", () => {
+    expect(Date.parse(liveAt("2026-11-10"))).toBe(Date.parse("2026-11-10T06:00:00+05:30"));
+  });
+
+  it("are built ahead, with when they go live and when the site was built", async () => {
+    const { root } = site({ "later.md": post().replace("2026-11-03", "2099-01-01") });
+    const now = new Date("2026-11-03T10:00:00Z");
+    const built = (await buildContent({ site: root, now })) as Built[];
+    expect(built.map((p) => [p.slug, p.liveAt])).toEqual([["later", "2099-01-01T00:30:00.000Z"]]);
+    expect(JSON.parse(readFileSync(join(root, ".content/blog.json"), "utf8")).builtAt).toBe(now.toISOString());
   });
 });
 

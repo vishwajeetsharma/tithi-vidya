@@ -1,4 +1,4 @@
-import { getPosts } from "./blog";
+import { getLivePosts } from "./blog";
 import { FAQ } from "./faq";
 import { postMarkdown } from "./feeds";
 import { AUTHOR, REPO_URL, SITE_NAME, siteUrl } from "./site";
@@ -30,7 +30,7 @@ export function llmsIntro(origin: string): string[] {
 
 export function llmsTxt(): string {
   const origin = siteUrl().origin;
-  const posts = getPosts();
+  const posts = getLivePosts();
   return [
     ...llmsIntro(origin),
     "## Pages",
@@ -59,7 +59,7 @@ export function llmsFullTxt(): string {
     "## Questions and answers",
     "",
     ...FAQ.flatMap(({ q, a }) => [`### ${q}`, "", a, ""]),
-    ...getPosts().flatMap((post) => ["---", "", postMarkdown(post, origin)]),
+    ...getLivePosts().flatMap((post) => ["---", "", postMarkdown(post, origin)]),
     `Written by ${AUTHOR}.`,
     "",
   ].join("\n");

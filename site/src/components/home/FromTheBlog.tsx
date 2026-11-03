@@ -1,14 +1,18 @@
+"use client";
+
 import Link from "next/link";
 
 import { PostCard } from "@/components/blog/PostCard";
+import { useLivePosts } from "@/components/blog/useLivePosts";
 import { ArrowIcon } from "@/components/Icons";
-import { getPosts } from "@/lib/blog";
+import type { PostSummary } from "@/lib/posts";
 
 import s from "./home.module.css";
 
-export function FromTheBlog() {
-  const posts = getPosts().slice(0, 3);
-  if (posts.length === 0) return null;
+/** The three newest posts. `posts` comes from latestPosts(3) in lib/blog. */
+export function FromTheBlog({ posts, builtAt }: { posts: PostSummary[]; builtAt: string }) {
+  const live = useLivePosts(posts, builtAt).slice(0, 3);
+  if (live.length === 0) return null;
   return (
     <section className={s.fromBlog} aria-labelledby="blog-title">
       <div className="wrap">
@@ -22,7 +26,7 @@ export function FromTheBlog() {
           </Link>
         </div>
         <div className={s.fromBlogGrid}>
-          {posts.map((post) => (
+          {live.map((post) => (
             <div key={post.slug} data-reveal>
               <PostCard post={post} headingLevel={3} />
             </div>

@@ -1,8 +1,12 @@
 // Builds the blog from content/blog. Runs before every build and dev server.
 //
-//   node scripts/content.mjs            published posts only (what Vercel runs)
+//   node scripts/content.mjs            every post except drafts (what Vercel runs)
 //   node scripts/content.mjs --drafts   include posts marked `draft: true`
 //   node scripts/content.mjs --watch    rebuild when a post or image changes
+//
+// A post dated in the future is built like any other, with `liveAt` set to
+// 6:00 AM IST on its date. The pages hide it until then, by the visitor's
+// clock. The sitemap, feed and llms.txt add it at the first build after that.
 //
 // Writes:
 //   .content/blog.json     every post's details and HTML, read by the pages
@@ -58,6 +62,11 @@ async function findPosts(dir) {
 function asDate(value) {
   if (value instanceof Date && !Number.isNaN(value.getTime())) return value.toISOString().slice(0, 10);
   return typeof value === "string" ? value.trim() : "";
+}
+
+/** A post goes live at 6:00 AM IST on its date. India has no daylight saving, so that is always 00:30 UTC. */
+function liveAt(date) {
+  return `${date}T00:30:00.000Z`;
 }
 
 function checkFrontMatter(slug, data, problems) {
@@ -240,6 +249,7 @@ async function renderPost({ slug, file }, processImage, problems) {
     title: data.title.trim(),
     description: data.description.trim(),
     date,
+    liveAt: liveAt(date),
     updated: data.updated ? asDate(data.updated) : date,
     author: typeof data.author === "string" && data.author.trim() ? data.author.trim() : DEFAULT_AUTHOR,
     tags: Array.isArray(data.tags) ? data.tags : [],
@@ -260,7 +270,7 @@ function markdownCopy(post) {
   return lines.join("\n");
 }
 
-export async function buildContent({ site = SITE, drafts = false } = {}) {
+export async function buildContent({ site = SITE, drafts = false, now = new Date() } = {}) {
   const started = performance.now();
   const contentDir = join(site, "content/blog");
   const outDir = join(site, ".content");
@@ -288,11 +298,15 @@ export async function buildContent({ site = SITE, drafts = false } = {}) {
   const posts = rendered
     .filter((post) => post && (drafts || !post.draft))
     .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
-  await writeFile(join(outDir, "blog.json"), JSON.stringify({ posts }));
+  // builtAt lets every page agree on which posts were live when the HTML was made.
+  await writeFile(join(outDir, "blog.json"), JSON.stringify({ builtAt: now.toISOString(), posts }));
   await Promise.all(posts.map((post) => writeFile(join(copyDir, `${post.slug}.md`), markdownCopy(post))));
 
   const images = (await readdir(mediaDir)).length;
   console.log(`blog: ${posts.length} post${posts.length === 1 ? "" : "s"}, ${images} image files, ${Math.round(performance.now() - started)} ms`);
+  for (const post of posts.filter((p) => new Date(p.liveAt) > now)) {
+    console.log(`blog: "${post.slug}" is scheduled, and goes live on ${post.date} at 6:00 AM IST`);
+  }
   return posts;
 }
 
@@ -318,4 +332,4 @@ if (isCli) {
 }
 
 // Exposed for tests.
-export { asDate, findPosts };
+export { asDate, findPosts, liveAt };

@@ -17,7 +17,7 @@ export default function PrivacyPage() {
     <div className={s.page}>
       <div className={`wrap ${s.inner}`}>
         <h1 className={`display ${s.title}`}>Privacy Policy</h1>
-        <p className={s.updated}>Last updated: 2 November 2026</p>
+        <p className={s.updated}>Last updated: 3 November 2026</p>
 
         <p>
           {SITE_NAME} is run by Vishwajeet Sharma. This page explains what data the site uses, in plain words. The short version:{" "}
@@ -51,6 +51,16 @@ export default function PrivacyPage() {
           data under their own privacy policies:{" "}
           <a href="https://policies.google.com/privacy">Google</a> and <a href="https://www.facebook.com/privacy/policy">Meta</a>. We set up the site so they do not
           receive your birth details.
+        </p>
+
+        <h2>The newsletter</h2>
+        <p>
+          If you subscribe, we keep your email address and, if you give it, your first name. They are stored by{" "}
+          <a href="https://www.brevo.com/legal/privacypolicy/">Brevo</a>, which sends the newsletter for us. We use them only to send you the newsletter, and we
+          never sell them. Brevo can record whether an email was opened or a link in it was clicked.
+        </p>
+        <p>
+          Every email has an unsubscribe link. You can also email <a href="mailto:contact@thevishwa.in">contact@thevishwa.in</a> and we will remove you.
         </p>
 
         <h2>Cookies and browser storage</h2>
@@ -106,6 +116,7 @@ export default function PrivacyPage() {
         <ul>
           <li>Decline cookies on the finder page, or change your mind with Cookie settings.</li>
           <li>Clear the site&apos;s data in your browser at any time.</li>
+          <li>Unsubscribe from the newsletter with the link in any email.</li>
           <li>To ask about data held by Google or Meta, use the controls those companies provide.</li>
         </ul>
 

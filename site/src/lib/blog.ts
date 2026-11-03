@@ -1,46 +1,53 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-/** A processed image: WebP widths with fixed dimensions, and a 1200x630 social card. */
-export type BlogImage = { src: string; srcset: string; width: number; height: number; largest: string; og: string };
+import { isLive, summarise, type Post, type PostSummary } from "./posts";
 
-export type Post = {
-  slug: string;
-  title: string;
-  description: string;
-  date: string;
-  updated: string;
-  author: string;
-  tags: string[];
-  draft: boolean;
-  cover: (BlogImage & { alt: string }) | null;
-  toc: { id: string; text: string }[];
-  words: number;
-  minutes: number;
-  html: string;
-  markdown: string;
-};
+export { formatDate, type BlogImage, type Post } from "./posts";
 
-let posts: Post[] | null = null;
+type Content = { builtAt: string; posts: Post[] };
+
+let content: Content | null = null;
 
 /**
- * Every post, newest first. Built ahead of time by scripts/content.mjs, which
- * runs before `npm run build` and `npm run dev`, so pages only read a file.
+ * The posts, built ahead of time by scripts/content.mjs, which runs before
+ * `npm run build` and `npm run dev`, so pages only read a file.
  */
-export function getPosts(): Post[] {
-  if (posts && process.env.NODE_ENV === "production") return posts;
+function read(): Content {
+  if (content && process.env.NODE_ENV === "production") return content;
   try {
-    posts = (JSON.parse(readFileSync(join(process.cwd(), ".content/blog.json"), "utf8")) as { posts: Post[] }).posts;
+    content = JSON.parse(readFileSync(join(process.cwd(), ".content/blog.json"), "utf8")) as Content;
   } catch {
     throw new Error("Blog content is missing. Run `npm run content` in site/ (it normally runs before build and dev).");
   }
-  return posts;
+  return content;
+}
+
+/** Every built post, newest first, including posts scheduled for later. */
+export const getPosts = (): Post[] => read().posts;
+
+/** When the posts were built. The HTML shows what was live then, and the page's script catches up from there. */
+export const getBuiltAt = (): string => read().builtAt;
+
+/** Posts that were live when the site was built. For files that can't check the clock: the sitemap, feed and llms.txt. */
+export function getLivePosts(): Post[] {
+  const builtAt = Date.parse(getBuiltAt());
+  return getPosts().filter((post) => isLive(post, builtAt));
 }
 
 export function getPost(slug: string): Post | undefined {
   return getPosts().find((post) => post.slug === slug);
 }
 
-const longDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
-
-export const formatDate = (iso: string) => longDate.format(new Date(`${iso}T00:00:00Z`));
+/**
+ * Candidates for a list of the newest `count` posts: the newest live ones,
+ * plus every scheduled post, since any of those may be live by the time
+ * someone visits. The list itself picks by the visitor's clock.
+ */
+export function latestPosts(count: number, except = ""): PostSummary[] {
+  const builtAt = Date.parse(getBuiltAt());
+  let live = 0;
+  return getPosts()
+    .filter((post) => post.slug !== except && (!isLive(post, builtAt) || live++ < count))
+    .map(summarise);
+}
