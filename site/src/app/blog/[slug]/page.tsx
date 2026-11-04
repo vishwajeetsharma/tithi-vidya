@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import Form from "next/form";
+import { draftMode } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -107,7 +108,10 @@ export default async function PostPage({ params }: Params) {
   const hasContents = post.toc.length >= 3;
   const builtAt = getBuiltAt();
   const liveAt = Date.parse(post.liveAt);
-  const scheduled = !isLive(post, Date.parse(builtAt));
+  // Signed in at /backstage (draft mode), a scheduled post shows in full, with a note.
+  const { isEnabled: backstage } = await draftMode();
+  const early = liveAt > Date.parse(builtAt);
+  const scheduled = !backstage && !isLive(post, Date.parse(builtAt));
 
   return (
     // The notice's script marks this element, so the attribute it adds is expected.
@@ -164,6 +168,14 @@ export default async function PostPage({ params }: Params) {
       <div className={s.postWrap}>
         <div className={s.postLayout}>
           <article className={s.postMain}>
+            {backstage && early && (
+              <p className={s.backstageNote} role="status">
+                Preview from Backstage. Visitors see this post from {formatDate(post.date)} at 6:00 AM India time.{" "}
+                <Link href="/backstage" prefetch={false}>
+                  Back to Backstage
+                </Link>
+              </p>
+            )}
             <nav className={s.crumbs} aria-label="Breadcrumb">
               <Link href="/blog">Blog</Link>
             </nav>

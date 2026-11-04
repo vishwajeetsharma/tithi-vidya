@@ -578,6 +578,22 @@ a.pageStep:hover,
   font-size: clamp(2.25rem, 1.5rem + 3.6vw, 4rem);
 }
 
+/* Above a scheduled post opened from Backstage, which visitors can't see yet. */
+.backstageNote {
+  margin-bottom: 18px;
+  padding: 12px 18px;
+  border-left: 4px solid var(--indigo);
+  border-radius: 0 16px 16px 0;
+  background: var(--lilac-50);
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+}
+
+.backstageNote a {
+  color: var(--indigo);
+  font-weight: 700;
+}
+
 /* A whole card is clickable through its title link. */
 .card {
   position: relative;

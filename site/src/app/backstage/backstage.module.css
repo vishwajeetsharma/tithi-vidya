@@ -1,0 +1,94 @@
+/* Backstage: the private page for previewing scheduled posts. */
+
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 110px 16px 60px;
+  background: radial-gradient(70vmax 46vmax at 90% -4%, #c9d4ff 0%, rgb(201 212 255 / 0) 64%);
+}
+
+.card {
+  width: min(100%, 420px);
+  display: grid;
+  gap: 14px;
+  padding: clamp(24px, 5vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: 0 18px 50px rgb(21 17 61 / 0.08);
+}
+
+.wide {
+  width: min(100%, 680px);
+}
+
+.title {
+  font-size: clamp(2.25rem, 1.6rem + 3vw, 3.25rem);
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+.form label {
+  font-weight: 700;
+}
+
+.field {
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 1rem;
+}
+
+.field:focus-visible {
+  outline: 3px solid var(--indigo);
+  outline-offset: 2px;
+}
+
+.wrong {
+  color: #b42318;
+  font-weight: 600;
+}
+
+.note {
+  color: var(--ink-soft);
+}
+
+.heading {
+  margin-top: 12px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.list li {
+  display: grid;
+  gap: 2px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--lilac-50);
+}
+
+.list a {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.list span {
+  color: var(--ink-mute);
+  font-size: 0.9375rem;
+}
+
+.signOut {
+  margin-top: 8px;
+}
