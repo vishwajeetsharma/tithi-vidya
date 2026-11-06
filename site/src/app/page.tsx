@@ -16,7 +16,7 @@ import { TryIt } from "@/components/home/TryIt";
 import { JsonLd } from "@/components/JsonLd";
 import { getBuiltAt, latestPosts } from "@/lib/blog";
 import { FAQ } from "@/lib/faq";
-import { AUTHOR, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, CONTACT_EMAIL, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -29,6 +29,9 @@ export default function HomePage() {
       <JsonLd
         data={{
           "@graph": [
+            // Google uses these for the site name and logo shown in search results.
+            { "@type": "WebSite", name: SITE_NAME, alternateName: "TithiVidya", url: `${url}/` },
+            { "@type": "Organization", name: SITE_NAME, url: `${url}/`, logo: `${url}/icon-512.png`, email: CONTACT_EMAIL },
             {
               "@type": "WebApplication",
               name: SITE_NAME,

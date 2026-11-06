@@ -13,7 +13,8 @@
     "test": "vitest run",
     "content": "node scripts/content.mjs",
     "sync": "node scripts/sync.mjs",
-    "bake-moon": "node scripts/bake-moon.mjs"
+    "bake-moon": "node scripts/bake-moon.mjs",
+    "icons": "node scripts/make-icons.mjs"
   },
   "dependencies": {
     "@shikijs/rehype": "^4.6.0",

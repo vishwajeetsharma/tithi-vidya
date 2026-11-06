@@ -128,6 +128,8 @@ npm --prefix site run sync
 
 To change how the moon looks, edit the shader in `site/scripts/bake-moon.mjs` and run `npm --prefix site run bake-moon` (needs Chrome).
 
+To change the site icon, edit `site/src/app/icon.svg` and run `npm --prefix site run icons`. It makes `favicon.ico`, the PNG sizes Google and phones need, and the app manifest icons, all from that one file.
+
 ## Contributing
 
 Articles, fixes and algorithm improvements are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) explains how, and the website shows the same guide at `/contribute`, built from that file.
