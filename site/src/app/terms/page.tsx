@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { CONTACT_EMAIL, REPO_URL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, REPO_URL, SITE_NAME, pageMetadata } from "@/lib/site";
 
 import s from "../legal.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Terms of Use",
-  description: `The terms for using ${SITE_NAME}.`,
-  alternates: { canonical: "/terms" },
-};
+  description: `The terms for using ${SITE_NAME}, a free tithi and moon birthday finder: what results mean, accuracy, ads, the newsletter and the open source code.`,
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

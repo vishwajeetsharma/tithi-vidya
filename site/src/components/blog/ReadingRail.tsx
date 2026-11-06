@@ -6,16 +6,17 @@ import { useEffect, useRef, useState } from "react";
 import { litPath } from "@/lib/moon";
 
 import s from "./blog.module.css";
+import { PreferredSource } from "./PreferredSource";
+import { ShareButtons } from "./ShareButtons";
 
 /**
  * The left rail on wide screens: a moon that fills as you read, share links,
- * and a way to the finder. Share links are plain links; no third-party script
- * is loaded.
+ * the Google preferred source button, and a way to the finder. Smaller screens
+ * get the share links and button after the article instead.
  */
 export function ReadingRail({ url, title }: { url: string; title: string }) {
   const lit = useRef<SVGPathElement>(null);
   const [percent, setPercent] = useState(0);
-  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const body = document.querySelector("[data-article-body]");
@@ -42,25 +43,6 @@ export function ReadingRail({ url, title }: { url: string; title: string }) {
     };
   }, []);
 
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      window.prompt("Copy this link:", url);
-    }
-  };
-
-  const u = encodeURIComponent(url);
-  const t = encodeURIComponent(title);
-  const shares = [
-    { name: "WhatsApp", href: `https://wa.me/?text=${t}%20${u}` },
-    { name: "X", href: `https://x.com/intent/tweet?text=${t}&url=${u}` },
-    { name: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
-    { name: "LinkedIn", href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` },
-  ];
-
   return (
     <div className={s.railSticky}>
       <div className={s.progress}>
@@ -77,21 +59,10 @@ export function ReadingRail({ url, title }: { url: string; title: string }) {
 
       <div className={s.railBlock}>
         <p className={s.railLabel}>Share this article</p>
-        <ul className={s.shareList}>
-          {shares.map((share) => (
-            <li key={share.name}>
-              <a className={s.shareLink} href={share.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${share.name} (opens in a new tab)`}>
-                {share.name}
-              </a>
-            </li>
-          ))}
-          <li>
-            <button className={s.shareLink} type="button" onClick={() => void copy()}>
-              {copied ? "Link copied" : "Copy link"}
-            </button>
-          </li>
-        </ul>
+        <ShareButtons url={url} title={title} />
       </div>
+
+      <PreferredSource compact />
 
       <div className={`${s.railBlock} ${s.railCta}`}>
         <p className={s.railLabel}>Your moon birthday</p>

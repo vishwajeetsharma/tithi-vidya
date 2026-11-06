@@ -43,7 +43,8 @@ export const metadata: Metadata = {
     locale: "en_IN",
   },
   twitter: { card: "summary_large_image", title: SITE_TITLE, description: SITE_DESCRIPTION },
-  robots: { index: true, follow: true },
+  // Lets Google show large images and full snippets, in Discover too.
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
 };
 
 export const viewport: Viewport = {

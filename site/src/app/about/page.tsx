@@ -4,18 +4,13 @@ import Link from "next/link";
 import { ArrowIcon, HeartIcon, LinkIcon, LockIcon, MailIcon, SparkIcon, StarIcon } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
 import { MoonPhase } from "@/components/MoonPhase";
-import { AUTHOR, LINKEDIN_URL, PORTFOLIO_URL, SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, LINKEDIN_URL, PORTFOLIO_URL, SITE_NAME, pageMetadata, siteUrl } from "@/lib/site";
 
 import s from "./about.module.css";
 
 const DESCRIPTION = `Why ${SITE_NAME} exists, and who made it: Vishwajeet Sharma, a 22-year-old software student who couldn't find his own moon birthday.`;
 
-export const metadata: Metadata = {
-  title: "About",
-  description: DESCRIPTION,
-  alternates: { canonical: "/about" },
-  openGraph: { title: `About | ${SITE_NAME}`, description: DESCRIPTION, url: "/about" },
-};
+export const metadata: Metadata = pageMetadata({ title: "About the Site and Its Maker", description: DESCRIPTION, path: "/about" });
 
 const STORY = [
   {

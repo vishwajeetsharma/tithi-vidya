@@ -8,7 +8,7 @@ import { TocSpy } from "@/components/how/TocSpy";
 import { ArrowIcon, ForkIcon, HeartIcon, StarIcon } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
 import { MoonPhase } from "@/components/MoonPhase";
-import { AUTHOR, CREDIT, REPO_URL, SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, CREDIT, REPO_URL, SITE_NAME, pageMetadata, siteUrl } from "@/lib/site";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
@@ -16,12 +16,7 @@ const TITLE = "How It Works and How Accurate It Is";
 const DESCRIPTION =
   "See exactly how Tithi Vidya finds your tithi: the NASA JPL data, the real code, every accuracy test, and where it can be wrong.";
 
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: "/how-it-works" },
-  openGraph: { type: "article", title: `${TITLE} | ${SITE_NAME}`, description: DESCRIPTION, url: "/how-it-works" },
-};
+export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/how-it-works", type: "article" });
 
 const SECTIONS = [
   { id: "idea", label: "The big idea" },

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, SITE_NAME, pageMetadata } from "@/lib/site";
 
 import s from "../legal.module.css";
 
-export const metadata: Metadata = {
-  title: "Disclaimer",
-  description: `What ${SITE_NAME}'s results are, and are not. For general information, not religious or astrological advice.`,
-  alternates: { canonical: "/disclaimer" },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Disclaimer: What the Results Mean",
+  description: `What ${SITE_NAME}'s tithi and moon birthday results are, and are not. For general information, not religious or astrological advice.`,
+  path: "/disclaimer",
+});
 
 export default function DisclaimerPage() {
   return (

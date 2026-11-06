@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { Credit } from "@/components/home/Credit";
 import { DriftScene } from "@/components/home/DriftScene";
 import { Faq } from "@/components/home/Faq";
@@ -13,6 +14,7 @@ import { Steps } from "@/components/home/Steps";
 import { SunriseScene } from "@/components/home/SunriseScene";
 import { TithiScene } from "@/components/home/TithiScene";
 import { TryIt } from "@/components/home/TryIt";
+import s from "@/components/home/home.module.css";
 import { JsonLd } from "@/components/JsonLd";
 import { getBuiltAt, latestPosts } from "@/lib/blog";
 import { FAQ } from "@/lib/faq";
@@ -67,6 +69,9 @@ export default function HomePage() {
         <TryIt />
         <Proof />
         <FromTheBlog posts={latestPosts(3)} builtAt={getBuiltAt()} />
+        <div className={`wrap ${s.newsletter}`} data-reveal>
+          <NewsletterSignup />
+        </div>
         <Faq />
         <Credit />
       </div>

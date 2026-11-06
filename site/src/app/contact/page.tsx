@@ -4,18 +4,14 @@ import Link from "next/link";
 import { CopyEmail } from "@/components/CopyEmail";
 import { ArrowIcon, MailIcon } from "@/components/Icons";
 import { JsonLd } from "@/components/JsonLd";
-import { CONTACT_EMAIL, LINKEDIN_URL, SITE_NAME, siteUrl } from "@/lib/site";
+import { CONTACT_EMAIL, LINKEDIN_URL, SITE_NAME, pageMetadata, siteUrl } from "@/lib/site";
 
 import s from "../legal.module.css";
 import c from "./contact.module.css";
 
-const DESCRIPTION = `Questions, feedback or a result that looks wrong? Email ${CONTACT_EMAIL}.`;
+const DESCRIPTION = `Questions, feedback or a result that looks wrong? Email ${CONTACT_EMAIL}. Every message about tithis, moon birthdays or the site is read.`;
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: DESCRIPTION,
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = pageMetadata({ title: "Contact: Questions and Feedback", description: DESCRIPTION, path: "/contact" });
 
 const TOPICS = [
   "A result that looks wrong",

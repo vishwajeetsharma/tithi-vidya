@@ -1318,3 +1318,113 @@ a.pageStep:hover,
   height: 1px;
   opacity: 0;
 }
+
+/* Sharing after the article, for phones and tablets. Wide screens have it in the left rail. */
+
+.shareInline {
+  display: grid;
+  gap: 12px;
+  margin-top: clamp(28px, 4vw, 40px);
+  padding: clamp(18px, 3vw, 24px);
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.shareInline .shareList {
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 8px;
+}
+
+.shareInline .shareLink {
+  min-height: 44px;
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 1280px) {
+  .shareInline {
+    display: none;
+  }
+}
+
+.shareWide {
+  grid-column: 1 / -1;
+}
+
+.shareNative {
+  gap: 8px;
+  color: #fff;
+  background: var(--grad);
+}
+
+.shareNative:hover {
+  background: var(--grad);
+  filter: brightness(1.06);
+}
+
+/* "Add as a preferred source on Google" */
+
+.preferred {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: var(--lilac-50);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.preferred:hover {
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px #a79cf0;
+}
+
+.preferred svg {
+  flex: none;
+  color: var(--indigo);
+}
+
+.preferred span {
+  display: grid;
+  gap: 2px;
+  line-height: 1.3;
+}
+
+.preferred strong {
+  font-size: 0.9375rem;
+}
+
+.preferred small {
+  color: var(--ink-mute);
+  font-size: 0.8125rem;
+}
+
+/* In the blog header, beside Follow with RSS: the same height as that button. */
+.preferredCompact {
+  min-height: 46px;
+  margin-top: 8px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.72);
+}
+
+.preferredCompact strong {
+  font-size: 1rem;
+}
+
+/* In the left rail it is a card like the others. */
+.railSticky .preferredCompact {
+  min-height: 0;
+  margin-top: 0;
+  padding: 12px 14px;
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 16px 40px -30px rgb(52 36 170 / 0.45);
+}
+
+.railSticky .preferredCompact strong {
+  font-size: 0.875rem;
+}

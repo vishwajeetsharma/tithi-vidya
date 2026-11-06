@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Finder } from "@/components/find/Finder";
 import { JsonLd } from "@/components/JsonLd";
-import { SITE_NAME, siteUrl } from "@/lib/site";
+import { pageMetadata, siteUrl } from "@/lib/site";
 
 import s from "./page.module.css";
 
@@ -10,12 +10,7 @@ const TITLE = "Find Your Tithi by Date of Birth";
 const DESCRIPTION =
   "Enter your birth date, time and place to find your tithi, your moon month and your tithi birthday for the next 100 years. Free and private.";
 
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: "/find" },
-  openGraph: { title: `${TITLE} | ${SITE_NAME}`, description: DESCRIPTION, url: "/find" },
-};
+export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/find" });
 
 export default function FindPage() {
   const origin = siteUrl().origin;

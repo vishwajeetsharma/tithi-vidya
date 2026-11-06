@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { CookieSettingsButton } from "@/components/CookieSettingsButton";
-import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
+import { CONTACT_EMAIL, SITE_NAME, pageMetadata } from "@/lib/site";
 
 import s from "../legal.module.css";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
-  description: `How ${SITE_NAME} treats your data. Your birth details stay on your device.`,
-  alternates: { canonical: "/privacy" },
-};
+  description: `How ${SITE_NAME} treats your data. Your birth details never leave your device. What analytics, ads and the newsletter use, and your choices.`,
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

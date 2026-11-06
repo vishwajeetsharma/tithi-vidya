@@ -5,7 +5,7 @@ import b from "@/components/blog/blog.module.css";
 import { TocSpy } from "@/components/how/TocSpy";
 import { ArrowIcon, ForkIcon, HeartIcon, SparkIcon, StarIcon } from "@/components/Icons";
 import { getGuide } from "@/lib/guide";
-import { REPO_URL, SITE_NAME } from "@/lib/site";
+import { REPO_URL, SITE_NAME, pageMetadata } from "@/lib/site";
 
 import s from "./contribute.module.css";
 
@@ -13,12 +13,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", displ
 
 const DESCRIPTION = `How to help ${SITE_NAME}: write an article for the blog, improve the code or the tithi algorithm, or report a result that looks wrong.`;
 
-export const metadata: Metadata = {
-  title: "Contribute",
-  description: DESCRIPTION,
-  alternates: { canonical: "/contribute" },
-  openGraph: { title: `Contribute | ${SITE_NAME}`, description: DESCRIPTION, url: "/contribute" },
-};
+export const metadata: Metadata = pageMetadata({ title: "Contribute: Write Articles or Improve the Code", description: DESCRIPTION, path: "/contribute" });
 
 const GUIDE_ON_GITHUB = `${REPO_URL}/blob/main/CONTRIBUTING.md`;
 

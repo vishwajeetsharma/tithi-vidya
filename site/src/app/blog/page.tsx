@@ -3,21 +3,17 @@ import type { Metadata } from "next";
 import { BlogBrowser } from "@/components/blog/BlogBrowser";
 import s from "@/components/blog/blog.module.css";
 import { FollowFeed } from "@/components/blog/FollowFeed";
+import { PreferredSource } from "@/components/blog/PreferredSource";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { JsonLd } from "@/components/JsonLd";
 import { getBuiltAt, getLivePosts, latestPosts } from "@/lib/blog";
 import { PAGE_SIZE, topics } from "@/lib/posts";
-import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, SITE_NAME, pageMetadata, siteUrl } from "@/lib/site";
 
 const TITLE = "Blog: Tithis, Moon Birthdays and the Hindu Calendar";
 const DESCRIPTION = "Simple guides to tithis, moon birthdays, panchang days and the Hindu calendar, from the makers of Tithi Vidya.";
 
-export const metadata: Metadata = {
-  title: TITLE,
-  description: DESCRIPTION,
-  alternates: { canonical: "/blog" },
-  openGraph: { title: `${TITLE} | ${SITE_NAME}`, description: DESCRIPTION, url: "/blog" },
-};
+export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/blog" });
 
 export default function BlogIndex() {
   const posts = getLivePosts();
@@ -51,6 +47,7 @@ export default function BlogIndex() {
           <p className={s.lead}>Short, plain guides to tithis, moon birthdays and the Hindu calendar.</p>
           <div className={s.headTools}>
             <FollowFeed feed={`${origin}/blog/feed.xml`} />
+            <PreferredSource compact />
           </div>
         </header>
         {/* The first page is in the HTML, with scheduled posts, which show once they go live. The rest load from /blog/posts.json. */}

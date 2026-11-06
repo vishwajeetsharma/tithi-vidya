@@ -6,15 +6,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
+import { PreferredSource } from "@/components/blog/PreferredSource";
 import { ReadingRail } from "@/components/blog/ReadingRail";
 import { RecentPosts } from "@/components/blog/RecentPosts";
+import { ShareButtons } from "@/components/blog/ShareButtons";
 import s from "@/components/blog/blog.module.css";
 import { ArrowIcon, SearchIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
 import { JsonLd } from "@/components/JsonLd";
 import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, type Post } from "@/lib/blog";
 import { isLive, PREVIEW } from "@/lib/posts";
-import { SITE_NAME, siteUrl } from "@/lib/site";
+import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
 
 // Only downloaded by pages that show code.
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap", preload: false });
@@ -42,6 +44,9 @@ export function generateStaticParams() {
   return posts.length ? posts.slice(0, BUILT_AT_DEPLOY).map((post) => ({ slug: post.slug })) : [{ slug: NO_POSTS }];
 }
 
+/** Posts go live at 6:00 AM India time on their date. Google asks for a time with its zone. */
+const atSixIst = (date: string) => `${date}T06:00:00+05:30`;
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return { robots: { index: false } };
@@ -59,17 +64,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url,
       title: post.title,
       description: post.description,
-      publishedTime: post.date,
-      modifiedTime: post.updated,
+      publishedTime: atSixIst(post.date),
+      modifiedTime: atSixIst(post.updated),
       authors: [post.author],
       tags: post.tags,
-      ...(post.cover ? { images: [{ url: post.cover.og, width: 1200, height: 630, alt: post.cover.alt }] } : {}),
+      images: [post.cover ? { url: post.cover.og, width: 1200, height: 630, alt: post.cover.alt } : "/opengraph-image.png"],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      ...(post.cover ? { images: [post.cover.og] } : {}),
+      images: [post.cover ? post.cover.og : "/opengraph-image.png"],
     },
   };
 }
@@ -144,15 +149,22 @@ export default async function PostPage({ params }: Params) {
               "@type": "BlogPosting",
               headline: post.title,
               description: post.description,
-              datePublished: post.date,
-              dateModified: post.updated,
-              author: { "@type": "Person", name: post.author },
+              datePublished: atSixIst(post.date),
+              dateModified: atSixIst(post.updated),
+              // The site's own author has a page; guest authors are named only.
+              author: { "@type": "Person", name: post.author, ...(post.author === AUTHOR ? { url: `${origin}/about` } : {}) },
+              publisher: {
+                "@type": "Organization",
+                name: SITE_NAME,
+                url: `${origin}/`,
+                logo: { "@type": "ImageObject", url: `${origin}/icon-512.png`, width: 512, height: 512 },
+              },
               mainEntityOfPage: `${origin}/blog/${post.slug}`,
               url: `${origin}/blog/${post.slug}`,
               inLanguage: "en",
               wordCount: post.words,
               keywords: post.tags.join(", "),
-              ...(post.cover ? { image: `${origin}${post.cover.og}` } : {}),
+              image: [`${origin}${post.cover ? post.cover.og : "/opengraph-image.png"}`],
             },
             {
               "@type": "BreadcrumbList",
@@ -227,6 +239,15 @@ export default async function PostPage({ params }: Params) {
                 ))}
               </ul>
             )}
+
+            {/* Phones and tablets: on wide screens these are in the left rail. */}
+            <section className={s.shareInline} aria-labelledby="share-title">
+              <h2 id="share-title" className={s.railLabel}>
+                Share this article
+              </h2>
+              <ShareButtons url={`${origin}/blog/${post.slug}`} title={post.title} />
+              <PreferredSource />
+            </section>
 
             <div className={s.cta}>
               <p className={`display ${s.ctaTitle}`}>When is your moon birthday?</p>
