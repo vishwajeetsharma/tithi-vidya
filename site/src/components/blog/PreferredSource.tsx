@@ -1,4 +1,4 @@
-import { GOOGLE_PREFERRED_SOURCE, SITE_NAME } from "@/lib/site";
+import { GOOGLE_PREFERRED_SOURCE, SHOW_PREFERRED_SOURCE, SITE_NAME } from "@/lib/site";
 
 import s from "./blog.module.css";
 
@@ -7,6 +7,7 @@ import s from "./blog.module.css";
  * Preferred Sources. A plain link: no Google script loads on the site.
  */
 export function PreferredSource({ compact = false }: { compact?: boolean }) {
+  if (!SHOW_PREFERRED_SOURCE) return null;
   return (
     <a
       className={`${s.preferred} ${compact ? s.preferredCompact : ""}`}

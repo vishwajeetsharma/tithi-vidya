@@ -17,6 +17,12 @@ export const PORTFOLIO_URL = "https://www.thevishwa.in/";
  * bare domain here.
  */
 export const GOOGLE_PREFERRED_SOURCE = `https://www.google.com/preferences/source?q=${new URL(SITE_ORIGIN).hostname.replace(/^www\./, "")}`;
+/**
+ * Off until Google lists the site: its Preferred Sources page says "No
+ * results" for a domain it has not picked up yet. Check the link above, and
+ * turn this on once it shows Tithi Vidya.
+ */
+export const SHOW_PREFERRED_SOURCE = false;
 export const GOOGLE_ANALYTICS_ID = "G-EH6CQB4WNP";
 export const META_PIXEL_ID = "1817935669409933";
 export const SITE_TITLE = "Tithi Vidya: Find Your Tithi Birthday by Date of Birth";
