@@ -1428,3 +1428,53 @@ a.pageStep:hover,
 .railSticky .preferredCompact strong {
   font-size: 0.875rem;
 }
+
+/* "Get notified of new articles": a button in the blog header, a card after each article. */
+
+.notifyInline {
+  display: contents;
+}
+
+.notifyButton:global(.btn) {
+  min-height: 46px;
+  margin-top: 8px;
+  padding: 0.6em 1.25em;
+  font-size: 1rem;
+}
+
+.notifyButton svg {
+  color: var(--indigo);
+}
+
+.notifyButton:global(.btnPrimary) svg {
+  color: #fff;
+}
+
+.notifyButton:hover svg {
+  transform: none;
+}
+
+.notifyNote {
+  order: 1;
+  flex-basis: 100%;
+  max-width: 34rem;
+  margin-top: 10px;
+  color: var(--ink-mute);
+  font-size: 0.875rem;
+}
+
+.notifyCard {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  margin-top: clamp(20px, 3vw, 28px);
+  padding: clamp(18px, 3vw, 24px);
+  border-radius: 24px;
+  background: var(--lilac-50);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  color: var(--ink-soft);
+}
+
+.notifyCard .notifyButton:global(.btn) {
+  margin-top: 4px;
+}

@@ -131,3 +131,11 @@ describe("pages", () => {
     expect(pageList(20, 20)).toEqual([1, null, 19, 20]);
   });
 });
+
+describe("feed html", () => {
+  it("keeps plain markup, and drops the site's own attributes and table wrappers", async () => {
+    const { feedHtml } = await import("@/lib/feeds");
+    const html = `<figure><img src="/a.webp" alt="A" loading="lazy" decoding="async" width="10" height="5" srcset="/a.webp 10w" sizes="100vw"></figure><div data-table="" tabindex="0" role="region" aria-label="Table"><table><tr><td>1</td></tr></table></div><pre class="shiki" style="color:#000" tabindex="0" role="group" aria-label="Code example"><code>x</code></pre>`;
+    expect(feedHtml(html)).toBe(`<figure><img src="/a.webp" alt="A" width="10" height="5" srcset="/a.webp 10w"></figure><table><tr><td>1</td></tr></table><pre><code>x</code></pre>`);
+  });
+});

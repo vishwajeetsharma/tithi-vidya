@@ -33,12 +33,14 @@
     "sharp": "^0.35.5",
     "shiki": "^4.5.0",
     "unified": "^11.0.5",
-    "unist-util-visit": "^5.2.0"
+    "unist-util-visit": "^5.2.0",
+    "web-push": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/web-push": "^3.6.4",
     "eslint": "^9",
     "eslint-config-next": "^16.4.3",
     "typescript": "^5",

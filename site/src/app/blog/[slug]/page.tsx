@@ -6,6 +6,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
+import { NotifyButton } from "@/components/blog/NotifyButton";
 import { PreferredSource } from "@/components/blog/PreferredSource";
 import { ReadingRail } from "@/components/blog/ReadingRail";
 import { RecentPosts } from "@/components/blog/RecentPosts";
@@ -248,6 +249,8 @@ export default async function PostPage({ params }: Params) {
               <ShareButtons url={`${origin}/blog/${post.slug}`} title={post.title} />
               <PreferredSource />
             </section>
+
+            <NotifyButton card />
 
             <div className={s.cta}>
               <p className={`display ${s.ctaTitle}`}>When is your moon birthday?</p>

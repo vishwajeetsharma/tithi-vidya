@@ -17,7 +17,7 @@ export default function PrivacyPage() {
     <div className={s.page}>
       <div className={`wrap ${s.inner}`}>
         <h1 className={`display ${s.title}`}>Privacy Policy</h1>
-        <p className={s.updated}>Last updated: 3 November 2026</p>
+        <p className={s.updated}>Last updated: 6 November 2026</p>
 
         <p>
           {SITE_NAME} is run by Vishwajeet Sharma. This page explains what data the site uses, in plain words. The short version:{" "}
@@ -89,6 +89,14 @@ export default function PrivacyPage() {
           Every email has an unsubscribe link. You can also email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> and we will remove you.
         </p>
 
+        <h2>Article notifications</h2>
+        <p>
+          If you press &quot;Get notified of new articles&quot; and allow it, your browser gives us an address at its maker&apos;s notification service, such as
+          Google, Apple or Mozilla, and two keys to encrypt messages. We store only that, with no name or email, in a database run by{" "}
+          <a href="https://upstash.com/trust/privacy.pdf">Upstash</a>, and use it only to tell you about new articles. Press &quot;Turn off notifications&quot;, or
+          block them in your browser&apos;s settings, and we stop. Addresses that stop working are deleted.
+        </p>
+
         <h2>Cookies and browser storage</h2>
         <div className={s.tableWrap} tabIndex={0} role="region" aria-label="Cookies and browser storage">
           <table className={s.table}>
@@ -149,6 +157,7 @@ export default function PrivacyPage() {
           <li>Decline cookies on the finder page, or change your mind with Cookie settings.</li>
           <li>Clear the site&apos;s data in your browser at any time.</li>
           <li>Unsubscribe from the newsletter with the link in any email.</li>
+          <li>Turn off article notifications on the blog, or in your browser&apos;s settings.</li>
           <li>Turn off personalised ads in Google&apos;s My Ad Center, or at aboutads.info.</li>
           <li>To ask about data held by Google or Meta, use the controls those companies provide.</li>
           <li>Email us to ask what we hold about you, or to have it removed. The only data we can hold about you is your newsletter signup.</li>

@@ -110,6 +110,12 @@ Pages are built ahead of time. Two things run on Vercel: the first visit to an o
 - `BREVO_API_KEY` and `BREVO_LIST_ID`: required for signups. Without them the form says signups are not open yet.
 - `BREVO_DOI_TEMPLATE_ID`: optional. When set, people confirm by email first and land on `/subscribed`.
 
+**Article notifications** (`site/src/app/api/push`, `site/public/sw.js`): the blog's "Get notified" button saves a browser's subscription in a free Upstash Redis database. A daily Vercel cron at 6:00 AM IST (`crons` in `site/vercel.json`) announces each post once, in the two days after it goes live. A post published directly goes out the next morning, or straight away with `curl -H "Authorization: Bearer $CRON_SECRET" https://www.tithividya.org/api/push/send`. It needs:
+
+- `NEXT_PUBLIC_VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY`, made with `npx web-push generate-vapid-keys`. The button stays hidden without them.
+- `CRON_SECRET`, any long random string.
+- The database: add Upstash Redis from Vercel's Marketplace, which sets `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (or the `KV_REST_API_` names) itself.
+
 For local testing, put the same names in `site/.env`, which git ignores.
 
 The site lives at https://www.tithividya.org; Vercel's domain settings redirect tithividya.org there. Canonical links, the sitemap and the feeds use `SITE_ORIGIN` in `site/src/lib/site.ts` on every Vercel build, previews included, and localhost on your computer. `NEXT_PUBLIC_SITE_URL` overrides both. Keep `SITE_ORIGIN` the same as the main domain in Vercel, or the two redirects can loop. `site/vercel.json` also permanently redirects the old address, tithi-vidya.thevishwa.in, as long as it stays added to the Vercel project.

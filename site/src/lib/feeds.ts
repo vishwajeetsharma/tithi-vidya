@@ -11,6 +11,17 @@ export function absoluteHtml(html: string, origin: string): string {
     .replace(/srcset="([^"]*)"/g, (_, set: string) => `srcset="${set.replace(/(^|, )\//g, `$1${origin}/`)}"`);
 }
 
+/**
+ * A post's HTML as feed readers want it. The site adds attributes for its own
+ * layout, lazy loading and screen readers; feed validators flag those, and
+ * strict readers drop the post. Table wrappers go, and plain markup stays.
+ */
+export function feedHtml(html: string): string {
+  return html
+    .replace(/<div data-table="[^"]*"[^>]*>(<table>[\s\S]*?<\/table>)<\/div>/g, "$1")
+    .replace(/\s(?:loading|decoding|sizes|tabindex|role|style|class|aria-[a-z-]+|data-[a-z-]+)="[^"]*"/g, "");
+}
+
 export const absoluteMarkdown = (markdown: string, origin: string) => markdown.replace(/\]\(\//g, `](${origin}/`);
 
 /** One post as Markdown, the same shape as the /blog/<slug>.md copies. */

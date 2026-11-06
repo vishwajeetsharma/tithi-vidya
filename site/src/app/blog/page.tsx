@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { BlogBrowser } from "@/components/blog/BlogBrowser";
 import s from "@/components/blog/blog.module.css";
 import { FollowFeed } from "@/components/blog/FollowFeed";
+import { NotifyButton } from "@/components/blog/NotifyButton";
 import { PreferredSource } from "@/components/blog/PreferredSource";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { JsonLd } from "@/components/JsonLd";
@@ -47,6 +48,7 @@ export default function BlogIndex() {
           <p className={s.lead}>Short, plain guides to tithis, moon birthdays and the Hindu calendar.</p>
           <div className={s.headTools}>
             <FollowFeed feed={`${origin}/blog/feed.xml`} />
+            <NotifyButton />
             <PreferredSource compact />
           </div>
         </header>

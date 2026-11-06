@@ -1,8 +1,11 @@
 import { getLivePosts, getPost } from "@/lib/blog";
-import { absoluteHtml, escape } from "@/lib/feeds";
+import { absoluteHtml, escape, feedHtml } from "@/lib/feeds";
 import { AUTHOR, AUTHOR_EMAIL, SITE_NAME, siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
+
+/** Posts go live at 6:00 AM India time on their date. */
+const liveDate = (date: string) => new Date(`${date}T06:00:00+05:30`).toUTCString();
 
 /** How many of the newest posts the feed carries. Readers only need recent ones; llms-full.txt has every post. */
 const FEED_POSTS = 20;
@@ -19,11 +22,11 @@ export function GET() {
       <title>${escape(post.title)}</title>
       <link>${origin}/blog/${post.slug}</link>
       <guid isPermaLink="true">${origin}/blog/${post.slug}</guid>
-      <pubDate>${new Date(`${post.date}T00:00:00Z`).toUTCString()}</pubDate>
+      <pubDate>${liveDate(post.date)}</pubDate>
       <dc:creator>${escape(post.author)}</dc:creator>
       <description>${escape(post.description)}</description>
 ${post.tags.map((tag) => `      <category>${escape(tag)}</category>`).join("\n")}
-      <content:encoded><![CDATA[${absoluteHtml(post.html, origin).replaceAll("]]>", "]]]]><![CDATA[>")}]]></content:encoded>
+      <content:encoded><![CDATA[${feedHtml(absoluteHtml(post.html, origin)).replaceAll("]]>", "]]]]><![CDATA[>")}]]></content:encoded>
     </item>`,
     )
     .join("\n");
@@ -35,8 +38,15 @@ ${post.tags.map((tag) => `      <category>${escape(tag)}</category>`).join("\n")
     <atom:link href="${origin}/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Simple guides to tithis, moon birthdays and the Hindu calendar.</description>
     <language>en</language>
+    <image>
+      <url>${origin}/icon1.png</url>
+      <title>${SITE_NAME} Blog</title>
+      <link>${origin}/blog</link>
+      <width>96</width>
+      <height>96</height>
+    </image>
     <managingEditor>${AUTHOR_EMAIL} (${AUTHOR})</managingEditor>
-${posts[0] ? `    <lastBuildDate>${new Date(`${posts[0].updated}T00:00:00Z`).toUTCString()}</lastBuildDate>\n` : ""}${items}
+${posts[0] ? `    <lastBuildDate>${liveDate(posts[0].updated)}</lastBuildDate>\n` : ""}${items}
   </channel>
 </rss>
 `;
