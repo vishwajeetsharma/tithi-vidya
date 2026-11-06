@@ -1,0 +1,38 @@
+/* AI Use Statement: a summary card and repeated "People decide" highlights. */
+
+.summary {
+  display: grid;
+  gap: 12px;
+  margin-block: 8px;
+  padding: clamp(20px, 3.4vw, 32px);
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.summaryTitle {
+  color: var(--indigo);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.summary ul {
+  display: grid;
+  gap: 10px;
+  padding-left: 1.2em;
+  list-style: disc;
+}
+
+.people {
+  padding: 14px 18px;
+  border-left: 4px solid var(--indigo);
+  border-radius: 0 16px 16px 0;
+  background: var(--lilac-100);
+  color: var(--ink);
+}
+
+.people strong {
+  color: #3b2fc4;
+}

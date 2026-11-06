@@ -19,6 +19,7 @@ const GROUPS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/contribute", label: "Contribute" },
+      { href: "/ai-use", label: "How we use AI" },
       { href: "/contact", label: "Contact" },
       { href: "/disclaimer", label: "Disclaimer" },
     ],

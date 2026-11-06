@@ -1454,10 +1454,10 @@ a.pageStep:hover,
   transform: none;
 }
 
+/* Its own line under the header buttons. */
 .notifyNote {
   order: 1;
-  flex-basis: 100%;
-  max-width: 34rem;
+  flex: 0 0 100%;
   margin-top: 10px;
   color: var(--ink-mute);
   font-size: 0.875rem;

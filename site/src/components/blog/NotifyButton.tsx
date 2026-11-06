@@ -42,6 +42,8 @@ async function currentSubscription() {
 export function NotifyButton({ card = false }: { card?: boolean }) {
   const can = useSyncExternalStore(never, support, notWhileBuilding);
   const [status, setStatus] = useState<Status>("checking");
+  // Set only when turned on in this visit: an article confirms it once, then stays quiet.
+  const [justTurnedOn, setJustTurnedOn] = useState(false);
 
   useEffect(() => {
     if (can !== "yes") return;
@@ -58,6 +60,9 @@ export function NotifyButton({ card = false }: { card?: boolean }) {
   }, [can]);
 
   if (can === "server" || can === "none") return null;
+  // Articles: nothing while checking, and nothing for readers already subscribed.
+  // Turning it off is on the blog page.
+  if (card && (status === "checking" || (status === "on" && !justTurnedOn))) return null;
 
   async function turnOn() {
     setStatus("working");
@@ -73,6 +78,7 @@ export function NotifyButton({ card = false }: { card?: boolean }) {
         return setStatus("error");
       }
       setStatus("on");
+      setJustTurnedOn(true);
     } catch {
       setStatus("error");
     }
@@ -96,7 +102,9 @@ export function NotifyButton({ card = false }: { card?: boolean }) {
     can === "home-screen"
       ? "On iPhone and iPad, first add this site to your Home Screen: tap Share, then Add to Home Screen. Open it from there to turn on notifications."
       : status === "on"
-        ? "Notifications are on. You'll hear when a new article comes out."
+        ? card
+          ? "Notifications are on. You'll hear when a new article comes out."
+          : ""
         : status === "blocked"
           ? "Notifications are blocked for this site. Allow them in your browser's settings to get new articles."
           : status === "error"
@@ -106,7 +114,7 @@ export function NotifyButton({ card = false }: { card?: boolean }) {
               : "";
 
   const button =
-    can === "home-screen" || status === "blocked" ? null : status === "on" ? (
+    can === "home-screen" || status === "blocked" || (card && status === "on") ? null : status === "on" ? (
       <button type="button" className={`btn btnGhost ${s.notifyButton}`} onClick={() => void turnOff()}>
         <BellIcon off />
         Turn off notifications

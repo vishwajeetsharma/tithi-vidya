@@ -49,6 +49,7 @@ export function llmsTxt(): string {
     `- [Source code](${REPO_URL}): MIT License.`,
     `- [About](${origin}/about): who made the site and why`,
     `- [Contribute](${origin}/contribute): how to write for the blog, or improve the code and the algorithm`,
+    `- [How we use AI](${origin}/ai-use): AI helps build the site and polish articles; people decide, research, write and check everything`,
     `- [Contact](${origin}/contact) and [Disclaimer](${origin}/disclaimer)`,
     `- [Privacy Policy](${origin}/privacy) and [Terms](${origin}/terms)`,
     "",
