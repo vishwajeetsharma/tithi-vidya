@@ -7,6 +7,7 @@ There are four parts, plus the blog:
 - **`generator/`** (Python) uses JPL's DE440 ephemeris to compute every tithi boundary from 1900 to 2150 and writes `cli/data/tithi-table.bin`. You run it once, offline.
 - **`cli/`** (Rust) is the `tithi` library and command line tool. The table is built in, so at runtime it only computes sunrise for your place.
 - **`wasm/`** (Rust) compiles that same library to WebAssembly for the website.
+- **`brand/`** is the brand kit: logo files, icons, colour tokens and the brand guidelines ([`brand/README.md`](brand/README.md)). It is generated from the site's own files.
 - **`site/`** (Next.js) is the website. Pages are built ahead of time, and the engine runs in the visitor's browser, so birth details never leave their device. The only server code is the newsletter signup and the first visit to an older blog post (see [How posts are built](#how-posts-are-built)).
 
 This split works because a tithi starts and ends at the same instant everywhere on Earth. Only the date it lands on depends on the place, through local sunrise.

@@ -1,0 +1,34 @@
+/* Copied from site/src/app/globals.css by brand/tools/make-assets.mjs. Edit there. */
+:root {
+  color-scheme: only light;
+
+  --ink: #15113d;
+  --ink-soft: #3d3870;
+  --ink-mute: #524b84;
+  --paper: #f8f7ff;
+  --card: #ffffff;
+  --line: #e3dffb;
+  --line-strong: #cdc6f5;
+  /* Text box borders: the only outline of a white box on a near-white page, so they need 3:1. */
+  --field-line: #8a80cf;
+
+  --blue: #2758ec;
+  --indigo: #4a3bf0;
+  --violet: #7030e6;
+  --orchid: #a23bea;
+  --lilac-50: #f2efff;
+  --lilac-100: #e7e2ff;
+  --lilac-200: #d5ccff;
+  --peri-100: #dfe6ff;
+  --peri-200: #c6d1ff;
+  --sun: #ffb25e;
+  --sun-deep: #ff8a5c;
+
+  --grad: linear-gradient(105deg, #2758ec 0%, #5138ee 48%, #8f35e8 100%);
+  --grad-text: linear-gradient(100deg, #2758ec 0%, #5a38ee 45%, #a12fd8 100%);
+
+  --gutter: clamp(16px, 4.4vw, 56px);
+  --radius: clamp(22px, 3vw, 36px);
+  --shadow: 0 30px 70px -36px rgb(52 36 170 / 0.38), 0 8px 22px -14px rgb(52 36 170 / 0.16);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

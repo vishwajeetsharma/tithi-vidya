@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tithi Vidya brand guidelines</title>
+<link rel="icon" href="logo/svg/mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,100,1;1,9..144,400..700,100,1&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: only light;
+
+  --ink: #15113d;
+  --ink-soft: #3d3870;
+  --ink-mute: #524b84;
+  --paper: #f8f7ff;
+  --card: #ffffff;
+  --line: #e3dffb;
+  --line-strong: #cdc6f5;
+  /* Text box borders: the only outline of a white box on a near-white page, so they need 3:1. */
+  --field-line: #8a80cf;
+
+  --blue: #2758ec;
+  --indigo: #4a3bf0;
+  --violet: #7030e6;
+  --orchid: #a23bea;
+  --lilac-50: #f2efff;
+  --lilac-100: #e7e2ff;
+  --lilac-200: #d5ccff;
+  --peri-100: #dfe6ff;
+  --peri-200: #c6d1ff;
+  --sun: #ffb25e;
+  --sun-deep: #ff8a5c;
+
+  --grad: linear-gradient(105deg, #2758ec 0%, #5138ee 48%, #8f35e8 100%);
+  --grad-text: linear-gradient(100deg, #2758ec 0%, #5a38ee 45%, #a12fd8 100%);
+
+  --gutter: clamp(16px, 4.4vw, 56px);
+  --radius: clamp(22px, 3vw, 36px);
+  --shadow: 0 30px 70px -36px rgb(52 36 170 / 0.38), 0 8px 22px -14px rgb(52 36 170 / 0.16);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink-soft); font: 400 17px/1.6 "Plus Jakarta Sans", system-ui, sans-serif; }
+main { width: min(100% - 32px, 1120px); margin: 0 auto; padding: 56px 0 96px; }
+h1, h2, .display { font-family: Fraunces, Georgia, serif; font-weight: 600; color: var(--ink); letter-spacing: -0.008em; line-height: 1.06; font-variation-settings: "SOFT" 100, "WONK" 1; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); margin: 18px 0 12px; }
+h1 em { font-style: italic; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; padding-inline: .1em; margin-inline: -.1em; }
+h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); margin: 72px 0 8px; }
+h3 { color: var(--ink); font-size: 1.1rem; margin: 28px 0 8px; }
+.eyebrow { color: var(--indigo); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.lead { max-width: 40rem; font-size: 1.2rem; }
+a { color: #3b2fc4; }
+.hero { display: grid; gap: 8px; padding: 40px; border-radius: 32px; background: radial-gradient(70% 120% at 100% 0%, #c9d4ff, transparent 70%), linear-gradient(160deg, #f4f1ff, #ebe4ff); }
+.hero img { width: min(420px, 100%); }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); margin-top: 20px; }
+.tile { margin: 0; display: grid; place-items: center; min-height: 200px; padding: 28px 20px 52px; border-radius: 24px; position: relative; box-shadow: inset 0 0 0 1.5px var(--line); }
+.tile img { max-width: 100%; max-height: 110px; }
+.tile figcaption { position: absolute; left: 16px; right: 16px; bottom: 12px; display: flex; gap: 10px; font-size: .82rem; font-weight: 600; color: var(--ink-mute); }
+.tile figcaption a { margin-left: auto; font-weight: 700; } .tile figcaption a + a { margin-left: 0; }
+.tile.dark figcaption, .tile.dark figcaption a { color: #fff; }
+.rules { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 16px; }
+.card { padding: 24px; border-radius: 24px; background: #fff; box-shadow: var(--shadow); }
+.card ul { margin: 8px 0 0; padding-left: 1.2em; }
+.space { display: grid; place-items: center; padding: 20px; border-radius: 20px; background: #fff; box-shadow: var(--shadow); }
+.space div { padding: 40px; outline: 2px dashed #a79cf0; outline-offset: -2px; background: repeating-linear-gradient(45deg, #f2efff 0 8px, #fff 8px 16px); }
+.space img { display: block; width: 320px; max-width: 70vw; background: var(--paper); }
+.swatches { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); margin-top: 20px; }
+.swatch { border-radius: 20px; overflow: hidden; background: #fff; box-shadow: var(--shadow); }
+.swatch .chip { height: 96px; padding: 12px 14px; display: flex; align-items: flex-end; justify-content: space-between; font-weight: 700; font-size: .85rem; }
+.swatch p { margin: 0; padding: 12px 14px 14px; font-size: .85rem; line-height: 1.4; }
+.swatch strong { display: block; color: var(--ink); font-size: .95rem; }
+code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
+.gradients { display: grid; gap: 14px; margin-top: 20px; }
+.gradients div { padding: 22px; border-radius: 20px; color: #fff; font-weight: 700; }
+.type { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: 20px; }
+.type .card .display { font-size: 3.2rem; margin: 6px 0; }
+.icons { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); margin-top: 20px; }
+.icon { display: grid; justify-items: center; gap: 10px; padding: 20px 8px 14px; border-radius: 18px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); color: var(--indigo); font-size: .8rem; font-weight: 600; }
+.icon span { color: var(--ink-mute); }
+.do { color: #146c43; font-weight: 700; } .dont { color: #b42318; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+<section class="hero">
+  <span class="eyebrow">Brand guidelines</span>
+  <img src="logo/svg/lockup-horizontal.svg" alt="Tithi Vidya">
+  <h1>Moon days, <em>made simple</em></h1>
+  <p class="lead">Tithi Vidya helps anyone find their moon birthday, simply, privately and accurately. Calm, warm, trustworthy and modern, with a sense of wonder about the moon.</p>
+</section>
+
+<h2>Logo</h2>
+<p>A moon at the start of its waxing half, Shukla Paksha: a bright crescent grows on the right of a blue-to-purple disc. Use the files as they are.</p>
+<div class="grid">
+  <figure class="tile" style="background:var(--paper)"><img src="logo/svg/lockup-horizontal.svg" alt="Horizontal, colour"><figcaption>Horizontal, colour<a href="logo/svg/lockup-horizontal.svg" download>SVG</a><a href="logo/png/lockup-horizontal.png" download>PNG</a></figcaption></figure>
+  <figure class="tile" style="background:#fff"><img src="logo/svg/lockup-horizontal-ink.svg" alt="Horizontal, one colour"><figcaption>Horizontal, one colour<a href="logo/svg/lockup-horizontal-ink.svg" download>SVG</a><a href="logo/png/lockup-horizontal-ink.png" download>PNG</a></figcaption></figure>
+  <figure class="tile dark" style="background:linear-gradient(115deg,#2546cf,#4a32dc 46%,#7f2fd6)"><img src="logo/svg/lockup-horizontal-white.svg" alt="Horizontal, white"><figcaption>Horizontal, white<a href="logo/svg/lockup-horizontal-white.svg" download>SVG</a><a href="logo/png/lockup-horizontal-white.png" download>PNG</a></figcaption></figure>
+  <figure class="tile" style="background:var(--paper)"><img src="logo/svg/lockup-stacked.svg" alt="Stacked, colour"><figcaption>Stacked, colour<a href="logo/svg/lockup-stacked.svg" download>SVG</a><a href="logo/png/lockup-stacked.png" download>PNG</a></figcaption></figure>
+  <figure class="tile dark" style="background:var(--ink)"><img src="logo/svg/lockup-stacked-white.svg" alt="Stacked, white"><figcaption>Stacked, white<a href="logo/svg/lockup-stacked-white.svg" download>SVG</a><a href="logo/png/lockup-stacked-white.png" download>PNG</a></figcaption></figure>
+  <figure class="tile" style="background:#fff"><img src="logo/svg/mark.svg" alt="Mark, colour"><figcaption>Mark, colour<a href="logo/svg/mark.svg" download>SVG</a><a href="logo/png/mark.png" download>PNG</a></figcaption></figure>
+  <figure class="tile" style="background:#fff"><img src="logo/svg/mark-ink.svg" alt="Mark, one colour"><figcaption>Mark, one colour<a href="logo/svg/mark-ink.svg" download>SVG</a><a href="logo/png/mark-ink.png" download>PNG</a></figcaption></figure>
+  <figure class="tile dark" style="background:var(--indigo)"><img src="logo/svg/mark-white.svg" alt="Mark, white"><figcaption>Mark, white<a href="logo/svg/mark-white.svg" download>SVG</a><a href="logo/png/mark-white.png" download>PNG</a></figcaption></figure>
+  <figure class="tile" style="background:#fff"><img src="logo/svg/mark-app-icon.svg" alt="App icon and avatar"><figcaption>App icon and avatar<a href="logo/svg/mark-app-icon.svg" download>SVG</a><a href="logo/png/mark-app-icon.png" download>PNG</a></figcaption></figure>
+  <figure class="tile" style="background:#fff"><img src="logo/svg/wordmark-ink.svg" alt="Wordmark"><figcaption>Wordmark<a href="logo/svg/wordmark-ink.svg" download>SVG</a><a href="logo/png/wordmark-ink.png" download>PNG</a></figcaption></figure>
+</div>
+
+<h3>Clear space</h3>
+<p>Keep at least half the mark's height clear on every side. Smallest sizes: the mark at 16 px, the horizontal lockup at 120 px wide (30 mm in print), the stacked lockup at 80 px.</p>
+<div class="space"><div><img src="logo/svg/lockup-horizontal.svg" alt="The logo with its clear space shown"></div></div>
+
+<div class="rules">
+  <div class="card"><span class="do">Do</span><ul><li>Use the colour logo on light backgrounds.</li><li>Use the white logo on dark or gradient backgrounds.</li><li>Use the one-colour logo where the gradient can't print.</li></ul></div>
+  <div class="card"><span class="dont">Don't</span><ul><li>Change colours, stretch, rotate or add effects.</li><li>Change the moon's phase or put the crescent on the left.</li><li>Retype "Tithi Vidya" in another font.</li><li>Put the colour logo on photos or the brand gradient.</li></ul></div>
+</div>
+
+<h2>Colour</h2>
+<p>Light only. Ratios are contrast against the page colour; text needs 4.5:1.</p>
+<div class="swatches">
+  <div class="swatch"><div class="chip" style="background:var(--ink);color:#fff"><span>16.7:1</span><span>Aa</span></div><p><strong>Ink</strong><code>#15113d</code> · Headings, important text</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--ink-soft);color:#fff"><span>9.9:1</span><span>Aa</span></div><p><strong>Ink soft</strong><code>#3d3870</code> · Body text</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--ink-mute);color:#fff"><span>7.3:1</span><span>Aa</span></div><p><strong>Ink mute</strong><code>#524b84</code> · Captions, dates, hints</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--paper);color:var(--ink)"><span></span><span>Aa</span></div><p><strong>Paper</strong><code>#f8f7ff</code> · Page background</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--line);color:var(--ink)"><span></span><span>Aa</span></div><p><strong>Line</strong><code>#e3dffb</code> · Dividers, card edges</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--field-line);color:#fff"><span>3.3:1</span><span>Aa</span></div><p><strong>Field line</strong><code>#8a80cf</code> · Text box borders</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--blue);color:#fff"><span>5.3:1</span><span>Aa</span></div><p><strong>Blue</strong><code>#2758ec</code> · Gradient start</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--indigo);color:#fff"><span>6.2:1</span><span>Aa</span></div><p><strong>Indigo</strong><code>#4a3bf0</code> · Links, focus, icons</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--violet);color:#fff"><span>6.1:1</span><span>Aa</span></div><p><strong>Violet</strong><code>#7030e6</code> · Gradient middle</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--orchid);color:#fff"><span>4.5:1</span><span>Aa</span></div><p><strong>Orchid</strong><code>#a23bea</code> · Gradient end, large accents</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--lilac-100);color:var(--ink)"><span></span><span>Aa</span></div><p><strong>Lilac 100</strong><code>#e7e2ff</code> · Soft backgrounds, chips</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--peri-200);color:var(--ink)"><span></span><span>Aa</span></div><p><strong>Periwinkle 200</strong><code>#c6d1ff</code> · The sky</p></div>
+  <div class="swatch"><div class="chip" style="background:var(--sun);color:var(--ink)"><span></span><span>Aa</span></div><p><strong>Sun</strong><code>#ffb25e</code> · The sun in charts only</p></div>
+</div>
+<div class="gradients">
+  <div style="background:var(--grad)">Brand gradient · buttons, the mark <code>linear-gradient(105deg, #2758ec 0%, #5138ee 48%, #8f35e8 100%)</code></div>
+  <div style="background:linear-gradient(115deg,#2546cf 0%,#4a32dc 46%,#7f2fd6 100%)">Deep gradient · footer and call-to-action panels, white text</div>
+</div>
+
+<h2>Typography</h2>
+<div class="type">
+  <div class="card"><span class="eyebrow">Display · Fraunces, soft, 600</span><p class="display">Two birthdays</p><p>Headings, the wordmark and big numbers. Sentence case. One italic accent word per heading, in the text gradient.</p></div>
+  <div class="card"><span class="eyebrow">Body · Plus Jakarta Sans</span><p style="font-size:1.6rem;color:var(--ink);font-weight:700;margin:12px 0 4px">Find my tithi</p><p>Body text at 400, labels and buttons at 600 to 700. At least 16 px, about 70 characters a line.</p></div>
+</div>
+
+<h2>Icons</h2>
+<p>24 px grid, 2 px round stroke, no fill, in the colour of the text around them. Shown here in indigo.</p>
+<div class="icons">
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg><span>arrow</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /> <path d="m15.5 15.5 5 5" /></svg><span>search</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11a8 8 0 0 1 8 8M5 4.5A14.5 14.5 0 0 1 19.5 19" /> <circle cx="6" cy="18" r="1.6" fill="currentColor" stroke="none" /></svg><span>rss</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3.5" /> <path d="m4 7.5 8 5.5 8-5.5" /></svg><span>mail</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="4" /> <path d="M3.5 10h17M8.5 3v4M15.5 3v4" /></svg><span>calendar</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.75" /> <path d="M12 7.2V12l3.2 2" /></svg><span>clock</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s7.5-6.3 7.5-12a7.5 7.5 0 1 0-15 0c0 5.7 7.5 12 7.5 12Z" /> <circle cx="12" cy="9.5" r="2.6" /></svg><span>pin</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="3.5" /> <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg><span>lock</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13.5a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1" /> <path d="M14 10.5a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" /></svg><span>link</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8L12 3Z" /></svg><span>star</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="5.5" r="2.5" /> <circle cx="17.5" cy="5.5" r="2.5" /> <circle cx="12" cy="18.5" r="2.5" /> <path d="M6.5 8v1.5c0 1.7 1.3 3 3 3h5c1.7 0 3-1.3 3-3V8M12 12.5V16" /></svg><span>fork</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-8.5-5-8.5-11A4.8 4.8 0 0 1 12 6.6a4.8 4.8 0 0 1 8.5 2.9c0 6-8.5 11-8.5 11Z" /></svg><span>heart</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1.5c.9 6 3.6 9.6 10.5 10.5C15.6 12.9 12.9 16.5 12 22.5c-.9-6-3.6-9.6-10.5-10.5C8.4 11.1 11.1 7.5 12 1.5Z" fill="currentColor" stroke="none" /></svg><span>spark</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9M10 20a2.2 2.2 0 0 0 4 0" /></svg><span>bell</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9M10 20a2.2 2.2 0 0 0 4 0" /><path d="m4 4 16 16" /></svg><span>bell-off</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12" /></svg><span>share</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h9M8.5 3v2M6 5c.6 3.4 2.9 6.2 6 7.6M11 5c-.8 3.6-3.4 6.6-7 8" /><path d="m12.5 21 4-9 4 9M14 17.5h5" /></svg><span>translate</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="currentColor" stroke="none" /></svg><span>play</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor" stroke="none" /><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor" stroke="none" /></svg><span>pause</span></div>
+  <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none" /></svg><span>stop</span></div>
+</div>
+
+<h2>Voice</h2>
+<div class="rules">
+  <div class="card"><span class="do">Like this</span><p>"Your tithi birthday falls on a different date each year. Here is the simple reason."</p><p>Plain English, short sentences, warm and honest about limits.</p></div>
+  <div class="card"><span class="dont">Not like this</span><p>"Unlock the cosmic secrets hidden in your stars."</p><p>No mystical language, hype or fortune-telling.</p></div>
+</div>
+
+<p style="margin-top:56px">The full rules are in <a href="README.md">README.md</a>. Questions: <a href="mailto:contact@tithividya.org">contact@tithividya.org</a></p>
+</main>
+</body>
+</html>
