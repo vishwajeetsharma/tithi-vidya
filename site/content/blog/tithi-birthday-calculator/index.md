@@ -4,7 +4,7 @@ description: "How a tithi birthday calculator works, the 5 things that can make 
 date: 2026-11-08
 tags: [tithi, birthday]
 cover: cover.jpg
-coverAlt: "A half moon next to the words Wrong by a month, with a yellow sticker that says 5 checks"
+coverAlt: "A phone showing 7 Sep ticked and 8 Aug crossed out, beside the words Wrong by a month and a sticker saying 5 checks"
 ---
 
 **A tithi birthday calculator takes your birth date, time and place, finds the tithi you were born on, and then finds the day it comes back each year.** That sounds simple. But five small choices inside it decide whether your date is right, a day off, or a whole month off.

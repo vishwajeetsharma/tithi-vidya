@@ -4,7 +4,7 @@ description: "Vivah Panchami 2026 is on Monday, 14 December. Exact tithi times, 
 date: 2026-11-09
 tags: [festivals, hindu calendar]
 cover: cover.jpg
-coverAlt: "A calendar page for 14 December next to a crescent moon, with the words Vivah Panchami 2026 and a sticker asking No weddings?"
+coverAlt: "A calendar page for 14 December, marigold garlands and a golden bow broken in two, with the words Vivah Panchami 2026"
 ---
 
 **Vivah Panchami 2026 is on Monday, 14 December.** The Panchami tithi runs from 4:48 pm on Sunday, 13 December, to 7:16 pm on Monday, 14 December, in New Delhi. It marks the wedding of Ram and Sita.

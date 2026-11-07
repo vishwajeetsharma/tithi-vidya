@@ -279,7 +279,7 @@ ${Object.entries(icons).map(([name, inner]) => `  <div class="icon"><svg width="
   <div class="card"><span class="dont">Not like this</span><p>"Unlock the cosmic secrets hidden in your stars."</p><p>No mystical language, hype or fortune-telling.</p></div>
 </div>
 
-<p style="margin-top:56px">The full rules are in <a href="README.md">README.md</a>. Questions: <a href="mailto:contact@tithividya.org">contact@tithividya.org</a></p>
+<p style="margin-top:56px">The full rules are in <a href="https://github.com/vishwajeetsharma/tithi-vidya/blob/main/brand/README.md">README.md</a>. Questions: <a href="mailto:contact@tithividya.org">contact@tithividya.org</a></p>
 </main>
 </body>
 </html>
