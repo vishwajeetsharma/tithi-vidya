@@ -1,7 +1,7 @@
 ---
 title: "Tithi birthday: what it is and how to find yours"
 description: "Your tithi birthday is your birthday by the moon. Here's what it means, why its date moves every year, and how to find yours in a minute."
-date: 2026-11-08
+date: 2026-11-07
 tags: [tithi, birthday]
 cover: cover.jpg
 coverAlt: "A half-lit moon next to the words Your 2nd birthday, with a yellow sticker that says Set by the moon"

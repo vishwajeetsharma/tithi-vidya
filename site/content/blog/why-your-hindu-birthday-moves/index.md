@@ -17,7 +17,7 @@ The calendar on your wall follows the **sun**. One trip around the sun is 365 da
 
 The Hindu calendar also follows the **moon**. A moon month runs from one new moon to the next, about 29.5 days. Inside that month there are 30 tithis. A tithi is one step of the moon moving away from the sun: each time the gap between them grows by 12°, a new tithi starts.
 
-Your tithi birthday is the day your tithi comes back, in the same moon month you were born in.
+Your tithi birthday is the day your tithi comes back, in the same moon month you were born in. Our guide explains [what a tithi birthday is and how to find yours](/blog/tithi-birthday), step by step.
 
 ## Twelve moon months are short
 

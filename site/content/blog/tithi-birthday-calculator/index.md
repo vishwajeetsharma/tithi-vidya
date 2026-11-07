@@ -1,7 +1,7 @@
 ---
 title: "Tithi birthday calculator: 5 things it must get right"
 description: "How a tithi birthday calculator works, the 5 things that can make it a day or even a month wrong, and a quick test you can run on any calculator."
-date: 2026-11-11
+date: 2026-11-08
 tags: [tithi, birthday]
 cover: cover.jpg
 coverAlt: "A half moon next to the words Wrong by a month, with a yellow sticker that says 5 checks"

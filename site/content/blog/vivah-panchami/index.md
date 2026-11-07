@@ -1,7 +1,7 @@
 ---
 title: "Vivah Panchami 2026: date, story and the wedding custom"
 description: "Vivah Panchami 2026 is on Monday, 14 December. Exact tithi times, the story of Ram and Sita's wedding, and why some families skip weddings that day."
-date: 2026-11-15
+date: 2026-11-09
 tags: [festivals, hindu calendar]
 cover: cover.jpg
 coverAlt: "A calendar page for 14 December next to a crescent moon, with the words Vivah Panchami 2026 and a sticker asking No weddings?"
