@@ -27,13 +27,13 @@ So if nothing else happened, your tithi birthday would come about 11 days sooner
 
 ## The extra month
 
-The Hindu calendar does not let that happen. About every two or three years, it adds an **extra moon month**, called an adhika masa. That happens about 7 times every 19 years.
+The Hindu calendar does not let that happen. About every two or three years, it adds an **extra moon month**, called an adhika masa. That happens about 7 times every 19 years, and Wikipedia [explains how the extra month is chosen](https://en.wikipedia.org/wiki/Adhika-masa).
 
 When an extra month comes, your tithi birthday jumps back by about 19 days. Then it starts creeping earlier again.
 
 ## A real example
 
-Here is one tithi, Shukla Dashami in the month of Jyeshtha, at New Delhi. These dates come straight from Tithi Vidya.
+Here is one tithi, Shukla Dashami in the month of Jyeshtha, at New Delhi. These dates come straight from Tithi Vidya, which reads the sun's and moon's positions from NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html).
 
 ![The date of one tithi from 2026 to 2037. It falls about 11 days each year, then jumps back after each extra month](drift-chart.jpg "One tithi, year by year, at New Delhi")
 
@@ -56,10 +56,16 @@ Over twelve years, this birthday never leaves a window of about four weeks, from
 
 ## One more thing: sunrise
 
-A panchang day starts at **sunrise**, not at midnight. The tithi that is running at sunrise gives the day its name. Sunrise comes at different times in different cities, so now and then the same tithi lands on different dates in two places. That is why Tithi Vidya asks where you were born.
+A panchang day starts at **sunrise**, not at midnight. The tithi that is running at sunrise gives the day its name. Sunrise comes at different times in different cities, so now and then the same tithi lands on different dates in two places. That is why Tithi Vidya asks where you were born. Getting that sunrise right is one of the [checks that make or break a tithi calculator](/blog/tithi-birthday-calculator).
 
 ## So which birthday is right?
 
 Both. Your calendar birthday counts your years. Your tithi birthday follows the moon. Many families use the tithi birthday for prayers and blessings.
 
 You can find yours in a minute: enter your birth date, time and place on [Find my tithi](/find). If you want to see exactly how it works, and how it was tested, read [How it works](/how-it-works).
+
+## Keep reading
+
+- [Tithi birthday: what it is and how to find yours](/blog/tithi-birthday): the full guide, with a real birth worked through step by step.
+- [Tithi birthday calculator: 5 things it must get right](/blog/tithi-birthday-calculator): why two apps can give you dates a day, or a month, apart.
+- [Vivah Panchami 2026](/blog/vivah-panchami): the same 11-day slide, this time for a festival.

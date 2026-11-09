@@ -120,7 +120,9 @@ Neither is rare. Across 2027, New Delhi sees 17 skipped tithis and 12 doubled on
 
 Our example hits a skipped one in 2034. That year, Krishna Ashtami starts at 6:18 am on 5 September, just after sunrise. It ends at 4:07 am on 6 September, just before the next sunrise.
 
-So which day is the birthday? Tithi Vidya puts it on 5 September, the day the tithi falls in. For a doubled tithi, it uses the first of the two days. Some families and priests follow other rules, and if yours does, go with your family.
+So which day is the birthday? Tithi Vidya puts it on 5 September, the day the tithi falls in. For a doubled tithi, it uses the first of the two days.
+
+Some families and priests follow other rules, and if yours does, go with your family. This rule is one of [five things a tithi birthday calculator has to get right](/blog/tithi-birthday-calculator), and it's the one where two apps most often disagree.
 
 ## When your birth month comes twice
 
