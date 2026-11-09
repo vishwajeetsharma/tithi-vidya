@@ -34,10 +34,15 @@ export const getPosts = (): PostDetails[] => read().posts;
 /** When the posts were built. The HTML shows what was live then, and the page's script catches up from there. */
 export const getBuiltAt = (): string => read().builtAt;
 
-/** Posts that were live when the site was built. For files that can't check the clock: the sitemap, feed and llms.txt. */
-export function getLivePosts(): PostDetails[] {
-  const builtAt = Date.parse(getBuiltAt());
-  return getPosts().filter((post) => isLive(post, builtAt));
+// LISTS_REVALIDATE: the files that list live posts (the sitemap, the feed,
+// llms.txt, llms-full.txt and the blog page) set `revalidate = 600`. Each is
+// made at deploy, then made again on Vercel by the first visit more than 10
+// minutes later, so a post that goes live at 6:00 AM joins them without a
+// deploy. Next.js needs the number written out in each file: keep them in step.
+
+/** Posts that are live at `now` (milliseconds; the moment the file is made, by default). */
+export function getLivePosts(now = Date.now()): PostDetails[] {
+  return getPosts().filter((post) => isLive(post, now));
 }
 
 /**
@@ -54,10 +59,10 @@ export function getPost(slug: string): Post | undefined {
  * plus every scheduled post, since any of those may be live by the time
  * someone visits. The list itself picks by the visitor's clock.
  */
-export function latestPosts(count: number, except = ""): PostSummary[] {
-  const builtAt = Date.parse(getBuiltAt());
+export function latestPosts(count: number, except = "", at = getBuiltAt()): PostSummary[] {
+  const now = Date.parse(at);
   let live = 0;
   return getPosts()
-    .filter((post) => post.slug !== except && (!isLive(post, builtAt) || live++ < count))
+    .filter((post) => post.slug !== except && (!isLive(post, now) || live++ < count))
     .map(summarise);
 }

@@ -7,7 +7,7 @@ import { NotifyButton } from "@/components/blog/NotifyButton";
 import { PreferredSource } from "@/components/blog/PreferredSource";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { JsonLd } from "@/components/JsonLd";
-import { getBuiltAt, getLivePosts, latestPosts } from "@/lib/blog";
+import { getLivePosts, latestPosts } from "@/lib/blog";
 import { PAGE_SIZE, topics } from "@/lib/posts";
 import { AUTHOR, SITE_NAME, pageMetadata, siteUrl } from "@/lib/site";
 
@@ -16,8 +16,14 @@ const DESCRIPTION = "Simple guides to tithis, moon birthdays, panchang days and 
 
 export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/blog" });
 
+// Made again every 10 minutes, so the HTML and its structured data list posts
+// that went live since the deploy (see LISTS_REVALIDATE in lib/blog.ts).
+export const revalidate = 600;
+
 export default function BlogIndex() {
-  const posts = getLivePosts();
+  // When this HTML is made. The list's script catches up from here by the visitor's clock.
+  const madeAt = new Date().toISOString();
+  const posts = getLivePosts(Date.parse(madeAt));
   const origin = siteUrl().origin;
   return (
     <div className={s.page}>
@@ -53,7 +59,7 @@ export default function BlogIndex() {
           </div>
         </header>
         {/* The first page is in the HTML, with scheduled posts, which show once they go live. The rest load from /blog/posts.json. */}
-        <BlogBrowser firstPage={latestPosts(PAGE_SIZE)} total={posts.length} topics={topics(posts)} builtAt={getBuiltAt()} />
+        <BlogBrowser firstPage={latestPosts(PAGE_SIZE, "", madeAt)} total={posts.length} topics={topics(posts)} builtAt={madeAt} />
         <NewsletterSignup />
       </div>
     </div>

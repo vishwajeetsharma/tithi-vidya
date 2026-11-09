@@ -3,6 +3,8 @@ import { absoluteHtml, escape, feedHtml } from "@/lib/feeds";
 import { AUTHOR, AUTHOR_EMAIL, SITE_NAME, siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
+// Made again every 10 minutes, so posts that went live since the deploy are listed (see LISTS_REVALIDATE in lib/blog.ts).
+export const revalidate = 600;
 
 /** Posts go live at 6:00 AM India time on their date. */
 const liveDate = (date: string) => new Date(`${date}T06:00:00+05:30`).toUTCString();

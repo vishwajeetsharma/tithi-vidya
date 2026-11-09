@@ -4,6 +4,8 @@ import { getLivePosts } from "@/lib/blog";
 import { siteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
+// Made again every 10 minutes, so posts that went live since the deploy are listed (see LISTS_REVALIDATE in lib/blog.ts).
+export const revalidate = 600;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const origin = siteUrl().origin;
