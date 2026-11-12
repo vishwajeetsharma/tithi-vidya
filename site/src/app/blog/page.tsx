@@ -18,7 +18,7 @@ const DESCRIPTION = "Simple guides to tithis, moon birthdays, panchang days and 
 // The blog exists in each translated language too (/hi/blog): hreflang, and the language menu, find it here.
 const LANGUAGES = { en: "/blog", "x-default": "/blog", ...Object.fromEntries(TRANSLATED.map((code) => [code, inLang(code, "/blog")])) };
 
-export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/blog", languages: LANGUAGES });
+export const metadata: Metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/blog", ...(TRANSLATED.length ? { languages: LANGUAGES } : {}) });
 
 // Made again every 10 minutes, so the HTML and its structured data list posts
 // that went live since the deploy (see LISTS_REVALIDATE in lib/blog.ts).

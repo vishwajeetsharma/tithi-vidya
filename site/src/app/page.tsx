@@ -23,7 +23,7 @@ import { AUTHOR, CONTACT_EMAIL, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/l
 
 export const metadata: Metadata = {
   // Each translated language has a front page of its own (/hi, /mr): hreflang, and the language menu, find it here.
-  alternates: { canonical: "/", languages: { en: "/", "x-default": "/", ...Object.fromEntries(TRANSLATED.map((code) => [code, inLang(code, "/")])) } },
+  alternates: { canonical: "/", ...(TRANSLATED.length ? { languages: { en: "/", "x-default": "/", ...Object.fromEntries(TRANSLATED.map((code) => [code, inLang(code, "/")])) } } : {}) },
 };
 
 export default function HomePage() {

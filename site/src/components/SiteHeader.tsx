@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { inLang, splitPath } from "@/i18n/config";
+import { inLang, LANGUAGES_ON, splitPath } from "@/i18n/config";
 import { dictionary } from "@/i18n/dictionaries";
 import { litPath } from "@/lib/moon";
 
@@ -92,7 +92,7 @@ export function SiteHeader() {
               </Link>
             ))}
           </div>
-          <LanguageMenu variant="header" />
+          {LANGUAGES_ON && <LanguageMenu variant="header" />}
           <Link className="btn btnPrimary siteNavCta" href="/find" aria-current={current("/find")}>
             {t.find}
           </Link>
@@ -117,7 +117,7 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            <LanguageMenu variant="menu" />
+            {LANGUAGES_ON && <LanguageMenu variant="menu" />}
           </div>
         )}
       </div>

@@ -27,9 +27,18 @@ export const LANGS: Record<Lang, About> = {
   ...(languages.translated as Record<TranslatedLang, About>),
 };
 
-export const TRANSLATED = Object.keys(languages.translated) as TranslatedLang[];
+/**
+ * The switch for everything about languages. While it is false the site is
+ * English only: no language menu, no "Read this in" line, no /hi or /mr pages
+ * (they answer 404), and nothing about them in the sitemap or for search
+ * engines. The translations themselves stay in the repository, so turning it
+ * back on brings everything back. "Listen to this article" does not depend on it.
+ */
+export const LANGUAGES_ON = false;
 
-export const isTranslated = (value: string): value is TranslatedLang => Object.hasOwn(languages.translated, value);
+export const TRANSLATED = (LANGUAGES_ON ? Object.keys(languages.translated) : []) as TranslatedLang[];
+
+export const isTranslated = (value: string): value is TranslatedLang => LANGUAGES_ON && Object.hasOwn(languages.translated, value);
 
 /** [Google's code, the language's own name, its English name]. */
 export const MORE_LANGUAGES = languages.more as [code: string, name: string, english: string][];

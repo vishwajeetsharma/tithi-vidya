@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { LanguageMenu } from "@/components/LanguageMenu";
-import { inLang, LANGS, TRANSLATED, type Lang } from "@/i18n/config";
+import { inLang, LANGS, LANGUAGES_ON, TRANSLATED, type Lang } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 import s from "./blog.module.css";
@@ -24,6 +24,7 @@ export function ReadIn({
   t: Dictionary["post"];
   more: string;
 }) {
+  if (!LANGUAGES_ON) return null;
   const others = (["en", ...TRANSLATED] as Lang[]).filter((code) => code !== lang && (code === "en" || translations?.[code]));
   return (
     <div className={s.readIn}>
