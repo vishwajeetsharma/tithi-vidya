@@ -5,6 +5,9 @@ date: 2026-11-12
 tags: [festivals, traditions, hindu calendar]
 cover: cover.jpg
 coverAlt: "A tulsi plant in a red veil under a sugarcane mandap, a calendar page for 21 November, and the words Tulsi Vivah 2026"
+coverArt: cover-art.jpg
+pushTitle: "Tulsi Vivah 2026 is on 21 November"
+pushBody: "The wedding that opens shaadi season. The story, the timings and a simple 7-step puja at home."
 ---
 
 **Tulsi Vivah 2026 is on Saturday, 21 November,** the day after Dev Uthani Ekadashi. Its tithi, Dwadashi, runs from 6:32 am that morning to 4:57 am on Sunday. So the whole evening, when most families hold the wedding, falls inside it.

@@ -18,6 +18,12 @@ export type Post = {
   tags: string[];
   draft: boolean;
   cover: (BlogImage & { alt: string }) | null;
+  /**
+   * What a notification for the post shows: `pushTitle` and `pushBody` from the
+   * post (empty means its title and description), a wide picture cut from the
+   * cover, and a square one from `coverArt`. Either picture can be "".
+   */
+  push: { title: string; body: string; image: string; icon: string };
   toc: { id: string; text: string }[];
   words: number;
   minutes: number;

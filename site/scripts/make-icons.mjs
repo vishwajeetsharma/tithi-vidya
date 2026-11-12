@@ -8,6 +8,7 @@
 //   public/icon-192.png   for the app manifest (Android, "Add to home screen")
 //   public/icon-512.png
 //   public/icon-maskable-512.png   with room around it, for icons cut to a circle or squircle
+//   public/badge-96.png   the white, one-colour mark for notifications on Android
 import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -53,4 +54,12 @@ await sharp({ create: { width: 512, height: 512, channels: 4, background: PAPER 
   .png({ compressionLevel: 9 })
   .toFile(join(SITE, "public/icon-maskable-512.png"));
 
-console.log("icons: favicon.ico (16, 32, 48), icon1.png (96), icon-192.png, icon-512.png, icon-maskable-512.png");
+// The notification badge: the small mark Android shows in the status bar and
+// beside a notification. Android draws only its shape, in one colour, so it is
+// the logo as a white outline and moon on nothing (public/sw.js uses it).
+const badge = Buffer.from(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="27.5" fill="none" stroke="#fff" stroke-width="4"/><path fill="#fff" d="M32 8a24 24 0 0 1 0 48 34 34 0 0 0 0-48Z"/></svg>`,
+);
+await sharp(badge, { density: 72 * (96 / 64) * 4 }).resize(96, 96).png({ compressionLevel: 9 }).toFile(join(SITE, "public/badge-96.png"));
+
+console.log("icons: favicon.ico (16, 32, 48), icon1.png (96), icon-192.png, icon-512.png, icon-maskable-512.png, badge-96.png");

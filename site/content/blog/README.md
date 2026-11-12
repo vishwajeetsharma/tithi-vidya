@@ -44,6 +44,9 @@ More text. **Bold**, *italic* and [links](/find) all work.
 | `tags` | No | A list of topics, in lowercase. Reuse the topic names other posts use, so readers find related posts together. |
 | `cover` | No | An image file in the post's folder. It appears at the top, on the blog page and when the post is shared. |
 | `coverAlt` | With a cover | A few words describing the cover, for people who can't see it. |
+| `coverArt` | No | A square picture in the post's folder: the cover's picture without its words. Notifications show it small, beside the text. Without it they show the site's icon. |
+| `pushTitle` | No | The notification's first line, in double quotes: a short hook of about 40 characters. Defaults to the title. |
+| `pushBody` | No | The notification's second line, in double quotes: what's inside, in about 100 characters. Defaults to the description. |
 | `author` | No | Defaults to Vishwajeet Sharma. |
 | `draft` | No | `draft: true` hides the post on the live site, but still shows it when running the site on your computer. |
 

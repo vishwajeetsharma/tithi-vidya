@@ -41,13 +41,39 @@ describe("which posts to announce", () => {
     expect(slugs(postsToAnnounce(posts, new Set(["today", "yesterday"]), now))).toEqual([]);
   });
 
-  it("says what the notification shows", () => {
-    expect(notificationFor({ slug: "a", title: "Moon days", description: "Why." }, "https://www.tithividya.org")).toEqual({
-      title: "New on Tithi Vidya: Moon days",
+  it("says what the notification shows, with the post's own words and pictures", () => {
+    const origin = "https://www.tithividya.org";
+    const plain = { slug: "a", title: "Moon days", description: "Why.", liveAt: "2026-11-10T00:30:00.000Z" };
+    // Without its own words or pictures: the title, the description and the site's icon.
+    expect(notificationFor(plain, origin)).toEqual({
+      title: "Moon days",
       body: "Why.",
-      url: "https://www.tithividya.org/blog/a",
-      icon: "https://www.tithividya.org/icon-192.png",
+      url: `${origin}/blog/a?utm_source=push&utm_medium=notification&utm_campaign=a`,
+      icon: `${origin}/icon-192.png`,
+      badge: `${origin}/badge-96.png`,
       tag: "post-a",
+      timestamp: Date.parse("2026-11-10T00:30:00.000Z"),
     });
+    const rich = notificationFor(
+      { ...plain, push: { title: "Holi is on 22 March", body: "Bonfire the night before.", image: "/blog-media/a-push.jpg", icon: "/blog-media/a-icon.jpg" } },
+      origin,
+    );
+    expect(rich).toMatchObject({
+      title: "Holi is on 22 March",
+      body: "Bonfire the night before.",
+      image: `${origin}/blog-media/a-push.jpg`,
+      icon: `${origin}/blog-media/a-icon.jpg`,
+    });
+  });
+
+  it("cuts long words at a word, so nothing ends mid-word on a lock screen", () => {
+    const long = notificationFor(
+      { slug: "a", title: "A very long title ".repeat(8).trim(), description: "Some words here. ".repeat(20).trim(), liveAt: "2026-11-10T00:30:00.000Z" },
+      "https://www.tithividya.org",
+    );
+    expect(long.title.length).toBeLessThanOrEqual(65);
+    expect(long.title.endsWith("…")).toBe(true);
+    expect(long.title).not.toMatch(/\s…$/);
+    expect(long.body.length).toBeLessThanOrEqual(180);
   });
 });

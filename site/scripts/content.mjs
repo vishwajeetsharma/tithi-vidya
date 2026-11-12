@@ -85,7 +85,18 @@ function checkFrontMatter(slug, data, problems) {
   if (data.tags !== undefined && !(Array.isArray(data.tags) && data.tags.every((t) => typeof t === "string"))) {
     problems.push(`${where} tags must be a list, like  tags: [tithi, birthday]`);
   }
+  for (const key of ["pushTitle", "pushBody", "coverArt"]) {
+    if (data[key] !== undefined && (typeof data[key] !== "string" || !data[key].trim())) {
+      problems.push(`${where} ${key} must be text in double quotes, or left out`);
+    }
+  }
 }
+
+/** The pictures a notification shows: a wide one (2:1, the shape Android and Windows use) and a small square one. */
+const VARIANTS = {
+  push: (image) => image.resize(1024, 512, { fit: "cover" }),
+  icon: (image) => image.resize(256, 256, { fit: "cover" }),
+};
 
 /** Resizes one image into WebP widths, reusing earlier results from the cache. */
 function imageProcessor({ mediaDir, cacheDir }) {
@@ -98,10 +109,25 @@ function imageProcessor({ mediaDir, cacheDir }) {
     return `/blog-media/${name}`;
   }
 
-  return function process(file, slug) {
+  function process(file, slug) {
     if (!done.has(file)) done.set(file, run(file, slug));
     return done.get(file);
+  }
+
+  /**
+   * One more picture cut from an image, as a JPEG: one of VARIANTS, the wide
+   * and the square picture a notification shows. Kept in the same cache.
+   */
+  process.variant = async function variant(file, slug, name) {
+    const bytes = await readFile(file);
+    const hash = createHash("sha1").update(bytes).update(IMAGE_VERSION).update(name).digest("hex").slice(0, 10);
+    const stem = basename(file, extname(file)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "image";
+    return cached(`${slug}-${stem}-${hash}-${name}.jpg`, (to) =>
+      VARIANTS[name](sharp(bytes).rotate()).jpeg({ quality: 80, mozjpeg: true }).toFile(to),
+    );
   };
+
+  return process;
 
   async function run(file, slug) {
     const bytes = await readFile(file);
@@ -237,6 +263,22 @@ async function renderPost({ slug, file, source }, processImage, problems) {
     if (!existsSync(path)) problems.push(`${slug}: cover image "${data.cover}" was not found next to the post`);
     else cover = { ...(await processImage(path, slug)), alt: String(data.coverAlt ?? "") };
   }
+  // What a notification for this post shows (src/lib/push.ts): its own short
+  // words when the post gives them, a wide picture cut from the cover (2:1, the
+  // shape Android and Windows show), and a square one from coverArt, which is
+  // the cover's picture without its words.
+  const push = { title: String(data.pushTitle ?? "").trim(), body: String(data.pushBody ?? "").trim(), image: "", icon: "" };
+  if (cover && RASTER.has(extname(data.cover).toLowerCase())) {
+    push.image = await processImage.variant(resolve(dirname(file), data.cover), slug, "push");
+  }
+  if (typeof data.coverArt === "string") {
+    const path = resolve(dirname(file), data.coverArt);
+    if (!existsSync(path) || !RASTER.has(extname(path).toLowerCase())) {
+      problems.push(`${slug}: coverArt image "${data.coverArt}" was not found next to the post (JPG, PNG or WebP)`);
+    } else {
+      push.icon = await processImage.variant(path, slug, "icon");
+    }
+  }
   if (problems.length > before) return null;
 
   // The Markdown copy points at the published images, so it reads well on its own.
@@ -256,6 +298,7 @@ async function renderPost({ slug, file, source }, processImage, problems) {
     tags: Array.isArray(data.tags) ? data.tags : [],
     draft: data.draft === true,
     cover,
+    push,
     toc,
     words,
     minutes: Math.max(1, Math.round(words / 200)),
@@ -290,7 +333,13 @@ async function cachedRender({ slug, file }, { site, cacheDir, renderer, processI
     const saved = JSON.parse(await readFile(store, "utf8"));
     if (saved.key === key) {
       // Processing an image again is quick, checks it hasn't changed, and copies it into public/blog-media.
-      const images = await Promise.all(saved.images.map((image) => processImage(join(site, image.file), slug)));
+      const images = await Promise.all(
+        saved.images.map((image) =>
+          image.variant
+            ? processImage.variant(join(site, image.file), slug, image.variant).then((src) => ({ src }))
+            : processImage(join(site, image.file), slug),
+        ),
+      );
       if (images.every((image, i) => image.src === saved.images[i].src)) return saved.post;
     }
   } catch {
@@ -301,6 +350,11 @@ async function cachedRender({ slug, file }, { site, cacheDir, renderer, processI
     processImage(path, slug).then((image) => {
       used.push({ file: relative(site, path), src: image.src });
       return image;
+    });
+  track.variant = (path, slug, name) =>
+    processImage.variant(path, slug, name).then((src) => {
+      used.push({ file: relative(site, path), src, variant: name });
+      return src;
     });
   const post = await renderPost({ slug, file, source }, track, problems);
   if (post) await writeFile(store, JSON.stringify({ key, images: used, post }));

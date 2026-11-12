@@ -15,7 +15,7 @@ import s from "@/components/blog/blog.module.css";
 import { ArrowIcon, SearchIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
 import { JsonLd } from "@/components/JsonLd";
-import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, type Post } from "@/lib/blog";
+import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, serverNow, type Post } from "@/lib/blog";
 import { isLive, PREVIEW } from "@/lib/posts";
 import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
 
@@ -115,8 +115,10 @@ export default async function PostPage({ params }: Params) {
   const builtAt = getBuiltAt();
   const liveAt = Date.parse(post.liveAt);
   // Signed in at /backstage (draft mode), a scheduled post shows in full, with a note.
+  // That page is made afresh on every visit, so it can ask the real clock: once the
+  // post is live, the note goes. (The build time would keep it until the next deploy.)
   const { isEnabled: backstage } = await draftMode();
-  const early = liveAt > Date.parse(builtAt);
+  const early = backstage && liveAt > serverNow();
   const scheduled = !backstage && !isLive(post, Date.parse(builtAt));
 
   return (
@@ -181,7 +183,7 @@ export default async function PostPage({ params }: Params) {
       <div className={s.postWrap}>
         <div className={s.postLayout}>
           <article className={s.postMain}>
-            {backstage && early && (
+            {early && (
               <p className={s.backstageNote} role="status">
                 Preview from Backstage. Visitors see this post from {formatDate(post.date)} at 6:00 AM India time.{" "}
                 <Link href="/backstage" prefetch={false}>
@@ -206,7 +208,7 @@ export default async function PostPage({ params }: Params) {
                   </>
                 )}{" "}
                 · {post.minutes} min read · {post.author}
-                {PREVIEW && liveAt > Date.parse(builtAt) && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
+                {PREVIEW && liveAt > serverNow() && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
               </p>
             </header>
 

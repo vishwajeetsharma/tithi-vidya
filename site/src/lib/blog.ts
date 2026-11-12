@@ -40,6 +40,13 @@ export const getBuiltAt = (): string => read().builtAt;
 // minutes later, so a post that goes live at 6:00 AM joins them without a
 // deploy. Next.js needs the number written out in each file: keep them in step.
 
+/**
+ * The time on the server, for pages that are made afresh on every visit:
+ * Backstage, and posts opened from it. A page built ahead of time must not
+ * use it, because its HTML is kept and the time in it would go stale.
+ */
+export const serverNow = (): number => Date.now();
+
 /** Posts that are live at `now` (milliseconds; the moment the file is made, by default). */
 export function getLivePosts(now = Date.now()): PostDetails[] {
   return getPosts().filter((post) => isLive(post, now));

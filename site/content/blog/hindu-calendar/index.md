@@ -5,6 +5,9 @@ date: 2026-11-18
 tags: [festivals, hindu calendar, panchang]
 cover: cover.jpg
 coverAlt: "A wall of twelve small month calendars with festival dates circled, beside the words Every festival of 2027"
+coverArt: cover-art.jpg
+pushTitle: "🗓️ Every Hindu festival of 2027, on one page"
+pushBody: "Holi 22 March, Diwali 29 October, and 49 more dates with tithi. Save the one-page calendar."
 ---
 
 **Here's every major Hindu festival of 2027, month by month, with its date, day and tithi.** Holi is on Monday, 22 March, Raksha Bandhan on Tuesday, 17 August, and Diwali on Friday, 29 October. All 51 dates are worked out for New Delhi.

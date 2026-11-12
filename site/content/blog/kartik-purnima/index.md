@@ -5,6 +5,9 @@ date: 2026-11-13
 tags: [festivals, purnima, hindu calendar]
 cover: cover.jpg
 coverAlt: "A full moon over ghat steps lined with lamps, a calendar page for 24 November, and the words Kartik Purnima 2026"
+coverArt: cover-art.jpg
+pushTitle: "🌕 Kartik Purnima 2026: 3 festivals, 1 day"
+pushBody: "It's Tuesday, 24 November. A holy dip at dawn, Gurpurab all day, Dev Deepawali at dusk. See the timings."
 ---
 
 **Kartik Purnima 2026 is on Tuesday, 24 November.** The full moon tithi runs from 11:42 pm on Monday, 23 November, to 8:23 pm on Tuesday (IST). So the dawn bath, Guru Nanak Jayanti and the evening lamps of Dev Deepawali all fall on the same day this year.

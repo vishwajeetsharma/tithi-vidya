@@ -5,6 +5,9 @@ date: 2026-11-17
 tags: [festivals, ekadashi, vrat, hindu calendar]
 cover: cover.jpg
 coverAlt: "A brass puja plate with a diya and tulsi leaves at dawn, a calendar page for 4 December, and the words Utpanna Ekadashi 2026"
+coverArt: cover-art.jpg
+pushTitle: "Utpanna Ekadashi: Friday, 4 December"
+pushBody: "New to Ekadashi fasts? This is the one to start with. Parana times for 12 cities inside."
 ---
 
 **Utpanna Ekadashi 2026 is on Friday, 4 December.** The Ekadashi tithi runs from 11:04 pm on Thursday, 3 December, to 11:45 pm on Friday (IST). Break the fast on Saturday, 5 December, between 6:59 am and 9:04 am in New Delhi.

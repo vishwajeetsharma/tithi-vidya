@@ -52,14 +52,57 @@ export function postsToAnnounce<T extends { slug: string; liveAt: string; draft?
     .slice(0, MOST_AT_ONCE);
 }
 
-/** What the notification says. public/sw.js shows it. */
-export function notificationFor(post: { slug: string; title: string; description: string }, origin: string) {
+/** Cuts text at a word, with "…", so a long line never ends mid-word in a notification. */
+function clip(text: string, most: number): string {
+  if (text.length <= most) return text;
+  const cut = text.slice(0, most - 1);
+  return `${cut.slice(0, Math.max(cut.lastIndexOf(" "), most - 20)).replace(/[\s,;:.!?-]+$/, "")}…`;
+}
+
+/** A notification's title and body are cut by the phone after about this many characters. */
+const TITLE_MOST = 65;
+const BODY_MOST = 180;
+
+export type Announcement = {
+  title: string;
+  body: string;
+  url: string;
+  icon: string;
+  image?: string;
+  badge: string;
+  tag: string;
+  timestamp: number;
+};
+
+type Announced = {
+  slug: string;
+  title: string;
+  description: string;
+  liveAt: string;
+  push?: { title: string; body: string; image: string; icon: string };
+};
+
+/**
+ * What the notification says and shows. public/sw.js draws it.
+ *
+ * - The words are the post's own `pushTitle` and `pushBody` when it has them:
+ *   a short hook reads better on a lock screen than a full page title.
+ * - `image` is the wide picture under the words (Android, Windows), and `icon`
+ *   the small square beside them: the post's own art, or the site's moon.
+ * - `badge` is the tiny one-colour mark in Android's status bar.
+ * - The address carries utm tags, so analytics can count visits from notifications.
+ */
+export function notificationFor(post: Announced, origin: string): Announcement {
+  const campaign = new URLSearchParams({ utm_source: "push", utm_medium: "notification", utm_campaign: post.slug });
   return {
-    title: `New on Tithi Vidya: ${post.title}`,
-    body: post.description,
-    url: `${origin}/blog/${post.slug}`,
-    icon: `${origin}/icon-192.png`,
+    title: clip(post.push?.title || post.title, TITLE_MOST),
+    body: clip(post.push?.body || post.description, BODY_MOST),
+    url: `${origin}/blog/${post.slug}?${campaign}`,
+    icon: `${origin}${post.push?.icon || "/icon-192.png"}`,
+    ...(post.push?.image ? { image: `${origin}${post.push.image}` } : {}),
+    badge: `${origin}/badge-96.png`,
     tag: `post-${post.slug}`,
+    timestamp: Date.parse(post.liveAt),
   };
 }
 
