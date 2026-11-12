@@ -16,12 +16,14 @@ import { TithiScene } from "@/components/home/TithiScene";
 import { TryIt } from "@/components/home/TryIt";
 import s from "@/components/home/home.module.css";
 import { JsonLd } from "@/components/JsonLd";
+import { inLang, TRANSLATED } from "@/i18n/config";
 import { getBuiltAt, latestPosts } from "@/lib/blog";
 import { FAQ } from "@/lib/faq";
 import { AUTHOR, CONTACT_EMAIL, SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+  // Each translated language has a front page of its own (/hi, /mr): hreflang, and the language menu, find it here.
+  alternates: { canonical: "/", languages: { en: "/", "x-default": "/", ...Object.fromEntries(TRANSLATED.map((code) => [code, inLang(code, "/")])) } },
 };
 
 export default function HomePage() {

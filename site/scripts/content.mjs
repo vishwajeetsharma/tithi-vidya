@@ -11,6 +11,7 @@
 // Writes:
 //   .content/blog.json          every post's details without its text, for lists, the sitemap and search
 //   .content/posts/<slug>.json  one post with its HTML and Markdown, read by its page
+//   .content/posts/<slug>.<lang>.json  the same for each translation (index.hi.md beside index.md)
 //   public/blog-media/          resized WebP images, with content hashes in their names
 //   public/blog/<slug>.md       a plain Markdown copy of each post, for AI tools
 //   .content/contribute.json    ../CONTRIBUTING.md as HTML, for the /contribute page
@@ -36,6 +37,7 @@ import sharp from "sharp";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
 
+import languages from "../src/i18n/languages.json" with { type: "json" };
 import codeTheme from "../src/lib/code-theme.json" with { type: "json" };
 
 const SITE = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -45,6 +47,9 @@ const IMAGE_VERSION = "webp-q78-v1"; // change to reprocess every image
 const RASTER = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".tif", ".tiff"]);
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+/** The languages posts can be translated into: index.hi.md beside index.md is the post in Hindi. */
+const TRANSLATED = Object.keys(languages.translated);
+const TRANSLATION = new RegExp(`\\.(${TRANSLATED.join("|")})\\.md$`);
 
 /** Finds every post: content/blog/<slug>.md or content/blog/<slug>/index.md. */
 async function findPosts(dir) {
@@ -53,10 +58,15 @@ async function findPosts(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     if (entry.name.startsWith("_") || entry.name.startsWith(".") || entry.name.toLowerCase() === "readme.md") continue;
     if (entry.isFile() && entry.name.endsWith(".md")) {
+      if (TRANSLATION.test(entry.name)) continue; // a translation of the post beside it
       found.push({ slug: entry.name.slice(0, -3), file: join(dir, entry.name) });
     } else if (entry.isDirectory() && existsSync(join(dir, entry.name, "index.md"))) {
       found.push({ slug: entry.name, file: join(dir, entry.name, "index.md") });
     }
+  }
+  // A post's translations: my-post.hi.md beside my-post.md, or index.hi.md beside index.md.
+  for (const post of found) {
+    post.translations = TRANSLATED.map((lang) => ({ lang, file: post.file.replace(/\.md$/, `.${lang}.md`) })).filter((t) => existsSync(t.file));
   }
   return found;
 }
@@ -238,8 +248,12 @@ function rehypeArticle({ file, slug, processImage, images, toc, problems }) {
   };
 }
 
-async function renderPost({ slug, file, source }, processImage, problems) {
-  const { data, content } = matter(source);
+async function renderPost({ slug, file, source, base }, processImage, problems) {
+  // A translation gives its own title, description and text. The date, tags
+  // and cover it leaves out come from the post it translates (`base`).
+  const own = matter(source);
+  const data = base ? { ...base, ...own.data } : own.data;
+  const content = own.content;
   const before = problems.length;
   checkFrontMatter(slug, data, problems);
 
@@ -325,10 +339,13 @@ async function rendererKey() {
  * result is kept in the cache and reused while the post, its images and the
  * renderer are unchanged. A post with a problem is never kept.
  */
-async function cachedRender({ slug, file }, { site, cacheDir, renderer, processImage, problems }) {
+async function cachedRender({ slug, file, lang, original }, { site, cacheDir, renderer, processImage, problems }) {
   const source = await readFile(file, "utf8");
-  const key = createHash("sha1").update(renderer).update(source).digest("hex");
-  const store = join(cacheDir, `${slug}.json`);
+  // A translation depends on the post it translates too: that is where its date, tags and cover come from.
+  const originalSource = original ? await readFile(original, "utf8") : "";
+  const base = original ? matter(originalSource).data : undefined;
+  const key = createHash("sha1").update(renderer).update(source).update(originalSource).digest("hex");
+  const store = join(cacheDir, `${lang ? `${slug}.${lang}` : slug}.json`);
   try {
     const saved = JSON.parse(await readFile(store, "utf8"));
     if (saved.key === key) {
@@ -356,7 +373,7 @@ async function cachedRender({ slug, file }, { site, cacheDir, renderer, processI
       used.push({ file: relative(site, path), src, variant: name });
       return src;
     });
-  const post = await renderPost({ slug, file, source }, track, problems);
+  const post = await renderPost({ slug, file, source, base }, track, problems);
   if (post) await writeFile(store, JSON.stringify({ key, images: used, post }));
   return post;
 }
@@ -488,6 +505,28 @@ export async function buildContent({ site = SITE, drafts = false, now = new Date
   const posts = rendered
     .filter((post) => post && (drafts || !post.draft))
     .sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
+
+  // Translations: each is a post of its own in .content/posts/<slug>.<lang>.json,
+  // and the post it translates lists the languages it is in, with their titles.
+  const bySlug = new Map(posts.map((post) => [post.slug, post]));
+  const translated = [];
+  for (const { slug, file, translations } of found) {
+    const post = bySlug.get(slug);
+    if (!post) continue;
+    post.translations = {};
+    for (const { lang, file: translation } of translations) {
+      const version = await cachedRender({ slug, file: translation, lang, original: file }, { site, cacheDir: postCacheDir, renderer, processImage, problems });
+      if (!version) continue;
+      post.translations[lang] = { title: version.title, description: version.description, minutes: version.minutes };
+      translated.push({ ...version, lang });
+    }
+  }
+  if (problems.length) {
+    throw new Error(`The blog could not be built. Please fix:\n${problems.map((p) => `  - ${p}`).join("\n")}`);
+  }
+  // Every version knows the others, so each page can link to them and name them for search engines.
+  for (const version of translated) version.translations = bySlug.get(version.slug).translations;
+
   // builtAt lets every page agree on which posts were live when the HTML was made.
   const TEXT = new Set(["html", "markdown"]);
   const details = posts.map((post) => Object.fromEntries(Object.entries(post).filter(([key]) => !TEXT.has(key))));
@@ -498,16 +537,20 @@ export async function buildContent({ site = SITE, drafts = false, now = new Date
       writeFile(join(copyDir, `${post.slug}.md`), markdownCopy(post)),
     ]),
   );
+  await Promise.all(translated.map((post) => writeFile(join(postsDir, `${post.slug}.${post.lang}.json`), JSON.stringify(post))));
   // Written over in place, not emptied first, so a running dev server never finds a post missing.
   // Then deleted, renamed and draft posts go, here and in the cache.
-  const files = (list) => new Set(list.map((post) => `${post.slug}.json`));
-  for (const [dir, wanted] of [[postsDir, files(posts)], [postCacheDir, files(found)]]) {
+  const files = (list) => new Set(list.map((post) => `${post.lang ? `${post.slug}.${post.lang}` : post.slug}.json`));
+  const everyFile = found.flatMap((post) => [post, ...post.translations.map((t) => ({ slug: post.slug, lang: t.lang }))]);
+  for (const [dir, wanted] of [[postsDir, files([...posts, ...translated])], [postCacheDir, files(everyFile)]]) {
     await Promise.all((await readdir(dir)).filter((name) => !wanted.has(name)).map((name) => rm(join(dir, name), { force: true })));
   }
   await buildGuide(site, outDir);
 
   const images = (await readdir(mediaDir)).length;
-  console.log(`blog: ${posts.length} post${posts.length === 1 ? "" : "s"}, ${images} image files, ${Math.round(performance.now() - started)} ms`);
+  console.log(
+    `blog: ${posts.length} post${posts.length === 1 ? "" : "s"}${translated.length ? `, ${translated.length} translation${translated.length === 1 ? "" : "s"}` : ""}, ${images} image files, ${Math.round(performance.now() - started)} ms`,
+  );
   for (const post of posts.filter((p) => new Date(p.liveAt) > now)) {
     console.log(`blog: "${post.slug}" is scheduled, and goes live on ${post.date} at 6:00 AM IST`);
   }

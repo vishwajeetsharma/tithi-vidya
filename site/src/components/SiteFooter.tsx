@@ -1,51 +1,62 @@
-import Link from "next/link";
+"use client";
 
-import { CONTACT_EMAIL, CREDIT, SITE_NAME } from "@/lib/site";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+import { inLang, splitPath } from "@/i18n/config";
+import { dictionary } from "@/i18n/dictionaries";
+import { CONTACT_EMAIL, SITE_NAME } from "@/lib/site";
 
 import { CookieSettingsButton } from "./CookieSettingsButton";
 
-const GROUPS = [
-  {
-    title: "Explore",
-    links: [
-      { href: "/", label: "Home" },
-      { href: "/find", label: "Find my tithi" },
-      { href: "/blog", label: "Blog" },
-      { href: "/how-it-works", label: "How it works" },
-    ],
-  },
-  {
-    title: "About",
-    links: [
-      { href: "/about", label: "About" },
-      { href: "/contribute", label: "Contribute" },
-      { href: "/ai-use", label: "How we use AI" },
-      { href: "/contact", label: "Contact" },
-      { href: "/disclaimer", label: "Disclaimer" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      { href: "/privacy", label: "Privacy" },
-      { href: "/terms", label: "Terms" },
-    ],
-  },
-];
-
 export function SiteFooter() {
+  // The footer follows the page's language (/hi/... is Hindi). The home page and the
+  // blog exist in each language; the other pages are in English for now.
+  const { lang } = splitPath(usePathname());
+  const t = dictionary(lang).footer;
+  const GROUPS = [
+    {
+      title: t.explore,
+      links: [
+        { href: inLang(lang, "/"), label: t.home },
+        { href: "/find", label: t.find },
+        { href: inLang(lang, "/blog"), label: t.blog },
+        { href: "/how-it-works", label: t.how },
+      ],
+    },
+    {
+      title: t.about,
+      links: [
+        { href: "/about", label: t.aboutUs },
+        { href: "/contribute", label: t.contribute },
+        { href: "/ai-use", label: t.ai },
+        { href: "/contact", label: t.contact },
+        { href: "/disclaimer", label: t.disclaimer },
+      ],
+    },
+    {
+      title: t.legal,
+      legal: true,
+      links: [
+        { href: "/privacy", label: t.privacy },
+        { href: "/terms", label: t.terms },
+      ],
+    },
+  ];
   return (
-    <footer className="siteFooter">
+    <footer className="siteFooter" lang={lang}>
       <div className="wrap siteFooterInner">
-        <p className="siteFooterCredit display">{CREDIT}.</p>
+        <p className="siteFooterCredit display">{t.credit}.</p>
         <div className="siteFooterRow">
           <div className="siteFooterAbout">
-            <p>{SITE_NAME}. Your details stay on your device.</p>
+            <p>
+              {SITE_NAME}. {t.promise}
+            </p>
             <p>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </p>
           </div>
-          <nav className="siteFooterLinks" aria-label="Footer">
+          <nav className="siteFooterLinks" aria-label={t.label}>
             {GROUPS.map((group) => (
               <div key={group.title} className="siteFooterGroup">
                 <p className="siteFooterHeading">{group.title}</p>
@@ -55,7 +66,7 @@ export function SiteFooter() {
                       <Link href={link.href}>{link.label}</Link>
                     </li>
                   ))}
-                  {group.title === "Legal" && (
+                  {group.legal && (
                     <li>
                       <CookieSettingsButton className="siteFooterButton" />
                     </li>

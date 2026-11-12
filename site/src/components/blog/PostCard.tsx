@@ -31,11 +31,17 @@ export function PostCard({
   headingLevel = 2,
   priority = false,
   terms = [],
+  href = `/blog/${post.slug}`,
+  meta,
 }: {
   post: CardPost;
   headingLevel?: 2 | 3;
   priority?: boolean;
   terms?: string[];
+  /** Where the card goes: a translated post lives at /hi/blog/<slug>. */
+  href?: string;
+  /** The date and reading time in another language, in place of the English line. */
+  meta?: string;
 }) {
   const Heading = `h${headingLevel}` as const;
   const section = terms.length ? bestMatch(post.headings ?? [], terms) : undefined;
@@ -59,10 +65,14 @@ export function PostCard({
       )}
       <div className={s.cardBody}>
         <p className={s.meta}>
-          <time dateTime={post.date}>{formatDate(post.date)}</time> · {post.minutes} min read
+          {meta ?? (
+            <>
+              <time dateTime={post.date}>{formatDate(post.date)}</time> · {post.minutes} min read
+            </>
+          )}
         </p>
         <Heading className={`display ${s.cardTitle}`}>
-          <Link className={s.cardLink} href={`/blog/${post.slug}`}>
+          <Link className={s.cardLink} href={href}>
             <Marked text={post.title} terms={terms} />
           </Link>
         </Heading>

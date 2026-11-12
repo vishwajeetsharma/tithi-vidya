@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
   // Those pages read the posts from the files scripts/content.mjs built.
   outputFileTracingIncludes: {
     "/blog/*": ["./.content/blog.json", "./.content/posts/*.json"],
+    // The same pages in the translated languages: /hi, /hi/blog and /hi/blog/<slug> (src/app/[lang]).
+    "/*": ["./.content/blog.json"],
+    "/*/blog": ["./.content/blog.json"],
+    "/*/blog/*": ["./.content/blog.json", "./.content/posts/*.json"],
     // Lists of live posts, made again on Vercel every 10 minutes (lib/blog.ts).
     "/blog": ["./.content/blog.json"],
     "/sitemap.xml": ["./.content/blog.json"],

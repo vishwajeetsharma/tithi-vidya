@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { TRANSLATED } from "@/i18n/config";
 import { getLivePosts } from "@/lib/blog";
 import { siteUrl } from "@/lib/site";
 
@@ -18,13 +19,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${origin}/find`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${origin}/how-it-works`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${origin}/blog`, ...(posts[0] ? { lastModified: day(posts[0].updated) } : {}), changeFrequency: "weekly", priority: 0.8 },
-    ...posts.map((post) => ({
-      url: `${origin}/blog/${post.slug}`,
-      lastModified: day(post.updated),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-      ...(post.cover ? { images: [`${origin}${post.cover.largest}`] } : {}),
-    })),
+    ...TRANSLATED.flatMap((lang) => [
+      { url: `${origin}/${lang}`, changeFrequency: "weekly" as const, priority: 0.8 },
+      { url: `${origin}/${lang}/blog`, changeFrequency: "weekly" as const, priority: 0.7 },
+    ]),
+    // A post and each of its translations get a line of their own, and each names
+    // the others, so search engines show every reader the version in their language.
+    ...posts.flatMap((post) => {
+      const versions = TRANSLATED.filter((lang) => post.translations?.[lang]);
+      const address = (lang: string) => `${origin}${lang === "en" ? "" : `/${lang}`}/blog/${post.slug}`;
+      const languages = Object.fromEntries(["en", ...versions].map((lang) => [lang, address(lang)]));
+      return ["en", ...versions].map((lang) => ({
+        url: address(lang),
+        lastModified: day(post.updated),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+        ...(post.cover ? { images: [`${origin}${post.cover.largest}`] } : {}),
+        ...(versions.length ? { alternates: { languages } } : {}),
+      }));
+    }),
     { url: `${origin}/about`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${origin}/contribute`, changeFrequency: "monthly", priority: 0.4 },
     { url: `${origin}/ai-use`, changeFrequency: "yearly", priority: 0.3 },

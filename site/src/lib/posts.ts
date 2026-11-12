@@ -24,6 +24,8 @@ export type Post = {
    * cover, and a square one from `coverArt`. Either picture can be "".
    */
   push: { title: string; body: string; image: string; icon: string };
+  /** The languages the post is translated into, with each one's title and description. See src/i18n. */
+  translations?: Partial<Record<string, { title: string; description: string; minutes: number }>>;
   toc: { id: string; text: string }[];
   words: number;
   minutes: number;

@@ -5,9 +5,11 @@ import { draftMode } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Listen } from "@/components/blog/Listen";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { NotifyButton } from "@/components/blog/NotifyButton";
 import { PreferredSource } from "@/components/blog/PreferredSource";
+import { ReadIn } from "@/components/blog/ReadIn";
 import { ReadingRail } from "@/components/blog/ReadingRail";
 import { RecentPosts } from "@/components/blog/RecentPosts";
 import { ShareButtons } from "@/components/blog/ShareButtons";
@@ -16,6 +18,8 @@ import { ArrowIcon, SearchIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
 import { JsonLd } from "@/components/JsonLd";
 import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, serverNow, type Post } from "@/lib/blog";
+import { inLang, TRANSLATED } from "@/i18n/config";
+import { dictionary } from "@/i18n/dictionaries";
 import { isLive, PREVIEW } from "@/lib/posts";
 import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
 
@@ -52,12 +56,15 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const post = getPost((await params).slug);
   if (!post) return { robots: { index: false } };
   const url = `/blog/${post.slug}`;
+  const translated = TRANSLATED.filter((code) => post.translations?.[code]);
+  const languages = { en: url, "x-default": url, ...Object.fromEntries(translated.map((code) => [code, inLang(code, url)])) };
   return {
     title: post.title,
     description: post.description,
     authors: [{ name: post.author }],
     keywords: post.tags,
-    alternates: { canonical: url, types: { "text/markdown": `${url}.md` } },
+    // `languages` names the post's translations (hreflang), so search engines show each reader their own language.
+    alternates: { canonical: url, types: { "text/markdown": `${url}.md` }, ...(translated.length ? { languages } : {}) },
     openGraph: {
       type: "article",
       siteName: SITE_NAME,
@@ -111,6 +118,7 @@ export default async function PostPage({ params }: Params) {
   }
   if (!post) notFound();
   const origin = siteUrl().origin;
+  const words = dictionary("en");
   const hasContents = post.toc.length >= 3;
   const builtAt = getBuiltAt();
   const liveAt = Date.parse(post.liveAt);
@@ -211,6 +219,12 @@ export default async function PostPage({ params }: Params) {
                 {PREVIEW && liveAt > serverNow() && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
               </p>
             </header>
+
+            {/* Listen to the article, or read it in another language. */}
+            <div className={s.articleTools}>
+              <Listen lang="en" words={post.words} t={words.listen} />
+              <ReadIn lang="en" slug={post.slug} translations={post.translations} t={words.post} more={words.language.more} />
+            </div>
 
             {post.cover && (
               // The cover is the largest thing on the page, so it loads first.

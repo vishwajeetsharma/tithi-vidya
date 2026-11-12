@@ -596,3 +596,159 @@ select {
   background: var(--indigo);
   color: #fff;
 }
+
+/* The language menu (components/LanguageMenu.tsx): a globe button in the top
+   bar, a row in the phone menu, and a text button inside articles. */
+.langMenu {
+  position: relative;
+}
+
+.langMenu-header {
+  position: static;
+}
+
+.langButton,
+.langInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.langButton:hover,
+.langButton[aria-expanded="true"] {
+  background: var(--lilac-50);
+  color: var(--ink);
+}
+
+.langInline {
+  min-height: 40px;
+  padding: 0 14px;
+  background: var(--lilac-50);
+  color: var(--indigo);
+  font-weight: 700;
+}
+
+.langRow {
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+}
+
+.langPanel {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(92vw, 440px);
+  max-height: min(70svh, 560px);
+  overflow: auto;
+  padding: 16px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 24px 50px -24px rgb(30 20 110 / 0.5), inset 0 0 0 1px var(--line);
+  text-align: start;
+}
+
+.langMenu-inline .langPanel {
+  right: auto;
+  left: 0;
+}
+
+/* Inside the phone menu, the list opens in place. */
+.langMenu-menu .langPanel {
+  position: static;
+  width: auto;
+  max-height: 50svh;
+  margin-top: 4px;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.langTitle {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.langGroup {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  color: var(--ink-mute);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.langList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+}
+
+.langLink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 46px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: var(--lilac-50);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.langLink:hover {
+  background: var(--lilac-100);
+  color: var(--indigo);
+}
+
+.langLink[aria-current="page"] {
+  background: var(--ink);
+  color: #fff;
+}
+
+.langLink small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.langMore .langLink {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 600;
+}
+
+.langNote {
+  margin-top: 12px;
+  color: var(--ink-mute);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+/* On phones the globe gives way to the row inside the menu. */
+@media (max-width: 619.98px) {
+  .langMenu-header {
+    display: none;
+  }
+}

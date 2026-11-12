@@ -4,18 +4,25 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { inLang, splitPath } from "@/i18n/config";
+import { dictionary } from "@/i18n/dictionaries";
 import { litPath } from "@/lib/moon";
 
-const START = 30; // a thin crescent at the top of the page
+import { LanguageMenu } from "./LanguageMenu";
 
-const LINKS = [
-  { href: "/blog", label: "Blog" },
-  { href: "/how-it-works", label: "How it works" },
-];
+const START = 30; // a thin crescent at the top of the page
 
 /** The logo's moon runs through its phases as you read down the page. */
 export function SiteHeader() {
   const pathname = usePathname();
+  // On a translated page (/hi/...), the bar speaks that language. The blog and
+  // the home page exist in it; pages that are not translated yet stay in English.
+  const { lang } = splitPath(pathname);
+  const t = dictionary(lang).nav;
+  const LINKS = [
+    { href: inLang(lang, "/blog"), label: t.blog },
+    { href: "/how-it-works", label: t.how },
+  ];
   const lit = useRef<SVGPathElement>(null);
   const bar = useRef<HTMLDivElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
@@ -62,9 +69,9 @@ export function SiteHeader() {
   const current = (href: string) => (pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined);
 
   return (
-    <header className="siteHeader">
+    <header className="siteHeader" lang={lang}>
       <div className="siteHeaderBar" ref={bar}>
-        <Link className="logo" href="/" aria-label="Tithi Vidya home">
+        <Link className="logo" href={inLang(lang, "/")} aria-label={t.home}>
           <svg width="30" height="30" viewBox="-52 -52 104 104" aria-hidden="true">
             <defs>
               <linearGradient id="logoNight" x1="0" y1="0" x2="1" y2="1">
@@ -77,7 +84,7 @@ export function SiteHeader() {
           </svg>
           <span className="logoWord">Tithi Vidya</span>
         </Link>
-        <nav className="siteNav" aria-label="Main">
+        <nav className="siteNav" aria-label={t.main}>
           <div className="siteNavLinks">
             {LINKS.map((link) => (
               <Link key={link.href} className="siteNavLink" href={link.href} aria-current={current(link.href)}>
@@ -85,8 +92,9 @@ export function SiteHeader() {
               </Link>
             ))}
           </div>
+          <LanguageMenu variant="header" />
           <Link className="btn btnPrimary siteNavCta" href="/find" aria-current={current("/find")}>
-            Find my tithi
+            {t.find}
           </Link>
           <button
             ref={menuButton}
@@ -94,7 +102,7 @@ export function SiteHeader() {
             type="button"
             aria-expanded={menu}
             aria-controls="site-menu"
-            aria-label="Menu"
+            aria-label={t.menu}
             onClick={() => setMenu((open) => !open)}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
@@ -109,6 +117,7 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
+            <LanguageMenu variant="menu" />
           </div>
         )}
       </div>

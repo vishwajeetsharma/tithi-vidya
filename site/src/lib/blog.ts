@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import type { TranslatedLang } from "@/i18n/config";
+
 import { isLive, summarise, type Post, type PostDetails, type PostSummary } from "./posts";
 
 export { formatDate, type BlogImage, type Post, type PostDetails } from "./posts";
@@ -59,6 +61,20 @@ export function getLivePosts(now = Date.now()): PostDetails[] {
 export function getPost(slug: string): Post | undefined {
   if (!getPosts().some((post) => post.slug === slug)) return undefined;
   return readBuilt<Post>(join("posts", `${slug}.json`));
+}
+
+/** A post in another language, from .content/posts/<slug>.<lang>.json, if it has been translated. */
+export function getTranslation(slug: string, lang: TranslatedLang): Post | undefined {
+  if (!getPosts().some((post) => post.slug === slug && post.translations?.[lang])) return undefined;
+  return readBuilt<Post>(join("posts", `${slug}.${lang}.json`));
+}
+
+/** The posts that exist in a language, newest first, with that language's title and description. */
+export function getPostsIn(lang: TranslatedLang): PostDetails[] {
+  return getPosts().flatMap((post) => {
+    const version = post.translations?.[lang];
+    return version ? [{ ...post, ...version }] : [];
+  });
 }
 
 /**

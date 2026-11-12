@@ -64,13 +64,28 @@ const SHARE_IMAGE = {
  * them, so a page that set only some of it shared without an image, or with
  * the home page's title.
  */
-export function pageMetadata({ title, description, path, type = "website" }: { title: string; description: string; path: string; type?: "website" | "article" }): Metadata {
+export function pageMetadata({
+  title,
+  description,
+  path,
+  type = "website",
+  languages,
+  locale = "en_IN",
+}: {
+  title: string;
+  description: string;
+  path: string;
+  type?: "website" | "article";
+  /** The same page in other languages (hreflang), like { en: "/blog", hi: "/hi/blog" }. */
+  languages?: Record<string, string>;
+  locale?: string;
+}): Metadata {
   const full = `${title} | ${SITE_NAME}`;
   return {
     title,
     description,
-    alternates: { canonical: path },
-    openGraph: { type, siteName: SITE_NAME, locale: "en_IN", title: full, description, url: path, images: [SHARE_IMAGE] },
+    alternates: { canonical: path, ...(languages ? { languages } : {}) },
+    openGraph: { type, siteName: SITE_NAME, locale, title: full, description, url: path, images: [SHARE_IMAGE] },
     twitter: { card: "summary_large_image", title: full, description, images: [SHARE_IMAGE.url] },
   };
 }
