@@ -101,14 +101,14 @@ The names all say the same thing. Dev Uthani means "the god rises", and Prabodhi
 
 Weddings are the other reason the day matters so much. Many families don't hold weddings during Chaturmas, so Dev Uthani reopens the wedding season. In Rajasthan, so many weddings fall on this day that it once moved an election. In 2023, more than 50,000 weddings were planned for Dev Uthani on 23 November. So the Election Commission moved the state's assembly vote to the 25th ([ETV Bharat reported it](https://etvbharat.com/english/state/rajasthan/with-more-than-50k-marriages-in-rajasthan-on-november-23-eci-delays-assembly-polls-to-accommodate-dev-uthani-ekadashi-festivities/na20231012194849152152511)).
 
-The day after Dev Uthani, many homes hold Tulsi Vivah, the wedding of the tulsi plant to Vishnu. And a month later, Mithila celebrates the most famous wedding of all on [Vivah Panchami, 14 December](/blog/vivah-panchami).
+The day after Dev Uthani, many homes hold [Tulsi Vivah](/blog/tulsi-vivah), the wedding of the tulsi plant to Vishnu. And a month later, Mithila celebrates the most famous wedding of all on [Vivah Panchami, 14 December](/blog/vivah-panchami).
 
 ## How people keep Dev Uthani Ekadashi
 
 - **The fast.** No rice or other grains. Some keep a nirjala fast, without even water. Most eat fruit, milk and fasting foods like sabudana or singhara (water chestnut) flour. If you're pregnant, diabetic or on medicine, talk to your doctor before a fast.
 - **Waking the gods.** In many homes in Uttar Pradesh and Bihar, the evening puja ends with a folk song that asks the gods to wake up. Someone beats a soop, a bamboo winnowing basket, like a drum. Some families also draw the god's footprints in rice paste.
 - **Sugarcane.** This is when the sugarcane harvest starts. Sugarcane, water chestnuts, sweet potatoes and ber go into the puja, and many families in Uttar Pradesh eat their first sugarcane of the season only after this day.
-- **Pandharpur and Pushkar.** In Maharashtra, Varkari pilgrims crowd the Vithoba temple at Pandharpur. In Rajasthan, the holy days of the Pushkar fair run from this Ekadashi to Kartik Purnima.
+- **Pandharpur and Pushkar.** In Maharashtra, Varkari pilgrims crowd the Vithoba temple at Pandharpur. In Rajasthan, the holy days of the Pushkar fair run from this Ekadashi to [Kartik Purnima](/blog/kartik-purnima).
 
 [Wikipedia's page on Prabodhini Ekadashi](https://en.wikipedia.org/wiki/Prabodhini_Ekadashi) has more on these regional customs.
 

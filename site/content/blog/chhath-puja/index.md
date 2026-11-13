@@ -58,7 +58,7 @@ The main day is **Kartika Shukla Shashthi**, the 6th tithi of the bright half of
 
 This year, Shashthi begins at 11:24 pm on Saturday, 14 November, and ends at 2:01 am on Monday, 16 November (New Delhi time). It covers all of Sunday, sunset included, so there's no doubt about the evening arghya.
 
-Because it follows the moon, Chhath moves every year. It usually comes about a week after Diwali, which is on 8 November in 2026.
+Because it follows the moon, Chhath moves every year. It usually comes about a week after Diwali, which is on 8 November in 2026. Kartika isn't done after Chhath, either: [Dev Uthani Ekadashi](/blog/dev-uthani-ekadashi) follows on 20 November, [Tulsi Vivah](/blog/tulsi-vivah) on the 21st and [Kartik Purnima](/blog/kartik-purnima) on the 24th.
 
 | Year | Nahay Khay | Evening arghya | Morning arghya |
 | --- | --- | --- | --- |

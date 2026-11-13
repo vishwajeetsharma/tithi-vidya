@@ -32,7 +32,7 @@ Tradition allows any day from Dev Uthani Ekadashi to Kartik Purnima, and familie
 
 - **On the Ekadashi itself, Friday, 20 November.** Some homes hold the wedding that evening, right after the [Dev Uthani Ekadashi puja](/blog/dev-uthani-ekadashi).
 - **On Dwadashi, Saturday, 21 November.** This is the most common day. In Andhra Pradesh and Telangana, where it's the main day, it's called Ksheerabdi Dwadashi.
-- **Any evening up to Kartik Purnima, Tuesday, 24 November.** Many families in Maharashtra pick a day in this window.
+- **Any evening up to [Kartik Purnima](/blog/kartik-purnima), Tuesday, 24 November.** Many families in Maharashtra pick a day in this window.
 
 Not sure which is yours? Ask whoever runs the puja in your home. Every one of these days is correct within its tradition.
 
