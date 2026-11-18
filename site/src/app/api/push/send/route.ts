@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { sendNotification, setVapidDetails, WebPushError } from "web-push";
 
 import { getPosts } from "@/lib/blog";
@@ -24,6 +25,9 @@ const AT_ONCE = 50;
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
   if (!secret || request.headers.get("authorization") !== `Bearer ${secret}`) return reply({ ok: false }, 401);
+  // The day's post has just gone live: the sitemap is made again on its next
+  // visit, so search engines find the post the same morning.
+  revalidatePath("/sitemap.xml");
   const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
   if (!publicKey || !privateKey || !hasDatabase()) {
