@@ -71,7 +71,7 @@ export function readChoice(): Choice | null {
 
 /** First-party cookies each kind of tag sets on this site. */
 const COOKIES: Record<keyof Choice, RegExp> = {
-  analytics: /^(_ga|_gid|_gat)/,
+  analytics: /^(_ga|_gid|_gat|_clck|_clsk)/,
   ads: /^(_fbp|_fbc|__gads|__gpi|__eoi)/,
 };
 

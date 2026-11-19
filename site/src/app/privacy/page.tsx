@@ -41,7 +41,9 @@ export default function PrivacyPage() {
         </p>
         <ul>
           <li>
-            <strong>Visit counts: Google Analytics</strong>, from Google, shows us how many people visit and which pages they open.
+            <strong>Visit counts: Google Analytics</strong>, from Google, shows us how many people visit and which pages they open.{" "}
+            <strong>Microsoft Clarity</strong>, from Microsoft, shows us how pages are used, with heatmaps and recordings of clicks, scrolls and mouse movement. The
+            finder form and your results are hidden from its recordings, and it does not record what you type.
           </li>
           <li>
             <strong>Ads: Google AdSense</strong>, from Google, shows the ads that keep the site free. <strong>Meta Pixel</strong>, from Meta, shows us whether our
@@ -55,7 +57,8 @@ export default function PrivacyPage() {
         <p>
           These services can receive things like the page you opened, your device and browser type, your IP address, and how you reached the site. They handle that
           data under their own privacy policies:{" "}
-          <a href="https://policies.google.com/privacy">Google</a> and <a href="https://www.facebook.com/privacy/policy">Meta</a>. We set up the site so they never
+          <a href="https://policies.google.com/privacy">Google</a>, <a href="https://privacy.microsoft.com/privacystatement">Microsoft</a> and{" "}
+          <a href="https://www.facebook.com/privacy/policy">Meta</a>. We set up the site so they never
           receive your birth details.
         </p>
 
@@ -133,6 +136,12 @@ export default function PrivacyPage() {
                 <td>Yes: Visit counts</td>
               </tr>
               <tr>
+                <td>_clck, _clsk</td>
+                <td>Microsoft Clarity</td>
+                <td>Tells one visitor from another (up to a year) and groups pages into one visit (a day)</td>
+                <td>Yes: Visit counts</td>
+              </tr>
+              <tr>
                 <td>__gads, __gpi, __eoi</td>
                 <td>Google AdSense</td>
                 <td>Shows ads, limits how often you see the same one, and measures them</td>
@@ -175,7 +184,7 @@ export default function PrivacyPage() {
             <strong>You don&apos;t have to agree to anything.</strong> The finder, the blog and every other page work the same if you decline.
           </li>
           <li>
-            <strong>How long we keep it.</strong> Your cookie choice: 12 months, in your browser. Google Analytics cookies: up to 13 months. Your newsletter signup:
+            <strong>How long we keep it.</strong> Your cookie choice: 12 months, in your browser. Google Analytics cookies: up to 13 months. Clarity cookies: up to a year. Your newsletter signup:
             until you unsubscribe. A notification address: until you turn notifications off or it stops working.
           </li>
           <li>
@@ -186,7 +195,7 @@ export default function PrivacyPage() {
             <strong>Complaints.</strong> You can complain to the data protection authority where you live.
           </li>
           <li>
-            <strong>Data outside Europe.</strong> Google, Meta, Vercel and Upstash may handle data in the United States and other countries. They say they protect it
+            <strong>Data outside Europe.</strong> Google, Microsoft, Meta, Vercel and Upstash may handle data in the United States and other countries. They say they protect it
             with safeguards the GDPR allows, such as the EU-U.S. Data Privacy Framework and the European Commission&apos;s standard contractual clauses. Brevo is based
             in France.
           </li>

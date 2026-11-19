@@ -25,6 +25,8 @@ export const GOOGLE_PREFERRED_SOURCE = `https://www.google.com/preferences/sourc
 export const SHOW_PREFERRED_SOURCE = false;
 export const GOOGLE_ANALYTICS_ID = "G-EH6CQB4WNP";
 export const META_PIXEL_ID = "1817935669409933";
+/** Microsoft Clarity project. The finder form and results are masked in its recordings (data-clarity-mask). */
+export const CLARITY_ID = "zgagx5rs8w";
 /** Google AdSense publisher ID. public/ads.txt must name the same one, without "ca-". */
 export const ADSENSE_CLIENT = "ca-pub-2218897904369009";
 export const SITE_TITLE = "Tithi Vidya: Find Your Tithi Birthday by Date of Birth";

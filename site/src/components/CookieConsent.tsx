@@ -105,10 +105,9 @@ export function CookieConsent() {
       )}
       <p>
         <strong id={titleId} className="cookieTitle">
-          Can we use cookies?
+          Cookies for visit counts and ads?
         </strong>{" "}
-        They let us count visits with Google Analytics, and show and measure ads with Google and Meta. Nothing loads unless you say yes, and your
-        birth details are never shared. <Link href="/privacy#cookies">Privacy Policy</Link>
+        Only if you say yes. <Link href="/privacy#cookies">Privacy Policy</Link>
       </p>
 
       {detailed && (
@@ -117,7 +116,8 @@ export function CookieConsent() {
           <label className="cookieOption">
             <input type="checkbox" name="analytics" defaultChecked={current.analytics} />
             <span>
-              <strong>Visit counts.</strong> Google Analytics shows us which pages people open.
+              <strong>Visit counts.</strong> Google Analytics counts visits, and Microsoft Clarity shows how pages are used. Both get no birth
+              details.
             </span>
           </label>
           <label className="cookieOption">
@@ -132,7 +132,12 @@ export function CookieConsent() {
         </form>
       )}
 
-      <div className="cookieActions">
+      <div className={detailed ? "cookieActions" : "cookieActions cookieActionsFirst"}>
+        {!detailed && (
+          <button className="cookieMore" type="button" onClick={() => setChoosing(true)}>
+            Customize
+          </button>
+        )}
         <button className="cookieButton" type="button" onClick={() => choose(DECLINE_ALL)}>
           {detailed ? "Decline all" : "Decline"}
         </button>
@@ -140,12 +145,6 @@ export function CookieConsent() {
           {detailed ? "Accept all" : "Accept"}
         </button>
       </div>
-
-      {!detailed && (
-        <button className="cookieMore" type="button" onClick={() => setChoosing(true)}>
-          Choose what to allow
-        </button>
-      )}
     </section>
   );
 }

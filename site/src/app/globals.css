@@ -560,16 +560,16 @@ select {
   right: 12px;
   bottom: max(12px, env(safe-area-inset-bottom));
   display: grid;
-  gap: 10px;
-  max-width: 400px;
+  gap: 8px;
+  max-width: 380px;
   max-height: calc(100svh - 24px);
   overflow-y: auto;
-  padding: 14px 16px;
-  border-radius: 20px;
+  padding: 10px 12px;
+  border-radius: 18px;
   background: var(--card);
   box-shadow: 0 24px 60px -20px rgb(30 20 110 / 0.5), inset 0 0 0 1px var(--line);
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: 0.8125rem;
+  line-height: 1.35;
   color: var(--ink-soft);
 }
 
@@ -607,14 +607,21 @@ select {
 }
 
 .cookieButton {
-  min-height: 44px;
+  min-height: 40px;
+  padding: 0 14px;
   border: 0;
   border-radius: 999px;
   background: var(--indigo);
   color: #fff;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
+}
+
+/* First view: Customize as a quiet text button, then Decline and Accept, all on one line. */
+.cookieActionsFirst {
+  grid-template-columns: auto 1fr 1fr;
+  align-items: center;
 }
 
 .cookieChoices {
@@ -649,10 +656,8 @@ select {
 }
 
 .cookieMore {
-  justify-self: center;
-  min-height: 44px;
-  margin-block: -6px -8px;
-  padding: 0 8px;
+  min-height: 40px;
+  padding: 0 4px;
   border: 0;
   background: none;
   color: #3b2fc4;

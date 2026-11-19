@@ -41,6 +41,7 @@ const GA = /googletagmanager\.com\/gtag\/js/;
 const ADSENSE = /pagead2\.googlesyndication\.com/;
 const RECOVERY = /fundingchoicesmessages\.google\.com/;
 const PIXEL = /connect\.facebook\.net/;
+const CLARITY = /clarity\.ms\/tag\/zgagx5rs8w/;
 
 describe("parseChoice", () => {
   it("reads a saved choice", () => {
@@ -69,10 +70,13 @@ describe("the head script", () => {
     expect(runHead(stored({ analytics: true, ads: true }, Date.now() - 400 * DAY)).added).toEqual([]);
   });
 
-  it("starts only Google Analytics for visit counts, with ad storage denied", () => {
+  it("starts only Google Analytics and Clarity for visit counts, with ad storage denied", () => {
     const { added, page } = runHead(stored({ analytics: true }, Date.now()));
-    expect(added).toHaveLength(1);
-    expect(added[0]).toMatch(GA);
+    expect(added).toHaveLength(2);
+    expect(added.some((src) => GA.test(src))).toBe(true);
+    expect(added.some((src) => CLARITY.test(src))).toBe(true);
+    // Clarity is told the visitor agreed, so it may set its cookies.
+    expect((page.clarity as { q: IArguments[] }).q.map((entry) => Array.from(entry))).toEqual([["consent"]]);
     const consent = (page.dataLayer as IArguments[]).map((entry) => Array.from(entry)).find((entry) => entry[0] === "consent");
     expect(consent).toEqual(["consent", "default", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" }]);
   });
@@ -82,7 +86,7 @@ describe("the head script", () => {
     expect(added.some((src) => ADSENSE.test(src))).toBe(true);
     expect(added.some((src) => RECOVERY.test(src))).toBe(true);
     expect(added.some((src) => PIXEL.test(src))).toBe(true);
-    expect(added.some((src) => GA.test(src))).toBe(false);
+    expect(added.some((src) => GA.test(src) || CLARITY.test(src))).toBe(false);
   });
 
   it("keeps every Google ad script away from visit counts alone", () => {

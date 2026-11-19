@@ -108,7 +108,7 @@ export function Results({ result, heading, noon, shareHash, onToggle }: Props) {
   };
 
   return (
-    <section className={s.results} aria-labelledby="result-title">
+    <section className={s.results} aria-labelledby="result-title" data-clarity-mask="true">
       <div className={s.summary}>
         <div className={s.summaryHead}>
           <MoonPhase className={s.summaryMoon} elongation={birth.elongation} size={128} />
