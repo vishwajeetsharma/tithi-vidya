@@ -98,7 +98,7 @@ The eight most used topics show as buttons (four on phones), and the rest are un
 
 ### Analytics and privacy
 
-Google Analytics and the Meta Pixel load by default so ad landings are measured, and stop if a visitor declines. The cookie box appears on `/find` (`site/src/components/CookieConsent.tsx`). Their IDs are in `site/src/lib/site.ts`.
+Nothing that sets analytics or ad cookies loads until a visitor says yes, as the GDPR asks. The cookie box (`site/src/components/CookieConsent.tsx`) appears on every page at the first scroll, or after 5 seconds, and never while someone is typing in a field. "Visit counts" starts Google Analytics, and "Ads" starts AdSense and the Meta Pixel. The choice is kept for a year (`site/src/lib/consent.ts`). The tags are in `site/src/lib/analytics-script.ts` and run on the live site only. Their IDs are in `site/src/lib/site.ts`.
 
 The site promises that birth details never leave the device, and analytics tags read the full page address. So birth details must never stay in the address: a script in `site/src/app/layout.tsx` moves them out of shared links before any tag loads, and the pixel's automatic form scanning is off. Keep Automatic Advanced Matching off in Meta Events Manager too.
 

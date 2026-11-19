@@ -549,7 +549,9 @@ select {
   outline-color: #fff;
 }
 
-/* Cookie choice: small, and never in the way of the page */
+/* Cookie choice: small, and never in the way of the page. Accept and Decline
+   look the same on purpose: European rules ask that saying no is as easy as
+   saying yes. */
 
 .cookieBar {
   position: fixed;
@@ -560,6 +562,8 @@ select {
   display: grid;
   gap: 10px;
   max-width: 400px;
+  max-height: calc(100svh - 24px);
+  overflow-y: auto;
   padding: 14px 16px;
   border-radius: 20px;
   background: var(--card);
@@ -569,10 +573,31 @@ select {
   color: var(--ink-soft);
 }
 
+.cookieBar:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cookieBar {
+    animation: cookieIn 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+
+@keyframes cookieIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
 .cookieBar a {
   color: #3b2fc4;
   font-weight: 600;
   text-underline-offset: 3px;
+}
+
+.cookieTitle {
+  color: var(--ink);
 }
 
 .cookieActions {
@@ -585,16 +610,76 @@ select {
   min-height: 44px;
   border: 0;
   border-radius: 999px;
-  background: var(--lilac-50);
-  color: var(--ink);
+  background: var(--indigo);
+  color: #fff;
   font-size: 0.9375rem;
   font-weight: 700;
   cursor: pointer;
 }
 
-.cookieAccept {
-  background: var(--indigo);
-  color: #fff;
+.cookieChoices {
+  display: grid;
+  gap: 10px;
+}
+
+.cookieOption {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  cursor: pointer;
+}
+
+.cookieOption input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--indigo);
+  cursor: pointer;
+}
+
+.cookieOption strong {
+  color: var(--ink);
+}
+
+.cookieButton.cookieSave {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--field-line);
+}
+
+.cookieMore {
+  justify-self: center;
+  min-height: 44px;
+  margin-block: -6px -8px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: #3b2fc4;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cookieClose {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink-soft);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cookieBar:has(.cookieClose) > p:first-of-type {
+  padding-right: 32px;
 }
 
 /* The language menu (components/LanguageMenu.tsx): a globe button in the top
