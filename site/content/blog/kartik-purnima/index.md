@@ -111,4 +111,5 @@ On Sunday, 14 November 2027, the day of the holy dip. Purnima begins at 9:55 am 
 
 - [Tulsi Vivah 2026: date, story and simple puja vidhi](/blog/tulsi-vivah): the wedding of the tulsi plant, which can be held up to this full moon.
 - [Dev Uthani Ekadashi 2026: 20 or 21 November?](/blog/dev-uthani-ekadashi): why the dates split, with parana times for 12 cities.
-- [Chhath Puja 2026](/blog/chhath-puja): four days of offerings to the setting and rising sun.
+- [Kaal Bhairav Jayanti 2026](/blog/kaal-bhairav-jayanti): a week later, Bhairav's night, and why it's picked by the night and not sunrise.
+- [Utpanna Ekadashi 2026](/blog/utpanna-ekadashi): the next Ekadashi after this full moon, with parana times for 12 cities.

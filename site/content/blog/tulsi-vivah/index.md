@@ -86,4 +86,4 @@ On Thursday, 11 November 2027, the day after Dev Uthani Ekadashi on 10 November.
 
 - [Dev Uthani Ekadashi 2026: 20 or 21 November?](/blog/dev-uthani-ekadashi): the day before, with parana times for 12 cities.
 - [Vivah Panchami 2026](/blog/vivah-panchami): the wedding of Ram and Sita, and why some families avoid weddings that day.
-- [Chhath Puja 2026](/blog/chhath-puja): four days of offerings to the setting and rising sun.
+- [Kaal Bhairav Jayanti 2026](/blog/kaal-bhairav-jayanti): Bhairav's night on 1 December, and the monthly Kalashtami dates.

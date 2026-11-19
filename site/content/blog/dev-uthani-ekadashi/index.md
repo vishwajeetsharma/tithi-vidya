@@ -138,10 +138,12 @@ On Dev Uthani Ekadashi: 20 November for most families, and 21 November for Vaish
 
 On Wednesday, 10 November 2027. That year Ekadashi is running at sunrise and before dawn, so Smarta and Vaishnava families fast on the same day.
 
+The next Ekadashi is [Utpanna Ekadashi on 4 December](/blog/utpanna-ekadashi), the traditional one to begin Ekadashi fasts with, and the [Ekadashi 2027 list](/blog/ekadashi-list) has all 25 of next year's dates with parana times.
+
 > **Tip:** Ekadashi comes twice a month, but your own birth tithi comes back once a year. [Find my tithi](/find) shows yours, and your tithi birthday for the next 100 years.
 
 ## Keep reading
 
-- [Chhath Puja 2026: dates, Kharna and arghya times](/blog/chhath-puja): all four days from 13 November, with sunset and sunrise for 8 cities.
+- [Kaal Bhairav Jayanti 2026](/blog/kaal-bhairav-jayanti): another day where the rule, not just the tithi, picks the date.
 - [Tithi birthday calculator: 5 things it must get right](/blog/tithi-birthday-calculator): the sunrise rule from this post, and four more.
 - [Vivah Panchami 2026](/blog/vivah-panchami): the wedding of Ram and Sita, and why some families avoid weddings that day.

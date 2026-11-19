@@ -202,7 +202,7 @@ A few dates differ from one calendar to another. That's usually not a mistake: t
 - **Karwa Chauth, 18 or 19 October.** Chaturthi is running at moonrise only on the 18th, but calendars that use the sunrise tithi print the 19th.
 - **Sharad Purnima, 14 or 15 October.** Purnima covers the whole night of the 14th, which is when the kheer is left out in the moonlight.
 - **Vishu and Pohela Boishakh, 14 or 15 April,** depending on each region's rule for the solar new year.
-- **Ekadashi fasts.** When Ekadashi starts just after a sunrise, families fast on the first day and Vaishnavas on the second. In 2027, Nirjala, Devshayani, Dev Uthani and Mokshada Ekadashi fall on the same day for both.
+- **Ekadashi fasts.** When Ekadashi starts just after a sunrise, families fast on the first day and Vaishnavas on the second. In 2027, Nirjala, Devshayani, Dev Uthani and Mokshada Ekadashi fall on the same day for both. The [Ekadashi 2027 list](/blog/ekadashi-list) has all 25, with parana times.
 
 If you follow a South Indian, Bengali or Odia calendar, some dates will follow your region's own panchang. And festivals set by the stars (nakshatras), like Onam, aren't in this list.
 

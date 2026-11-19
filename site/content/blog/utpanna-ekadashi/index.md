@@ -86,7 +86,7 @@ Yes, unless you're keeping a nirjala fast, which skips even water. Most people w
 
 ### When is Utpanna Ekadashi in 2027?
 
-On Wednesday, 24 November 2027. Ekadashi is running at sunrise and before dawn that day, so families and Vaishnavas fast together again.
+On Wednesday, 24 November 2027. Ekadashi is running at sunrise and before dawn that day, so families and Vaishnavas fast together again. All 25 Ekadashis of next year are in the [Ekadashi 2027 list](/blog/ekadashi-list), with parana times.
 
 > **Tip:** Ekadashi follows the moon, and so does your birthday in the Hindu calendar. [Find my tithi](/find) shows the tithi you were born on.
 

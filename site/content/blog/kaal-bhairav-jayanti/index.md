@@ -91,4 +91,4 @@ On Saturday, 20 November 2027. Ashtami begins at 7:17 pm that evening and ends b
 
 - [Kartik Purnima 2026](/blog/kartik-purnima): the full moon a week earlier, with Dev Deepawali and Gurpurab.
 - [Dev Uthani Ekadashi 2026: 20 or 21 November?](/blog/dev-uthani-ekadashi): another day where the rule, not just the tithi, picks the date.
-- [Tulsi Vivah 2026](/blog/tulsi-vivah): the wedding that opens the season, with a simple puja you can do at home.
+- [Utpanna Ekadashi 2026](/blog/utpanna-ekadashi): three days later, the Ekadashi to start your fasts with, with parana times for 12 cities.
