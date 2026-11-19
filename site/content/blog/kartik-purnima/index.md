@@ -1,5 +1,5 @@
 ---
-title: "Kartik Purnima 2026: Dev Deepawali, Gurpurab and snan time"
+title: "Kartik Purnima 2026: date and snan time"
 description: "Kartik Purnima 2026 is on Tuesday, 24 November. Purnima tithi times, sunrise for the holy dip in 6 cities, Dev Deepawali in Varanasi and Gurpurab."
 date: 2026-11-13
 tags: [festivals, purnima, hindu calendar]

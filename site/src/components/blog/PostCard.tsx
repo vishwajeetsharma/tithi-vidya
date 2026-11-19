@@ -57,7 +57,7 @@ export function PostCard({
           sizes="(min-width: 1000px) 400px, (min-width: 620px) 50vw, 100vw"
           width={post.cover.width}
           height={post.cover.height}
-          alt=""
+          alt={post.cover.alt}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : undefined}
           decoding="async"

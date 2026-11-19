@@ -213,5 +213,5 @@ Yes, it's the most common day for it. Families usually hold it on the evening of
 ## Keep reading
 
 - [Hindu calendar 2027: all festival dates with tithi](/blog/hindu-calendar): where each Purnima sits among the year's festivals.
-- [Kartik Purnima 2026: Dev Deepawali, Gurpurab and snan time](/blog/kartik-purnima): one Purnima, three celebrations.
+- [Kartik Purnima 2026: date and snan time](/blog/kartik-purnima): one Purnima, three celebrations.
 - [What is a tithi?](/blog/what-is-tithi): why a Purnima can start at 6:50 pm, in one picture.
