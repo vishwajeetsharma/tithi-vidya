@@ -1,6 +1,6 @@
 ---
 title: "Hindu calendar 2027: all festival dates with tithi"
-description: "Hindu calendar 2027 with every major festival, month by month: date, day and tithi. Holi is on 22 March, Diwali on 29 October, and 49 more."
+description: "Hindu calendar 2027: all 51 festivals month by month with date, day and tithi, and the ones like Maha Shivratri that fall a day before plain calendars show."
 date: 2026-11-18
 tags: [festivals, hindu calendar, panchang]
 cover: cover.jpg

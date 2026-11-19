@@ -1,6 +1,6 @@
 ---
 title: "Utpanna Ekadashi 2026: date, parana time and how to start"
-description: "Utpanna Ekadashi 2026 is on Friday, 4 December, with parana on Saturday morning. Times for 12 cities, the story, and how to begin Ekadashi fasts."
+description: "Utpanna Ekadashi 2026: tithi times, the parana window for 12 cities, the story, and why it's the traditional Ekadashi to start your fasts with."
 date: 2026-11-17
 tags: [festivals, ekadashi, vrat, hindu calendar]
 cover: cover.jpg

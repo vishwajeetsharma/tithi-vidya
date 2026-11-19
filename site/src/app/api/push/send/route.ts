@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 import { sendNotification, setVapidDetails, WebPushError } from "web-push";
 
 import { getPosts } from "@/lib/blog";
+import { justLive, pingIndexNow } from "@/lib/indexnow";
 import { hasDatabase, notificationFor, postsToAnnounce, readSubscription, redis, SENT, SUBS } from "@/lib/push";
 import { CONTACT_EMAIL, siteUrl } from "@/lib/site";
 
@@ -28,16 +29,22 @@ export async function GET(request: Request) {
   // The day's post has just gone live: the sitemap is made again on its next
   // visit, so search engines find the post the same morning.
   revalidatePath("/sitemap.xml");
+  // And Bing and the other IndexNow engines are told straight away. Only from
+  // the live site, so a preview deploy never reports its own addresses.
+  const origin = siteUrl().origin;
+  const indexNow = process.env.VERCEL_ENV === "production" ? await pingIndexNow(justLive(getPosts(), origin, Date.now()), origin) : { sent: 0 };
+  if (indexNow.sent || indexNow.status || indexNow.problem) console.log(`indexnow: ${JSON.stringify(indexNow)}`);
+
   const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
   if (!publicKey || !privateKey || !hasDatabase()) {
-    return reply({ ok: false, problem: "Set NEXT_PUBLIC_VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY and the database first." }, 503);
+    return reply({ ok: false, problem: "Set NEXT_PUBLIC_VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY and the database first.", indexNow }, 503);
   }
   setVapidDetails(`mailto:${CONTACT_EMAIL}`, publicKey, privateKey);
 
   const sent = new Set(await redis<string[]>(["SMEMBERS", SENT]));
   const posts = postsToAnnounce(getPosts(), sent, Date.now());
-  if (posts.length === 0) return reply({ ok: true, announced: [] });
+  if (posts.length === 0) return reply({ ok: true, announced: [], indexNow });
 
   // HGETALL answers [id, subscription, id, subscription, ...].
   const stored = await redis<string[]>(["HGETALL", SUBS]);
@@ -47,7 +54,6 @@ export async function GET(request: Request) {
     if (subscription) subscribers.push({ id: stored[i], subscription });
   }
 
-  const origin = siteUrl().origin;
   const gone = new Set<string>();
   let delivered = 0;
   let failed = 0;
@@ -69,7 +75,7 @@ export async function GET(request: Request) {
   }
   if (gone.size) await redis(["HDEL", SUBS, ...gone]);
 
-  const summary = { ok: true, announced: posts.map((p) => p.slug), subscribers: subscribers.length, delivered, failed, removed: gone.size };
+  const summary = { ok: true, announced: posts.map((p) => p.slug), subscribers: subscribers.length, delivered, failed, removed: gone.size, indexNow };
   console.log(`push: ${JSON.stringify(summary)}`);
   return reply(summary);
 }

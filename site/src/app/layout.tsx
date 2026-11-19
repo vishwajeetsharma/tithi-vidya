@@ -44,7 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image", title: SITE_TITLE, description: SITE_DESCRIPTION },
   // Lets Google show large images and full snippets, in Discover too.
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
+  // Large image previews let Google Discover and Bing show the covers as big cards.
+  robots: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
 };
 
 export const viewport: Viewport = {

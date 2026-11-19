@@ -1,6 +1,6 @@
 ---
 title: "Kaal Bhairav Jayanti 2026: date, time and why it's at night"
-description: "Kaal Bhairav Jayanti 2026 is on Tuesday, 1 December. The Ashtami tithi times, why the puja is kept at night, and the next Kalashtami dates."
+description: "Kaal Bhairav Jayanti 2026: the Ashtami tithi times, why Bhairav's day is picked by the night and not sunrise, and why 2027 falls a day earlier than you'd think."
 date: 2026-11-16
 tags: [festivals, vrat, hindu calendar]
 cover: cover.jpg
