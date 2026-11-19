@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { CookieConsent } from "@/components/CookieConsent";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { AUTHOR, KEYWORDS, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, siteUrl } from "@/lib/site";
+import { ADSENSE_CLIENT, AUTHOR, KEYWORDS, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, siteUrl } from "@/lib/site";
 
 import { ANALYTICS_SCRIPT } from "@/lib/analytics-script";
 
@@ -80,6 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <head>
+        <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
         <script dangerouslySetInnerHTML={{ __html: HEAD_SCRIPT }} />
         <link rel="alternate" type="application/rss+xml" title="Tithi Vidya Blog" href="/blog/feed.xml" />
       </head>
