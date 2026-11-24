@@ -20,11 +20,20 @@ type Tags = (choice: Choice & { pings?: boolean }) => void;
 /**
  * Runs the head script in a bare page, and returns the scripts it added and
  * the page's globals. `region` is what this tab already knows from
- * /api/region; `answer` is what /api/region says when asked.
+ * /api/region; `answer` is what /api/region says when asked. The page
+ * finishes loading straight away unless `loaded` is false; then `load()` does it.
  */
-function runHead(saved: string | null, { region = null as string | null, answer = Promise.resolve({ ok: true, json: async () => ({ strict: true }) }) as Promise<unknown> } = {}) {
+function runHead(
+  saved: string | null,
+  {
+    region = null as string | null,
+    answer = Promise.resolve({ ok: true, json: async () => ({ strict: true }) }) as Promise<unknown>,
+    loaded = true,
+  } = {},
+) {
   const added: string[] = [];
   const kept: Record<string, string> = {};
+  const onLoad: (() => void)[] = [];
   const script = () => ({ async: false, crossOrigin: "", src: "" });
   const record = (element: { src: string }) => added.push(element.src);
   const page: Record<string, unknown> = {
@@ -36,6 +45,11 @@ function runHead(saved: string | null, { region = null as string | null, answer 
       constructor(public type: string) {}
     },
     dispatchEvent: vi.fn(),
+    addEventListener: (type: string, listener: () => void) => {
+      if (type === "load") onLoad.push(listener);
+    },
+    // The browser is idle at once.
+    requestIdleCallback: (callback: () => void) => callback(),
     fetch: vi.fn(() => answer),
     localStorage: { getItem: (key: string) => (key === CONSENT_KEY ? saved : null) },
     sessionStorage: {
@@ -45,6 +59,7 @@ function runHead(saved: string | null, { region = null as string | null, answer 
       },
     },
     document: {
+      readyState: "loading",
       createElement: script,
       head: { appendChild: record },
       body: { appendChild: () => undefined },
@@ -53,7 +68,9 @@ function runHead(saved: string | null, { region = null as string | null, answer 
   };
   page.window = page;
   runInNewContext(ANALYTICS_SCRIPT, page);
-  return { added, page, kept, tags: page.__tithiTags as Tags };
+  const load = () => onLoad.splice(0).forEach((listener) => listener());
+  if (loaded) load();
+  return { added, page, kept, load, tags: page.__tithiTags as Tags };
 }
 
 /** Lets the /api/region answer arrive. */
@@ -108,6 +125,30 @@ describe("where a yes is needed first", () => {
 });
 
 describe("the head script", () => {
+  it("loads nothing until the page has loaded, then everything a choice allows", () => {
+    const { added, page, load } = runHead(stored({ analytics: true, ads: true }, Date.now()), { loaded: false });
+    expect(added).toEqual([]);
+    expect(page.fetch).not.toHaveBeenCalled();
+    // Google's consent defaults are set at once: they load nothing.
+    expect(consents(page)).toHaveLength(2);
+    load();
+    expect(has(added, ADSENSE) && has(added, RECOVERY)).toBe(true);
+    expect(trackers(added)).toHaveLength(3);
+  });
+
+  it("a yes before the page has loaded starts those tags at once, and later steps keep it", async () => {
+    const { added, page, tags, load } = runHead(null, { region: "strict", loaded: false });
+    tags(ACCEPT_ALL);
+    expect(trackers(added)).toHaveLength(3);
+    // The visitor's yes is saved by then; the head reads it again, so Europe's
+    // cookie-free default doesn't undo it.
+    (page.localStorage as { getItem: (key: string) => string | null }).getItem = (key) => (key === CONSENT_KEY ? stored(ACCEPT_ALL, Date.now()) : null);
+    load();
+    await settle();
+    expect(consents(page).some((entry) => entry[1] === "update" && (entry[2] as { analytics_storage?: string }).analytics_storage === "denied")).toBe(false);
+    expect(gaOff(page)).toBe(false);
+  });
+
   it("loads AdSense and its recovery message for everyone, once, and never asks for non-personalised ads", () => {
     for (const saved of [null, stored({}, Date.now()), stored({ analytics: true, ads: true }, Date.now())]) {
       const { added, page, tags } = runHead(saved, { region: "strict" });

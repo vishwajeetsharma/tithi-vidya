@@ -9,6 +9,10 @@ const GA_COOKIE_SECONDS = 395 * 86_400;
 /**
  * The page head's tags on the live site.
  *
+ * - **Nothing loads until the page has.** Every tag below starts once the
+ *   page's load event has fired and the browser is idle, so none of them
+ *   competes with the page itself for the network or the processor. A
+ *   visitor's yes in the cookie box still starts the tags it allows at once.
  * - **Google AdSense loads for everyone, with full ads.** The cookie box
  *   doesn't change it. Readers can turn off personalised ads in Google's My Ad
  *   Center. In Europe (lib/region.ts) Google's own consent message, set up in
@@ -17,7 +21,7 @@ const GA_COOKIE_SECONDS = 395 * 86_400;
  *   blocking recovery message comes with AdSense, for everyone.
  * - **Google Analytics, Microsoft Clarity and the Meta Pixel follow the cookie
  *   box** (components/CookieConsent.tsx). "Visit counts" is Analytics and
- *   Clarity, and "Ad measurement" is the pixel. A saved choice applies at once.
+ *   Clarity, and "Ad measurement" is the pixel. A saved choice applies as is.
  *   With no choice yet, it depends on where the visitor is, which /api/region
  *   tells this script once a visit:
  *   - Outside Europe, all three start, and the box shows a notice.
@@ -31,12 +35,8 @@ const GA_COOKIE_SECONDS = 395 * 86_400;
  */
 export const ANALYTICS_SCRIPT = `(function(){var w=window,d=document,on={};
 function add(src,cors){var s=d.createElement("script");s.async=true;if(cors)s.crossOrigin="anonymous";s.src=src;d.head.appendChild(s)}
-add("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}",1);
-add("https://fundingchoicesmessages.google.com/i/${ADSENSE_CLIENT.replace(/^ca-/, "")}?ers=1");
-(function f(){if(w.frames.googlefcPresent)return;if(!d.body)return setTimeout(f,0);var i=d.createElement("iframe");i.style="width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;";i.style.display="none";i.name="googlefcPresent";d.body.appendChild(i)})();
-(function(){${FC_ERROR_PROTECTION}}).call(w);
-var c=null;try{c=JSON.parse(localStorage.getItem("${CONSENT_KEY}"))}catch(e){}
-var ok=!!c&&c.v===${CONSENT_VERSION}&&typeof c.at==="number"&&Date.now()-c.at<=${CONSENT_DAYS * 86_400_000};
+function saved(){var c=null;try{c=JSON.parse(localStorage.getItem("${CONSENT_KEY}"))}catch(e){}
+return c&&c.v===${CONSENT_VERSION}&&typeof c.at==="number"&&Date.now()-c.at<=${CONSENT_DAYS * 86_400_000}?{analytics:c.analytics===true,ads:c.ads===true}:null}
 w.dataLayer=w.dataLayer||[];w.gtag=function(){dataLayer.push(arguments)};
 gtag("consent","default",{ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",region:${JSON.stringify(STRICT_REGIONS)}});
 gtag("consent","default",{ad_storage:"granted",ad_user_data:"granted",ad_personalization:"granted"});
@@ -50,8 +50,14 @@ if(t.analytics&&!on.cl){on.cl=1;(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(
 if(t.ads&&!on.px){on.px=1;
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(w,d,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq("set","autoConfig",false,"${META_PIXEL_ID}");fbq("init","${META_PIXEL_ID}");fbq("track","PageView")}};
-function start(r){w.__tithiRegion=r;var open=r==="open";w.__tithiTags({analytics:open,ads:open,pings:!open});try{w.dispatchEvent(new Event("${REGION_EVENT}"))}catch(e){}}
-if(ok)w.__tithiTags({analytics:c.analytics===true,ads:c.ads===true});
-else{var r=null;try{r=sessionStorage.getItem("${REGION_KEY}")}catch(e){}
-if(r==="open"||r==="strict")start(r);
-else fetch("/api/region").then(function(x){if(!x.ok)throw x.status;return x.json()}).then(function(j){var r=j.strict===false?"open":"strict";try{sessionStorage.setItem("${REGION_KEY}",r)}catch(e){}start(r)}).catch(function(){start("strict")})}})()`;
+function start(r){w.__tithiRegion=r;var c=saved(),open=r==="open";w.__tithiTags(c||{analytics:open,ads:open,pings:!open});try{w.dispatchEvent(new Event("${REGION_EVENT}"))}catch(e){}}
+function boot(){add("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}",1);
+add("https://fundingchoicesmessages.google.com/i/${ADSENSE_CLIENT.replace(/^ca-/, "")}?ers=1");
+(function f(){if(w.frames.googlefcPresent)return;if(!d.body)return setTimeout(f,0);var i=d.createElement("iframe");i.style="width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;";i.style.display="none";i.name="googlefcPresent";d.body.appendChild(i)})();
+(function(){${FC_ERROR_PROTECTION}}).call(w);
+var c=saved();if(c)return w.__tithiTags(c);
+var r=null;try{r=sessionStorage.getItem("${REGION_KEY}")}catch(e){}
+if(r==="open"||r==="strict")return start(r);
+fetch("/api/region").then(function(x){if(!x.ok)throw x.status;return x.json()}).then(function(j){var r=j.strict===false?"open":"strict";try{sessionStorage.setItem("${REGION_KEY}",r)}catch(e){}start(r)}).catch(function(){start("strict")})}
+function later(){"requestIdleCallback"in w?w.requestIdleCallback(boot,{timeout:1500}):setTimeout(boot,200)}
+if(d.readyState==="complete")later();else w.addEventListener("load",later,{once:true})})()`;
