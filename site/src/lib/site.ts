@@ -18,11 +18,10 @@ export const PORTFOLIO_URL = "https://www.thevishwa.in/";
  */
 export const GOOGLE_PREFERRED_SOURCE = `https://www.google.com/preferences/source?q=${new URL(SITE_ORIGIN).hostname.replace(/^www\./, "")}`;
 /**
- * Off until Google lists the site: its Preferred Sources page says "No
- * results" for a domain it has not picked up yet. Check the link above, and
- * turn this on once it shows Tithi Vidya.
+ * On since 25 Nov 2026, when Google's Preferred Sources page started listing
+ * Tithi Vidya. Turn it off if the page ever says "No results" for the domain.
  */
-export const SHOW_PREFERRED_SOURCE = false;
+export const SHOW_PREFERRED_SOURCE = true;
 export const GOOGLE_ANALYTICS_ID = "G-EH6CQB4WNP";
 export const META_PIXEL_ID = "1817935669409933";
 /** Microsoft Clarity project. The finder form and results are masked in its recordings (data-clarity-mask). */

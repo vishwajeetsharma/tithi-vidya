@@ -1362,71 +1362,79 @@ a.pageStep:hover,
   filter: brightness(1.06);
 }
 
-/* "Add as a preferred source on Google" */
+/* "Add as a preferred source on Google": styled like Google's own buttons, not ours. */
 
 .preferred {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
-  border-radius: 18px;
-  background: var(--lilac-50);
-  box-shadow: inset 0 0 0 1.5px var(--line-strong);
-  color: var(--ink);
-  text-decoration: none;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-
-.preferred:hover {
+  max-width: 100%;
+  padding: 10px 18px 10px 14px;
+  border: 1px solid #dadce0;
+  border-radius: 14px;
   background: #fff;
-  box-shadow: inset 0 0 0 1.5px #a79cf0;
+  color: #1f1f1f;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgb(60 64 67 / 0.3), 0 1px 3px 1px rgb(60 64 67 / 0.15);
+  transition: background 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), transform 0.35s var(--ease-out);
 }
 
-.preferred svg {
+/* Lifts like the site's other buttons, such as Follow with RSS beside it. */
+.preferred:hover {
+  transform: translateY(-2px);
+  background: #f8f9fa;
+  box-shadow: 0 1px 3px rgb(60 64 67 / 0.3), 0 4px 8px 3px rgb(60 64 67 / 0.15);
+}
+
+.preferred:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+.preferredG {
   flex: none;
-  color: var(--indigo);
 }
 
-.preferred span {
+.preferredText {
   display: grid;
   gap: 2px;
-  line-height: 1.3;
 }
 
-.preferred strong {
-  font-size: 0.9375rem;
+.preferredText b {
+  font-weight: 500;
 }
 
-.preferred small {
-  color: var(--ink-mute);
+.preferredText small {
+  color: #5f6368;
   font-size: 0.8125rem;
+  font-weight: 400;
 }
 
-/* In the blog header, beside Follow with RSS: the same height as that button. */
+/* On the blog page, under the header buttons: one line, a pill. */
 .preferredCompact {
-  min-height: 46px;
-  margin-top: 8px;
-  padding: 0 18px;
+  display: inline-flex;
   border-radius: 999px;
-  background: rgb(255 255 255 / 0.72);
+  margin-top: 10px;
+  padding: 0 18px 0 14px;
+  min-height: 46px;
 }
 
-.preferredCompact strong {
-  font-size: 1rem;
+.preferredCompact .preferredText {
+  display: block;
 }
 
-/* In the left rail it is a card like the others. */
+/* In the article's left rail: full width of the rail, text allowed to wrap. */
 .railSticky .preferredCompact {
-  min-height: 0;
+  display: flex;
   margin-top: 0;
-  padding: 12px 14px;
+  padding: 10px 14px;
   border-radius: 20px;
-  background: var(--card);
-  box-shadow: 0 16px 40px -30px rgb(52 36 170 / 0.45);
-}
-
-.railSticky .preferredCompact strong {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 /* "Get notified of new articles": a button in the blog header, a card after each article. */
