@@ -105,7 +105,7 @@ export function CookieConsent() {
       )}
       <p>
         <strong id={titleId} className="cookieTitle">
-          Cookies for visit counts and ads?
+          Cookies for visit counts and personalised ads?
         </strong>{" "}
         Only if you say yes. <Link href="/privacy#cookies">Privacy Policy</Link>
       </p>
@@ -123,7 +123,7 @@ export function CookieConsent() {
           <label className="cookieOption">
             <input type="checkbox" name="ads" defaultChecked={current.ads} />
             <span>
-              <strong>Ads.</strong> Google ads that can be based on your visits, and the Meta Pixel, which measures our Facebook and Instagram ads.
+              <strong>Personalised ads.</strong> Google ads based on your visits, and the Meta Pixel, which measures our Facebook and Instagram ads. Without it, you still see ads, just not personalised ones.
             </span>
           </label>
           <button className="cookieButton cookieSave" type="submit">

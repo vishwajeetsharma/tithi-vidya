@@ -69,8 +69,8 @@ const STRIP_DETAILS = `(function(){function s(){if(location.hash.includes("date=
 // those are not reloads. Must match STORE_KEY in lib/query.ts.
 const RESET_ON_RELOAD = `try{if(performance.getEntriesByType("navigation")[0]?.type==="reload")sessionStorage.removeItem("tithi-birth")}catch(e){}`;
 
-// Analytics run only on the live site. `npm run dev`, a local `npm run build`
-// and Vercel preview deployments send nothing to Google Analytics or Meta.
+// Analytics and ads run only on the live site. `npm run dev`, a local `npm run build`
+// and Vercel preview deployments send nothing to Google, Microsoft or Meta.
 // VERCEL_ENV is "production" only for builds of the main domain.
 const ANALYTICS_ON = process.env.NODE_ENV === "production" && process.env.VERCEL_ENV === "production";
 

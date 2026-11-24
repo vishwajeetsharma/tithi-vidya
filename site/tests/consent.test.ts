@@ -17,7 +17,11 @@ const stored = (choice: Partial<Choice>, at = NOW, v = CONSENT_VERSION) => JSON.
 function runHead(saved: string | null) {
   const added: string[] = [];
   const script = () => ({ async: false, crossOrigin: "", src: "" });
-  const record = (element: { src: string }) => added.push(element.src);
+  let npaWhenAdSenseAdded: unknown;
+  const record = (element: { src: string }) => {
+    added.push(element.src);
+    if (/adsbygoogle\.js/.test(element.src)) npaWhenAdSenseAdded = (page.adsbygoogle as { requestNonPersonalizedAds?: number } | undefined)?.requestNonPersonalizedAds;
+  };
   const page: Record<string, unknown> = {
     Date,
     JSON,
@@ -34,7 +38,7 @@ function runHead(saved: string | null) {
   page.window = page;
   runInNewContext(ANALYTICS_SCRIPT, page);
   const tags = page.__tithiTags as (choice: Choice) => void;
-  return { added, page, tags };
+  return { added, page, tags, npaWhenAdSenseAdded: () => npaWhenAdSenseAdded };
 }
 
 const GA = /googletagmanager\.com\/gtag\/js/;
@@ -57,50 +61,64 @@ describe("parseChoice", () => {
   });
 });
 
+/** Whether the page asks Google for non-personalised ads (1) or allows personalised ones (0). */
+const npa = (page: Record<string, unknown>) => (page.adsbygoogle as { requestNonPersonalizedAds?: number }).requestNonPersonalizedAds;
+const trackers = (added: string[]) => added.filter((src) => GA.test(src) || CLARITY.test(src) || PIXEL.test(src));
+
 describe("the head script", () => {
-  it("loads nothing before the visitor chooses", () => {
+  it("before any choice: ads for everyone, non-personalised, and no trackers", () => {
     const { added, page } = runHead(null);
-    expect(added).toEqual([]);
+    expect(added.some((src) => RECOVERY.test(src))).toBe(true);
+    expect(npa(page)).toBe(1);
+    expect(trackers(added)).toEqual([]);
     expect(page.dataLayer).toBeUndefined();
     expect(page.fbq).toBeUndefined();
   });
 
-  it("loads nothing after a decline, or when the choice has expired", () => {
-    expect(runHead(stored({})).added).toEqual([]);
-    expect(runHead(stored({ analytics: true, ads: true }, Date.now() - 400 * DAY)).added).toEqual([]);
+  it("after a decline, or an expired choice, the same: non-personalised ads, no trackers", () => {
+    for (const saved of [stored({}), stored({ analytics: true, ads: true }, Date.now() - 400 * DAY)]) {
+      const { added, page } = runHead(saved);
+      expect(npa(page)).toBe(1);
+      expect(trackers(added)).toEqual([]);
+    }
   });
 
   it("starts only Google Analytics and Clarity for visit counts, with ad storage denied", () => {
     const { added, page } = runHead(stored({ analytics: true }, Date.now()));
-    expect(added).toHaveLength(2);
+    expect(trackers(added)).toHaveLength(2);
     expect(added.some((src) => GA.test(src))).toBe(true);
     expect(added.some((src) => CLARITY.test(src))).toBe(true);
+    expect(npa(page)).toBe(1);
     // Clarity is told the visitor agreed, so it may set its cookies.
     expect((page.clarity as { q: IArguments[] }).q.map((entry) => Array.from(entry))).toEqual([["consent"]]);
     const consent = (page.dataLayer as IArguments[]).map((entry) => Array.from(entry)).find((entry) => entry[0] === "consent");
     expect(consent).toEqual(["consent", "default", { analytics_storage: "granted", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" }]);
   });
 
-  it("starts AdSense, its ad blocking message and the Meta Pixel for ads, without Google Analytics", () => {
-    const { added } = runHead(stored({ ads: true }, Date.now()));
-    expect(added.some((src) => ADSENSE.test(src))).toBe(true);
-    expect(added.some((src) => RECOVERY.test(src))).toBe(true);
+  it("allows personalised ads and starts the Meta Pixel for ads, without Google Analytics", () => {
+    const { added, page } = runHead(stored({ ads: true }, Date.now()));
+    expect(npa(page)).toBe(0);
     expect(added.some((src) => PIXEL.test(src))).toBe(true);
     expect(added.some((src) => GA.test(src) || CLARITY.test(src))).toBe(false);
   });
 
-  it("keeps every Google ad script away from visit counts alone", () => {
-    const { added } = runHead(stored({ analytics: true }, Date.now()));
-    expect(added.some((src) => ADSENSE.test(src) || RECOVERY.test(src) || PIXEL.test(src))).toBe(false);
+  it("adds AdSense for everyone, once, after setting whether ads may be personalised", () => {
+    for (const [saved, expected] of [[null, 1], [stored({}), 1], [stored({ analytics: true, ads: true }, Date.now()), 0]] as const) {
+      const { added, tags, npaWhenAdSenseAdded } = runHead(saved);
+      expect(npaWhenAdSenseAdded()).toBe(expected);
+      tags({ analytics: true, ads: true });
+      expect(added.filter((src) => ADSENSE.test(src))).toHaveLength(1);
+    }
   });
 
   it("starts tags the moment someone accepts in the box, and only once", () => {
-    const { added, tags } = runHead(null);
+    const { added, page, tags } = runHead(null);
     tags({ analytics: true, ads: true });
     tags({ analytics: true, ads: true });
     expect(added.filter((src) => GA.test(src))).toHaveLength(1);
-    expect(added.filter((src) => ADSENSE.test(src))).toHaveLength(1);
+    expect(added.filter((src) => CLARITY.test(src))).toHaveLength(1);
     expect(added.filter((src) => PIXEL.test(src))).toHaveLength(1);
+    expect(npa(page)).toBe(0);
   });
 
   it("tells Google Analytics when ads are allowed later", () => {

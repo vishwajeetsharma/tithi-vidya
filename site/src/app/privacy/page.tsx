@@ -17,7 +17,7 @@ export default function PrivacyPage() {
     <div className={s.page}>
       <div className={`wrap ${s.inner}`}>
         <h1 className={`display ${s.title}`}>Privacy Policy</h1>
-        <p className={s.updated}>Last updated: 20 November 2026</p>
+        <p className={s.updated}>Last updated: 24 November 2026</p>
 
         <p>
           {SITE_NAME} is run by Vishwajeet Sharma. This page explains what data the site uses, in plain words. The short version:{" "}
@@ -34,10 +34,11 @@ export default function PrivacyPage() {
           link, the details are inside that link, so anyone you share it with can see them.
         </p>
 
-        <h2 id="cookies">Cookies, only with your OK</h2>
+        <h2 id="cookies">Cookies: your choice</h2>
         <p>
-          Nothing that sets analytics or ad cookies loads until you say yes. On your first visit a small box asks, once you start scrolling or after a few seconds.
-          You can accept, decline, or choose what to allow. If you don&apos;t answer, nothing loads.
+          Visit counting and ad measurement load only if you say yes. Google&apos;s ads show for everyone, but whether they can be based on your visits is your
+          choice. On your first visit a small box asks, once you start scrolling or after a few seconds. You can accept, decline, or choose what to allow. If you
+          don&apos;t answer, nothing that tracks you loads, and the ads aren&apos;t personalised.
         </p>
         <ul>
           <li>
@@ -46,8 +47,8 @@ export default function PrivacyPage() {
             finder form and your results are hidden from its recordings, and it does not record what you type.
           </li>
           <li>
-            <strong>Ads: Google AdSense</strong>, from Google, shows the ads that keep the site free. <strong>Meta Pixel</strong>, from Meta, shows us whether our
-            Facebook and Instagram ads bring visitors, and can be used to show our ads to people who visited.
+            <strong>Personalised ads</strong> lets Google AdSense base its ads on your visits, and starts the <strong>Meta Pixel</strong>, from Meta, which shows us
+            whether our Facebook and Instagram ads bring visitors, and can be used to show our ads to people who visited.
           </li>
         </ul>
         <p>
@@ -68,14 +69,20 @@ export default function PrivacyPage() {
           see, and showing an ad does not mean we recommend it.
         </p>
         <ul>
-          <li>Google ads load only if you allow Ads. If you decline, or don&apos;t answer, Google ads don&apos;t load at all.</li>
+          <li>
+            Google ads show for everyone. If you allow personalised ads, they can be based on your visits. If you decline, or don&apos;t answer, we ask Google for{" "}
+            <a href="https://support.google.com/adsense/answer/9007336">non-personalised ads</a>, which Google chooses from things like the page you&apos;re reading and your rough
+            location, not your history.
+          </li>
+          <li>Google says non-personalised ads still use cookies, to limit how often you see the same ad and to count ads in its reports.</li>
           <li>
             Google and other ad companies working with Google use cookies to show ads. These can be based on your earlier visits to this site and to other websites.
             Google explains this in{" "}
             <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from sites that use its services</a>.
           </li>
           <li>
-            In the European Economic Area, the UK and Switzerland, Google may show only limited ads, which don&apos;t use your personal data to choose them.
+            In the European Economic Area, the UK and Switzerland, Google may show only <a href="https://support.google.com/adsense/answer/14210870">limited ads</a>, which
+            don&apos;t use your personal data to choose them.
           </li>
           <li>
             Ad services can receive the same kind of data as above: the page, your device and browser, your IP address and a rough location. They never receive your
@@ -145,13 +152,13 @@ export default function PrivacyPage() {
                 <td>__gads, __gpi, __eoi</td>
                 <td>Google AdSense</td>
                 <td>Shows ads, limits how often you see the same one, and measures them</td>
-                <td>Yes: Ads</td>
+                <td>Only to base ads on your visits</td>
               </tr>
               <tr>
                 <td>_fbp, _fbc</td>
                 <td>Meta Pixel</td>
                 <td>Measures ads and tells one visitor from another</td>
-                <td>Yes: Ads</td>
+                <td>Yes: Personalised ads</td>
               </tr>
             </tbody>
           </table>
@@ -177,7 +184,7 @@ export default function PrivacyPage() {
             Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
           </li>
           <li>
-            <strong>Why we use data.</strong> Analytics and ad cookies: only with your consent. The newsletter and article notifications: your consent, which you give
+            <strong>Why we use data.</strong> Visit counting, Clarity, the Meta Pixel and personalised ads: only with your consent. Ads that aren&apos;t personalised: our legitimate interest in keeping the site free. The newsletter and article notifications: your consent, which you give
             when you sign up or turn them on. Hosting and security: our legitimate interest in keeping the site running and safe.
           </li>
           <li>
