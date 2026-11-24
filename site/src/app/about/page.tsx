@@ -145,6 +145,10 @@ export default function AboutPage() {
                 {SITE_NAME} is a small project built with a lot of care. The tithi engine is written in Rust and runs right in your browser, and the{" "}
                 <Link href="/how-it-works">How it works</Link> page shows the real code and every test.
               </p>
+              <p>
+                I&apos;m the main developer, and a graphic designer works with me on the look of the site and its images. We both use AI tools to build it, but every
+                date, time and fact on the site is checked by us by hand. Here&apos;s <Link href="/ai-use">exactly how we use AI</Link>.
+              </p>
             </div>
           </div>
         </section>

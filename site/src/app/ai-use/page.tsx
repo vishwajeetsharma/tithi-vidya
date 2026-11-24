@@ -27,7 +27,7 @@ export default function AiUsePage() {
       <div className={`wrap ${s.inner}`}>
         <p className="eyebrow">Transparency</p>
         <h1 className={`display ${s.title}`}>How we use AI</h1>
-        <p className={s.updated}>Last updated: 6 November 2026</p>
+        <p className={s.updated}>Last updated: 24 November 2026</p>
 
         <p>
           We use AI tools, and we want you to know exactly how. AI helps us work faster. It does not decide what {SITE_NAME} is, what we write about, or what we
@@ -44,7 +44,7 @@ export default function AiUsePage() {
               <strong>Articles are researched and written by people.</strong> AI helps us find topics and makes our wording easier to read.
             </li>
             <li>
-              <strong>Every fact is checked by people</strong> against trusted sources before we publish.
+              <strong>Every date and fact is checked by hand</strong> against our own engine and trusted sources before we publish.
             </li>
             <li>
               <strong>Your tithi results do not come from AI.</strong> They come from astronomy data and tested code.
@@ -54,8 +54,8 @@ export default function AiUsePage() {
 
         <h2>Who we are</h2>
         <p>
-          {SITE_NAME} is made by a small team of four developers and designers, including one designer. Vishwajeet Sharma started the project. You can read why on
-          the <Link href="/about">About</Link> page.
+          {SITE_NAME} is made by two people: Vishwajeet Sharma, who started the project and is its main developer, and a graphic designer. We both use AI tools
+          in our work, and we both check what goes on the site. You can read why Vishwajeet started it on the <Link href="/about">About</Link> page.
         </p>
 
         <h2>Building the website</h2>
