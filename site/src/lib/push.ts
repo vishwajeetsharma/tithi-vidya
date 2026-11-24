@@ -1,8 +1,7 @@
 // Browser notifications for new articles: the server side. The browser side
 // is components/blog/NotifyButton.tsx and public/sw.js.
 //
-// Subscriptions live in a Redis database (Upstash, from Vercel's Marketplace),
-// reached over its REST API, so no database library is needed:
+// Subscriptions live in the site's Redis database (lib/redis.ts):
 //   push:subs  a hash of subscription id -> the browser's subscription JSON
 //   push:sent  a set of post slugs already announced, so each goes out once
 import { createHash } from "node:crypto";
@@ -106,30 +105,8 @@ export function notificationFor(post: Announced, origin: string): Announcement {
   };
 }
 
-/** The database's address and token. Vercel's Upstash integration may name them either way. */
-function database() {
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
-  return url && token ? { url, token } : null;
-}
-
-export const hasDatabase = () => database() !== null;
-
-/** Runs one Redis command over Upstash's REST API. */
-export async function redis<T = unknown>(command: (string | number)[]): Promise<T> {
-  const db = database();
-  if (!db) throw new Error("push: the database is not set up (UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN)");
-  const response = await fetch(db.url, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${db.token}`, "Content-Type": "application/json" },
-    body: JSON.stringify(command),
-    signal: AbortSignal.timeout(8000),
-    cache: "no-store",
-  });
-  const data = (await response.json()) as { result?: T; error?: string };
-  if (!response.ok || data.error) throw new Error(`push: database said ${response.status} ${data.error ?? ""}`.trim());
-  return data.result as T;
-}
+// The database itself is in lib/redis.ts, shared with the article view counts.
+export { hasDatabase, redis } from "./redis";
 
 export const SUBS = "push:subs";
 export const SENT = "push:sent";

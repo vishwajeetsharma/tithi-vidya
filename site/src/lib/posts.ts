@@ -68,38 +68,53 @@ export const formatDate = (iso: string) => longDate.format(new Date(`${iso}T00:0
 /** Articles on each page of the blog: four rows of three on a wide screen. */
 export const PAGE_SIZE = 12;
 
-export const SORTS = { best: "Best match", newest: "Newest first", oldest: "Oldest first", quickest: "Quickest read" } as const;
+export const SORTS = { best: "Best match", read: "Most read", newest: "Newest first", oldest: "Oldest first", quickest: "Quickest read" } as const;
 export type Sort = keyof typeof SORTS;
-/** `sort` stays "" until someone picks one; see sortOf. */
-export type Browse = { q: string; tag: string; sort: Sort | ""; page: number };
-export const SHOW_ALL: Browse = { q: "", tag: "", sort: "", page: 1 };
+/**
+ * `sort` stays "" until someone picks one; see sortOf. `show` is "trending"
+ * for the most read articles of the last 30 days, in place of a topic.
+ */
+export type Browse = { q: string; tag: string; sort: Sort | ""; page: number; show: "" | "trending" };
+export const SHOW_ALL: Browse = { q: "", tag: "", sort: "", page: 1, show: "" };
 
-/** The order in use: what was picked, or else best match while searching and newest first otherwise. */
-export function sortOf({ q, sort }: Pick<Browse, "q" | "sort">): Sort {
+/** How many articles Trending shows. */
+export const TRENDING_COUNT = 10;
+
+/**
+ * The order in use: what was picked, or else best match while searching,
+ * most read for trending, and newest first otherwise. "Best match" needs a
+ * search, and "Most read" needs trending.
+ */
+export function sortOf({ q, sort, show = "" }: Pick<Browse, "q" | "sort"> & { show?: Browse["show"] }): Sort {
   const searching = q.trim() !== "";
-  if (!sort || (sort === "best" && !searching)) return searching ? "best" : "newest";
+  const fallback = searching ? "best" : show ? "read" : "newest";
+  if (!sort || (sort === "best" && !searching) || (sort === "read" && !show)) return fallback;
   return sort;
 }
 
-/** Reads ?q=, ?tag=, ?sort= and ?page= from the address. */
+/** Reads ?q=, ?tag=, ?sort=, ?page= and ?show= from the address. */
 export function readBrowse(search: string): Browse {
   const params = new URLSearchParams(search);
   const sort = params.get("sort") ?? "";
   const page = Number(params.get("page"));
+  const show = params.get("show") === "trending" ? "trending" : "";
   return {
     q: params.get("q") ?? "",
-    tag: params.get("tag") ?? "",
+    // Trending takes the place of a topic.
+    tag: show ? "" : (params.get("tag") ?? ""),
     sort: Object.hasOwn(SORTS, sort) ? (sort as Sort) : "",
     page: Number.isInteger(page) && page > 1 ? page : 1,
+    show,
   };
 }
 
 /** The address's query with these choices in it. Defaults are left out, so a plain /blog stays plain, and anything else (like utm_source) is kept. */
-export function withBrowse(search: string, { q, tag, sort, page }: Browse): string {
+export function withBrowse(search: string, { q, tag, sort, page, show }: Browse): string {
   const params = new URLSearchParams(search);
   const put = (key: string, value: string) => (value ? params.set(key, value) : params.delete(key));
   put("q", q.trim());
   put("tag", tag);
+  put("show", show);
   put("sort", sort);
   put("page", page > 1 ? String(page) : "");
   return params.toString();
@@ -107,19 +122,49 @@ export function withBrowse(search: string, { q, tag, sort, page }: Browse): stri
 
 const newestFirst = (a: PostSummary, b: PostSummary) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title);
 
-const ORDER: Record<Exclude<Sort, "best">, (a: PostSummary, b: PostSummary) => number> = {
+const ORDER: Record<Exclude<Sort, "best" | "read">, (a: PostSummary, b: PostSummary) => number> = {
   newest: newestFirst,
   oldest: (a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title),
   quickest: (a, b) => a.minutes - b.minutes || newestFirst(a, b),
 };
 
-/** The posts to show, with the terms to highlight. See searchPosts in lib/search for how words match. */
-export function browsePosts<T extends PostSummary>(posts: T[], browse: Browse): Found<T> {
-  const inTopic = browse.tag ? posts.filter((post) => post.tags.includes(browse.tag)) : posts;
-  const found = searchPosts(inTopic, browse.q);
+/**
+ * The posts to show, with the terms to highlight. See searchPosts in lib/search
+ * for how words match. `trending` is the most read slugs, most first: Trending
+ * shows those, in that order.
+ */
+export function browsePosts<T extends PostSummary>(posts: T[], browse: Browse, trending: string[] = []): Found<T> {
+  const bySlug = new Map(posts.map((post) => [post.slug, post]));
+  const inView = browse.show
+    ? trending.flatMap((slug) => bySlug.get(slug) ?? []).slice(0, TRENDING_COUNT)
+    : browse.tag
+      ? posts.filter((post) => post.tags.includes(browse.tag))
+      : posts;
+  const found = searchPosts(inView, browse.q);
   const sort = sortOf(browse);
-  return sort === "best" ? found : { ...found, posts: [...found.posts].sort(ORDER[sort]) };
+  if (sort === "best") return found;
+  if (sort === "read") {
+    const rank = new Map(trending.map((slug, i) => [slug, i]));
+    return { ...found, posts: [...found.posts].sort((a, b) => (rank.get(a.slug) ?? Infinity) - (rank.get(b.slug) ?? Infinity)) };
+  }
+  return { ...found, posts: [...found.posts].sort(ORDER[sort]) };
 }
+
+/**
+ * The post a search names directly, if it does: a link to it (with or without
+ * the site, a language, a query or a #section) or its slug. "kharmas",
+ * "/blog/kharmas" and "https://www.tithividya.org/hi/blog/kharmas?x=1" all
+ * name kharmas. Plain words come back as a slug too, so check it exists.
+ */
+export function slugFromSearch(query: string): string | null {
+  const text = query.trim();
+  const link = text.match(/\/blog\/([a-z0-9]+(?:-[a-z0-9]+)*)/i);
+  if (link) return link[1].toLowerCase();
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(text) ? text.toLowerCase() : null;
+}
+
+/** Whether a search is a link, which should find only the post it names. */
+export const isLinkSearch = (query: string) => /\/blog\//i.test(query);
 
 /** Every topic with its number of posts, most used first. */
 export function topics(posts: { tags: string[] }[]): [string, number][] {

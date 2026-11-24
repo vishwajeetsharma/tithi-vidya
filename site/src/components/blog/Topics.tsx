@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 
+import { FireIcon } from "@/components/Icons";
 import { searchTerms } from "@/lib/search";
 
 import s from "./blog.module.css";
@@ -12,7 +13,13 @@ const SHOWN_ON_PHONES = 4;
 /** With more topics than this, the full list gets a box to find one. */
 const FINDABLE = 16;
 
-type Props = { counts: [string, number][]; active: string; onPick: (tag: string) => void };
+type Props = {
+  counts: [string, number][];
+  active: string;
+  onPick: (tag: string) => void;
+  /** The Trending button, once posts have views: whether it's on, and what pressing it does. */
+  trending?: { on: boolean; toggle: () => void };
+};
 
 type ButtonProps = { tag: string; count: number; active: boolean; onPick: (tag: string) => void; className?: string };
 
@@ -30,9 +37,10 @@ function TopicButton({ tag, count, active, onPick, className = "" }: ButtonProps
 
 /**
  * The most used topics as buttons, and every topic, A to Z, behind "All
- * topics". The picked topic always shows among the buttons.
+ * topics". The picked topic always shows among the buttons. Trending, the
+ * most read articles, comes first, after All.
  */
-export function Topics({ counts, active, onPick }: Props) {
+export function Topics({ counts, active, onPick, trending }: Props) {
   const [open, setOpen] = useState(false);
   const [find, setFind] = useState("");
   const panel = useId();
@@ -58,9 +66,15 @@ export function Topics({ counts, active, onPick }: Props) {
   return (
     <>
       <div className={s.topics} role="group" aria-label="Topics">
-        <button type="button" className={s.topic} aria-pressed={!active} onClick={() => onPick("")}>
+        <button type="button" className={s.topic} aria-pressed={!active && !trending?.on} onClick={() => onPick("")}>
           All
         </button>
+        {trending && (
+          <button type="button" className={`${s.topic} ${s.trendingTopic}`} aria-pressed={trending.on} onClick={trending.toggle}>
+            <FireIcon />
+            Trending
+          </button>
+        )}
         {shown.map(([tag, count], i) => (
           <TopicButton
             key={tag}

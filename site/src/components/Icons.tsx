@@ -87,6 +87,15 @@ export function SparkIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+/** A flame, filled: the mark for trending articles. */
+export function FireIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M12 21.5c-3.6 0-6.5-2.7-6.5-6.4 0-2.6 1.4-4.4 2.8-6 .3 1.4 1 2.4 2 3C10 8.6 10.9 5.3 13.6 2.5c.4 3 2.1 4.9 3.6 6.6 1.3 1.5 2.3 3.2 2.3 5.6 0 3.9-3.2 6.8-7.5 6.8Z" />
+    </svg>
+  );
+}
+
 export function LockIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <Icon {...props}>

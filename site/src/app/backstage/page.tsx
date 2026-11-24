@@ -3,8 +3,11 @@ import { draftMode } from "next/headers";
 import Link from "next/link";
 
 import { getBuiltAt, getPosts, serverNow, type PostDetails } from "@/lib/blog";
+import { isLinkSearch, slugFromSearch } from "@/lib/posts";
 import { notificationFor } from "@/lib/push";
+import { hasDatabase } from "@/lib/redis";
 import { searchPosts } from "@/lib/search";
+import { readViews, TRENDING_DAYS, type Views } from "@/lib/views";
 
 import { signIn, signOut } from "./actions";
 import s from "./backstage.module.css";
@@ -18,7 +21,7 @@ export const metadata: Metadata = { title: "Backstage", robots: { index: false, 
 // What it shows depends on who is asking and on the time, so it's never built ahead of time.
 export const dynamic = "force-dynamic";
 
-type Props = { searchParams: Promise<{ wrong?: string; view?: string; q?: string; page?: string }> };
+type Props = { searchParams: Promise<{ wrong?: string; view?: string; q?: string; page?: string; by?: string }> };
 
 /**
  * Posts on each page. The list is cut on the server, so the page stays the
@@ -26,12 +29,22 @@ type Props = { searchParams: Promise<{ wrong?: string; view?: string; q?: string
  */
 const PER_PAGE = 24;
 
-const VIEWS = { scheduled: "Scheduled", live: "Live", all: "All" } as const;
-type View = keyof typeof VIEWS;
+/** The lists, each a tab: its label, and what its posts are called in sentences. */
+const TABS = {
+  scheduled: { label: "Scheduled", posts: "scheduled posts" },
+  live: { label: "Live", posts: "live posts" },
+  all: { label: "All", posts: "posts" },
+  read: { label: "Most read", posts: "live posts" },
+} as const;
+type Tab = keyof typeof TABS;
+
+/** Most read counts every view, or only the last 30 days'. */
+type By = "all" | "month";
 
 const dayAndDate = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const istClock = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Asia/Kolkata" });
 const relative = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
+const number = (n: number) => n.toLocaleString("en-IN");
 
 /** "in 17 hours", "tomorrow", "3 days ago". */
 function fromNow(at: number, now: number): string {
@@ -42,14 +55,41 @@ function fromNow(at: number, now: number): string {
   return relative.format(Math.round(hours / 24), "day");
 }
 
-/** The address of this page for a view, a search and a page number. */
-function address(view: View, q: string, page = 1): string {
+/** The address of this page for a tab, a search, a page number and, on Most read, the days counted. */
+function address(tab: Tab, q: string, page = 1, by: By = "all"): string {
   const query = new URLSearchParams();
-  if (view !== "scheduled") query.set("view", view);
+  if (tab !== "scheduled") query.set("view", tab);
+  if (tab === "read" && by === "month") query.set("by", by);
   if (q) query.set("q", q);
   if (page > 1) query.set("page", String(page));
   const text = query.toString();
   return text ? `/backstage?${text}` : "/backstage";
+}
+
+/**
+ * The posts a search finds. A link to a post, or its slug, finds that post
+ * alone; anything else finds posts with the words, as the blog's search does.
+ */
+function find(posts: PostDetails[], q: string): PostDetails[] {
+  if (!q) return posts;
+  const named = slugFromSearch(q);
+  const exact = named ? posts.filter((post) => post.slug === named) : [];
+  if (exact.length || isLinkSearch(q)) return exact;
+  return searchPosts(
+    posts.map((post) => ({ ...post, headings: post.toc.map((heading) => heading.text) })),
+    q,
+  ).posts;
+}
+
+/** Every post's views, or why there are none to show. */
+async function loadViews(): Promise<{ views: Views | null; problem: string }> {
+  if (!hasDatabase()) return { views: null, problem: "View counts need the Upstash database: set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN." };
+  try {
+    return { views: await readViews(serverNow()), problem: "" };
+  } catch (error) {
+    console.error("backstage: couldn't read view counts", error);
+    return { views: null, problem: "The database didn't answer, so view counts aren't shown. Try again in a minute." };
+  }
 }
 
 /** The smallest version of a cover: the list shows it about 170 px wide. */
@@ -103,24 +143,31 @@ export default async function Backstage({ searchParams }: Props) {
   const now = serverNow();
   const posts = getPosts(); // newest first
   const isScheduled = (post: PostDetails) => Date.parse(post.liveAt) > now;
-  const lists: Record<View, PostDetails[]> = {
+  const live = posts.filter((post) => !isScheduled(post));
+
+  const tab: Tab = params.view === "live" || params.view === "all" || params.view === "read" ? params.view : "scheduled";
+  const by: By = params.by === "month" ? "month" : "all";
+  const { views, problem } = await loadViews();
+  const viewsOf = (post: PostDetails) => ({ all: views?.all.get(post.slug) ?? 0, recent: views?.recent.get(post.slug) ?? 0 });
+  const counted = (post: PostDetails) => (by === "month" ? viewsOf(post).recent : viewsOf(post).all);
+
+  const lists: Record<Tab, PostDetails[]> = {
     scheduled: posts.filter(isScheduled).reverse(), // the next one to go live first
-    live: posts.filter((post) => !isScheduled(post)),
+    live,
     all: posts,
+    // Most read first; posts with the same views, newest first.
+    read: [...live].sort((a, b) => counted(b) - counted(a)),
   };
 
-  const view: View = params.view === "live" || params.view === "all" ? params.view : "scheduled";
-  const q = (params.q ?? "").trim().slice(0, 100);
-  const found = q
-    ? searchPosts(
-        lists[view].map((post) => ({ ...post, headings: post.toc.map((heading) => heading.text) })),
-        q,
-      ).posts
-    : lists[view];
+  const q = (params.q ?? "").trim().slice(0, 300);
+  const found = find(lists[tab], q);
   const pages = Math.max(1, Math.ceil(found.length / PER_PAGE));
   const page = Math.min(pages, Math.max(1, Math.floor(Number(params.page)) || 1));
-  const shown = found.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  const first = (page - 1) * PER_PAGE;
+  const shown = found.slice(first, first + PER_PAGE);
   const next = lists.scheduled[0];
+  const noun = TABS[tab].posts;
+  const total = (counts: Map<string, number>) => [...counts.values()].reduce((sum, n) => sum + n, 0);
 
   return (
     <div className={s.page}>
@@ -151,17 +198,46 @@ export default async function Backstage({ searchParams }: Props) {
         </p>
 
         <nav className={s.tabs} aria-label="Which posts to show">
-          {(Object.keys(VIEWS) as View[]).map((key) => (
-            <Link key={key} className={s.tab} href={address(key, q)} aria-current={key === view ? "page" : undefined} prefetch={false}>
-              {VIEWS[key]} <span>{lists[key].length.toLocaleString("en-IN")}</span>
+          {(Object.keys(TABS) as Tab[]).map((key) => (
+            <Link key={key} className={s.tab} href={address(key, q, 1, by)} aria-current={key === tab ? "page" : undefined} prefetch={false}>
+              {TABS[key].label} <span>{number(lists[key].length)}</span>
             </Link>
           ))}
         </nav>
 
+        {tab === "read" && (
+          <div className={s.reads}>
+            {views ? (
+              <p className={s.note}>
+                <strong>{number(total(views.all))}</strong> views in all, <strong>{number(total(views.recent))}</strong> in the last{" "}
+                {TRENDING_DAYS} days. Counted on the live site only: not on a reload, not from robots, and not in this browser while
+                you&apos;re signed in here.
+              </p>
+            ) : (
+              <p className={s.note} role="alert">
+                {problem}
+              </p>
+            )}
+            <nav className={s.byTabs} aria-label="Views counted">
+              {(
+                [
+                  ["all", "All time"],
+                  ["month", `Last ${TRENDING_DAYS} days`],
+                ] as const
+              ).map(([key, label]) => (
+                <Link key={key} className={s.byTab} href={address("read", q, 1, key)} aria-current={key === by ? "page" : undefined} prefetch={false}>
+                  {label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
+
         <form className={s.search} action="/backstage" method="get" role="search">
-          {view !== "scheduled" && <input type="hidden" name="view" value={view} />}
+          {tab !== "scheduled" && <input type="hidden" name="view" value={tab} />}
+          {tab === "read" && by === "month" && <input type="hidden" name="by" value={by} />}
           <label className="visuallyHidden" htmlFor="backstage-search">
-            Search {VIEWS[view].toLowerCase()} posts
+            Search {noun}
           </label>
           <input
             id="backstage-search"
@@ -169,7 +245,7 @@ export default async function Backstage({ searchParams }: Props) {
             type="search"
             name="q"
             defaultValue={q}
-            placeholder={`Search ${VIEWS[view].toLowerCase()} posts by title, topic or word`}
+            placeholder={`Search ${noun} by title, slug, link or word`}
           />
           <button className="btn btnPrimary" type="submit">
             Search
@@ -179,15 +255,15 @@ export default async function Backstage({ searchParams }: Props) {
         <p className={s.count} role="status">
           {found.length === 0
             ? q
-              ? `No ${view === "all" ? "" : `${VIEWS[view].toLowerCase()} `}posts match “${q}”.`
-              : view === "scheduled"
+              ? `No ${noun} match “${q}”.`
+              : tab === "scheduled"
                 ? "Nothing is scheduled."
                 : "No posts yet."
-            : `${found.length.toLocaleString("en-IN")} post${found.length === 1 ? "" : "s"}${q ? ` for “${q}”` : ""}${pages > 1 ? `, page ${page} of ${pages}` : ""}`}
+            : `${number(found.length)} post${found.length === 1 ? "" : "s"}${q ? ` for “${q}”` : ""}${pages > 1 ? `, page ${page} of ${pages}` : ""}`}
           {q && (
             <>
               {" "}
-              <Link href={address(view, "")} prefetch={false}>
+              <Link href={address(tab, "", 1, by)} prefetch={false}>
                 Clear search
               </Link>
             </>
@@ -199,6 +275,7 @@ export default async function Backstage({ searchParams }: Props) {
             const liveAt = Date.parse(post.liveAt);
             const waiting = liveAt > now;
             const day = dayAndDate.format(new Date(`${post.date}T00:00:00Z`));
+            const seen = viewsOf(post);
             // With no origin its addresses start at "/", so the pictures load from
             // whichever copy of the site this is, even before a deploy.
             const push = waiting ? notificationFor(post, "") : null;
@@ -237,9 +314,17 @@ export default async function Backstage({ searchParams }: Props) {
                     </Link>
                   </h2>
                   <p className={s.meta}>
-                    {post.minutes} min · {post.words.toLocaleString("en-IN")} words
+                    {post.slug} · {post.minutes} min · {number(post.words)} words
                     {post.tags.length > 0 && ` · ${post.tags.join(", ")}`}
                   </p>
+                  {!waiting && views && (
+                    <p className={s.views}>
+                      <strong>
+                        {number(seen.all)} {seen.all === 1 ? "view" : "views"}
+                      </strong>{" "}
+                      · {number(seen.recent)} in the last {TRENDING_DAYS} days
+                    </p>
+                  )}
                   {missing.length > 0 && (
                     <ul className={s.missing} aria-label="To fix">
                       {missing.map((item) => (
@@ -276,7 +361,7 @@ export default async function Backstage({ searchParams }: Props) {
         {pages > 1 && (
           <nav className={s.pager} aria-label="Pages">
             {page > 1 ? (
-              <Link className="btn btnGhost" href={address(view, q, page - 1)} prefetch={false}>
+              <Link className="btn btnGhost" href={address(tab, q, page - 1, by)} prefetch={false}>
                 Previous
               </Link>
             ) : (
@@ -286,7 +371,7 @@ export default async function Backstage({ searchParams }: Props) {
               Page {page} of {pages}
             </span>
             {page < pages ? (
-              <Link className="btn btnGhost" href={address(view, q, page + 1)} prefetch={false}>
+              <Link className="btn btnGhost" href={address(tab, q, page + 1, by)} prefetch={false}>
                 Next
               </Link>
             ) : (

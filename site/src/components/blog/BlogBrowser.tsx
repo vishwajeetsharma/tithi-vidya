@@ -19,12 +19,13 @@ function AddressReader({ onChange }: { onChange: (query: string) => void }) {
   return null;
 }
 
-function describe(count: number, { q, tag }: Browse, partial: boolean) {
+function describe(count: number, { q, tag, show }: Browse, partial: boolean) {
   const words = q.trim();
   if (partial) return `No article has all of “${words}”. ${count === 1 ? "This one has" : `These ${count} have`} some of the words.`;
-  let text = `${count} ${count === 1 ? "article" : "articles"}`;
+  let text = `${count} ${show ? "trending " : ""}${count === 1 ? "article" : "articles"}`;
   if (tag) text += ` about ${tag}`;
   if (words) text += ` matching “${words}”`;
+  if (show) text += words ? ", from the most read of the last 30 days" : ", the most read of the last 30 days";
   return text;
 }
 
@@ -56,8 +57,10 @@ function useAllPosts() {
 }
 
 type Props = {
-  /** The first page of posts, built into the HTML, plus scheduled posts. */
+  /** The first page of posts, built into the HTML, plus scheduled posts and the trending ones. */
   firstPage: PostSummary[];
+  /** The most read slugs of the last 30 days, most first. Empty until posts have views. */
+  trending: string[];
   /** Live posts when the site was built, and their topics: what the page shows until every post has loaded. */
   total: number;
   topics: [string, number][];
@@ -69,7 +72,7 @@ type Props = {
  * choices are kept in the address (?q=, ?tag=, ?sort=, ?page=), so topic links
  * from articles, shared links and the back button all work.
  */
-export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: Props) {
+export function BlogBrowser({ firstPage, trending, total, topics: builtTopics, builtAt }: Props) {
   const all = useAllPosts();
   const live = useLivePosts(all.posts ?? firstPage, builtAt);
   const [browse, setBrowse] = useState<Browse>(SHOW_ALL);
@@ -80,7 +83,10 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
 
   // Typing stays quick: results catch up a moment later when there are many posts.
   const q = useDeferredValue(browse.q);
-  const found = useMemo(() => browsePosts(live, { ...browse, q }), [live, browse, q]);
+  // ?show=trending from an old link, before any post has views: everything shows.
+  const shown = trending.length > 0 && browse.show === "trending";
+  const view = useMemo<Browse>(() => ({ ...browse, q, show: shown ? "trending" : "" }), [browse, q, shown]);
+  const found = useMemo(() => browsePosts(live, view, trending), [live, view, trending]);
 
   // From the address: on arrival, and when a link or the back button changes it.
   const fromAddress = useCallback((query: string) => {
@@ -120,14 +126,15 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
   // Any change but the page starts again from page 1.
   const change = (next: Partial<Browse>) => setBrowse((current) => ({ ...current, page: 1, ...next }));
 
-  // Until every post has loaded, the first page of newest posts is all there is to show.
-  const waiting = !all.posts && (browse.q.trim() !== "" || browse.tag !== "" || browse.page > 1 || sortOf(browse) !== "newest");
-  const count = all.posts ? found.posts.length : total;
+  // Until every post has loaded, the first page of newest posts is all there is
+  // to show. The trending posts are built into the page, so Trending shows at once.
+  const sort = sortOf(view);
+  const waiting = !all.posts && !shown && (browse.q.trim() !== "" || browse.tag !== "" || browse.page > 1 || sort !== "newest");
+  const count = all.posts || shown ? found.posts.length : total;
   const pages = Math.max(1, Math.ceil(count / PAGE_SIZE));
   const page = Math.min(browse.page, pages);
-  const shown = found.posts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const onPage = found.posts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const tagCounts = all.posts ? topics(live) : builtTopics;
-  const sort = sortOf(browse);
   const searching = browse.q.trim() !== "";
 
   const goToPage = (to: number) => {
@@ -141,7 +148,7 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
     top.current?.scrollIntoView({ block: "start", behavior: calm ? "auto" : "smooth" });
   };
 
-  const pickSort = (value: Sort) => change({ sort: value === sortOf({ q: browse.q, sort: "" }) ? "" : value });
+  const pickSort = (value: Sort) => change({ sort: value === sortOf({ q: browse.q, sort: "", show: view.show }) ? "" : value });
 
   return (
     <>
@@ -203,7 +210,7 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
             <span>Sort</span>
             <select className={s.field} value={sort} onChange={(event) => pickSort(event.target.value as Sort)}>
               {Object.entries(SORTS)
-                .filter(([value]) => value !== "best" || searching)
+                .filter(([value]) => (value !== "best" || searching) && (value !== "read" || shown))
                 .map(([value, label]) => (
                   <option key={value} value={value}>
                     {label}
@@ -212,11 +219,18 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
             </select>
           </label>
         </div>
-        {tagCounts.length > 0 && <Topics counts={tagCounts} active={browse.tag} onPick={(tag) => change({ tag })} />}
+        {tagCounts.length > 0 && (
+          <Topics
+            counts={tagCounts}
+            active={browse.tag}
+            onPick={(tag) => change({ tag, show: "" })}
+            trending={trending.length > 0 ? { on: shown, toggle: () => change({ show: shown ? "" : "trending", tag: "", sort: "" }) } : undefined}
+          />
+        )}
       </form>
 
       <p ref={top} className={s.count} role="status" tabIndex={-1}>
-        {waiting ? "" : describe(count, { ...browse, q }, found.partial)}
+        {waiting ? "" : describe(count, view, found.partial)}
         {!waiting && pages > 1 && <span className={s.countPage}> · Page {page} of {pages}</span>}
       </p>
 
@@ -231,10 +245,10 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
         ) : (
           <p className={s.loading}>Loading articles…</p>
         )
-      ) : shown.length > 0 ? (
+      ) : onPage.length > 0 ? (
         <>
           <div className={s.grid}>
-            {shown.map((post, i) => (
+            {onPage.map((post, i) => (
               <PostCard key={post.slug} post={post} priority={page === 1 && i === 0} terms={found.terms} />
             ))}
           </div>
@@ -243,12 +257,12 @@ export function BlogBrowser({ firstPage, total, topics: builtTopics, builtAt }: 
       ) : (
         <div className={s.noMatch}>
           <p>
-            No articles match “{browse.q.trim()}”{browse.tag && ` about ${browse.tag}`}. Check the spelling, try other words, or pick a topic.
+            No {shown ? "trending " : ""}articles match “{browse.q.trim()}”{browse.tag && ` about ${browse.tag}`}. Check the spelling, try other words, or pick a topic.
           </p>
           <div className={s.noMatchActions}>
-            {browse.tag && (
-              <button type="button" className="btn btnGhost" onClick={() => change({ tag: "" })}>
-                Search all topics
+            {(browse.tag || shown) && (
+              <button type="button" className="btn btnGhost" onClick={() => change({ tag: "", show: "" })}>
+                Search all {shown ? "articles" : "topics"}
               </button>
             )}
             <button type="button" className="btn btnGhost" onClick={() => setBrowse(SHOW_ALL)}>

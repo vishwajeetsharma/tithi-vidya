@@ -8,7 +8,7 @@ import s from "../legal.module.css";
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
-  description: `How ${SITE_NAME} treats your data. Your birth details never leave your device, and analytics and ad cookies load only if you say yes.`,
+  description: `How ${SITE_NAME} treats your data. Your birth details never leave your device, and you choose which cookies run.`,
   path: "/privacy",
 });
 
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
     <div className={s.page}>
       <div className={`wrap ${s.inner}`}>
         <h1 className={`display ${s.title}`}>Privacy Policy</h1>
-        <p className={s.updated}>Last updated: 24 November 2026</p>
+        <p className={s.updated}>Last updated: 25 November 2026</p>
 
         <p>
           {SITE_NAME} is run by Vishwajeet Sharma. This page explains what data the site uses, in plain words. The short version:{" "}
@@ -35,11 +35,7 @@ export default function PrivacyPage() {
         </p>
 
         <h2 id="cookies">Cookies: your choice</h2>
-        <p>
-          Visit counting and ad measurement load only if you say yes. Google&apos;s ads show for everyone, but whether they can be based on your visits is your
-          choice. On your first visit a small box asks, once you start scrolling or after a few seconds. You can accept, decline, or choose what to allow. If you
-          don&apos;t answer, nothing that tracks you loads, and the ads aren&apos;t personalised.
-        </p>
+        <p>Two kinds of cookies are your choice:</p>
         <ul>
           <li>
             <strong>Visit counts: Google Analytics</strong>, from Google, shows us how many people visit and which pages they open.{" "}
@@ -47,13 +43,28 @@ export default function PrivacyPage() {
             finder form and your results are hidden from its recordings, and it does not record what you type.
           </li>
           <li>
-            <strong>Personalised ads</strong> lets Google AdSense base its ads on your visits, and starts the <strong>Meta Pixel</strong>, from Meta, which shows us
-            whether our Facebook and Instagram ads bring visitors, and can be used to show our ads to people who visited.
+            <strong>Ad measurement: the Meta Pixel</strong>, from Meta, shows us whether our Facebook and Instagram ads bring visitors, and can be used to show our
+            ads to people who visited.
+          </li>
+        </ul>
+        <p>What happens before you choose depends on where you are:</p>
+        <ul>
+          <li>
+            <strong>In the European Economic Area, the UK, Switzerland and Quebec</strong>, they load only if you say yes. A small box asks, once you start
+            scrolling or after a few seconds. You can accept, decline, or choose what to allow. Until you answer, Google Analytics runs without cookies: it sends
+            Google a cookie-free note of the page you opened, which Google uses to estimate how many people visit. If you decline, that stops too.
+          </li>
+          <li>
+            <strong>Everywhere else</strong>, they&apos;re on from your first visit, and a small notice says so. Press Settings in the notice to turn them off.
           </li>
         </ul>
         <p>
+          To know which applies, the site asks our host, Vercel, which country your IP address is in. Only the answer, &quot;ask first&quot; or not, comes back,
+          and your browser keeps it until you close the tab. Nobody stores your country.
+        </p>
+        <p>
           Your browser keeps your choice for 12 months, then we ask again. You can change it at any time with <CookieSettingsButton className={s.link} />, which is
-          also at the bottom of every page. If you take back a yes, we delete those cookies and reload the page, so the services stop.
+          also at the bottom of every page. If you turn something off that was on, we delete its cookies and reload the page, so it stops.
         </p>
         <p>
           These services can receive things like the page you opened, your device and browser type, your IP address, and how you reached the site. They handle that
@@ -70,19 +81,17 @@ export default function PrivacyPage() {
         </p>
         <ul>
           <li>
-            Google ads show for everyone. If you allow personalised ads, they can be based on your visits. If you decline, or don&apos;t answer, we ask Google for{" "}
-            <a href="https://support.google.com/adsense/answer/9007336">non-personalised ads</a>, which Google chooses from things like the page you&apos;re reading and your rough
-            location, not your history.
-          </li>
-          <li>Google says non-personalised ads still use cookies, to limit how often you see the same ad and to count ads in its reports.</li>
-          <li>
-            Google and other ad companies working with Google use cookies to show ads. These can be based on your earlier visits to this site and to other websites.
-            Google explains this in{" "}
-            <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from sites that use its services</a>.
+            Google ads show for everyone, and they aren&apos;t part of the cookie box. Google may personalise them: base them on your visits to this site and to
+            other websites. You can turn that off in <a href="https://myadcenter.google.com/">My Ad Center</a>.
           </li>
           <li>
-            In the European Economic Area, the UK and Switzerland, Google may show only <a href="https://support.google.com/adsense/answer/14210870">limited ads</a>, which
-            don&apos;t use your personal data to choose them.
+            Google and other ad companies working with Google use cookies to show ads, to limit how often you see the same one, and to measure them. Google explains
+            this in <a href="https://policies.google.com/technologies/partner-sites">how Google uses information from sites that use its services</a>.
+          </li>
+          <li>
+            In the European Economic Area, the UK and Switzerland, Google needs your consent before it uses cookies for ads, and asks for it in its own message.
+            Without it, Google shows <a href="https://support.google.com/adsense/answer/9007336">non-personalised ads</a> or{" "}
+            <a href="https://support.google.com/adsense/answer/14210870">limited ads</a>, which don&apos;t use your history to choose them.
           </li>
           <li>
             Ad services can receive the same kind of data as above: the page, your device and browser, your IP address and a rough location. They never receive your
@@ -92,6 +101,14 @@ export default function PrivacyPage() {
         <p>
           You can turn off personalised ads from Google in <a href="https://myadcenter.google.com/">My Ad Center</a>, and from many other ad companies at{" "}
           <a href="https://optout.aboutads.info/">aboutads.info</a> or, in Europe, <a href="https://www.youronlinechoices.eu/">youronlinechoices.eu</a>.
+        </p>
+
+        <h2 id="views">Article view counts</h2>
+        <p>
+          We count how many times each article is opened, to learn which ones help readers and to show the most read ones as Trending. When you open an article,
+          your browser sends us its name, and nothing else: no cookie, and nothing about you. We store only a count for each article and each day, in our
+          database at <a href="https://upstash.com/trust/privacy.pdf">Upstash</a>. The counts for each day are deleted after 40 days. This works the same
+          wherever you are, because it stores nothing on your device and nothing that could identify you.
         </p>
 
         <h2>The newsletter</h2>
@@ -120,7 +137,7 @@ export default function PrivacyPage() {
                 <th scope="col">Name</th>
                 <th scope="col">From</th>
                 <th scope="col">What it does</th>
-                <th scope="col">Needs your OK?</th>
+                <th scope="col">Your choice</th>
               </tr>
             </thead>
             <tbody>
@@ -137,34 +154,41 @@ export default function PrivacyPage() {
                 <td>No, it&apos;s needed</td>
               </tr>
               <tr>
+                <td>tithi-region</td>
+                <td>This site</td>
+                <td>Remembers, in this tab only, whether the cookie box needs to ask first</td>
+                <td>No, it&apos;s needed</td>
+              </tr>
+              <tr>
                 <td>_ga, _ga_*</td>
                 <td>Google Analytics</td>
                 <td>Tells one visitor from another. Lasts up to 13 months</td>
-                <td>Yes: Visit counts</td>
+                <td>Visit counts</td>
               </tr>
               <tr>
                 <td>_clck, _clsk</td>
                 <td>Microsoft Clarity</td>
                 <td>Tells one visitor from another (up to a year) and groups pages into one visit (a day)</td>
-                <td>Yes: Visit counts</td>
-              </tr>
-              <tr>
-                <td>__gads, __gpi, __eoi</td>
-                <td>Google AdSense</td>
-                <td>Shows ads, limits how often you see the same one, and measures them</td>
-                <td>Only to base ads on your visits</td>
+                <td>Visit counts</td>
               </tr>
               <tr>
                 <td>_fbp, _fbc</td>
                 <td>Meta Pixel</td>
                 <td>Measures ads and tells one visitor from another</td>
-                <td>Yes: Personalised ads</td>
+                <td>Ad measurement</td>
+              </tr>
+              <tr>
+                <td>__gads, __gpi, __eoi</td>
+                <td>Google AdSense</td>
+                <td>Shows ads, limits how often you see the same one, measures them and can personalise them</td>
+                <td>Not in the cookie box: in Europe, Google asks itself</td>
               </tr>
             </tbody>
           </table>
         </div>
         <p>
-          You can change your choice at any time: <CookieSettingsButton className={s.link} />. The same link is in the footer of every page.
+          In Europe, the UK, Switzerland and Quebec, the cookies under Visit counts and Ad measurement need your yes first. Elsewhere they&apos;re on until you turn
+          them off. You can change your choice at any time: <CookieSettingsButton className={s.link} />. The same link is in the footer of every page.
         </p>
 
         <h2>Hosting</h2>
@@ -184,15 +208,18 @@ export default function PrivacyPage() {
             Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
           </li>
           <li>
-            <strong>Why we use data.</strong> Visit counting, Clarity, the Meta Pixel and personalised ads: only with your consent. Ads that aren&apos;t personalised: our legitimate interest in keeping the site free. The newsletter and article notifications: your consent, which you give
-            when you sign up or turn them on. Hosting and security: our legitimate interest in keeping the site running and safe.
+            <strong>Why we use data.</strong> Google Analytics with cookies, Clarity and the Meta Pixel: only with your consent. Google Analytics without cookies,
+            before you answer, and our article view counts: our legitimate interest in knowing how many people read the site. Personalised ads: only with the
+            consent Google asks for. Ads that aren&apos;t personalised: our legitimate interest in keeping the site free. The newsletter and article notifications:
+            your consent, which you give when you sign up or turn them on. Hosting and security: our legitimate interest in keeping the site running and safe.
           </li>
           <li>
             <strong>You don&apos;t have to agree to anything.</strong> The finder, the blog and every other page work the same if you decline.
           </li>
           <li>
-            <strong>How long we keep it.</strong> Your cookie choice: 12 months, in your browser. Google Analytics cookies: up to 13 months. Clarity cookies: up to a year. Your newsletter signup:
-            until you unsubscribe. A notification address: until you turn notifications off or it stops working.
+            <strong>How long we keep it.</strong> Your cookie choice: 12 months, in your browser. Google Analytics cookies: up to 13 months. Clarity cookies: up to a
+            year. Daily article view counts: 40 days. Your newsletter signup: until you unsubscribe. A notification address: until you turn notifications off or it
+            stops working.
           </li>
           <li>
             <strong>Your rights.</strong> You can ask to see, correct or delete your data, to limit or object to its use, and to get a copy to take elsewhere. You can
@@ -213,7 +240,7 @@ export default function PrivacyPage() {
 
         <h2>Your choices</h2>
         <ul>
-          <li>Accept, decline or choose in the cookie box, and change your mind with Cookie settings at the bottom of any page.</li>
+          <li>Accept, decline or choose in the cookie box, or turn things off from its Settings, and change your mind with Cookie settings at the bottom of any page.</li>
           <li>Clear the site&apos;s data in your browser at any time.</li>
           <li>Unsubscribe from the newsletter with the link in any email.</li>
           <li>Turn off article notifications on the blog, or in your browser&apos;s settings.</li>

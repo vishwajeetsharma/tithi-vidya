@@ -4,6 +4,7 @@ import { join } from "node:path";
 import type { TranslatedLang } from "@/i18n/config";
 
 import { isLive, summarise, type Post, type PostDetails, type PostSummary } from "./posts";
+import { trendingViews } from "./views";
 
 export { formatDate, type BlogImage, type Post, type PostDetails } from "./posts";
 
@@ -88,4 +89,21 @@ export function latestPosts(count: number, except = "", at = getBuiltAt()): Post
   return getPosts()
     .filter((post) => post.slug !== except && (!isLive(post, now) || live++ < count))
     .map(summarise);
+}
+
+/**
+ * The most read live posts of the last 30 days, most first: up to `count`,
+ * leaving out `except`. Empty until posts have views, or when the database
+ * doesn't answer, so lists that use it fall back to the newest posts.
+ */
+export async function trendingPosts(count: number, except = "", now = Date.now()): Promise<PostSummary[]> {
+  const bySlug = new Map(getPosts().map((post) => [post.slug, post]));
+  const top: PostSummary[] = [];
+  for (const [slug] of await trendingViews(now)) {
+    const post = bySlug.get(slug);
+    if (!post || slug === except || post.draft || !isLive(post, now)) continue;
+    top.push(summarise(post));
+    if (top.length === count) break;
+  }
+  return top;
 }

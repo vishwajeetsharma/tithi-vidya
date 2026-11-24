@@ -57,17 +57,30 @@ describe("searching and sorting the blog", () => {
   });
 
   it("keeps choices in the address, leaving defaults and other parts alone", () => {
-    expect(readBrowse("tag=hindu+calendar&sort=toString&page=x")).toEqual({ q: "", tag: "hindu calendar", sort: "", page: 1 });
-    expect(readBrowse("q=moon&page=3")).toEqual({ q: "moon", tag: "", sort: "", page: 3 });
-    expect(withBrowse("utm_source=x&tag=old", { q: " moon ", tag: "", sort: "oldest", page: 2 })).toBe("utm_source=x&q=moon&sort=oldest&page=2");
-    expect(withBrowse("q=moon&page=4", SHOW_ALL)).toBe("");
+    expect(readBrowse("tag=hindu+calendar&sort=toString&page=x")).toEqual({ q: "", tag: "hindu calendar", sort: "", page: 1, show: "" });
+    expect(readBrowse("q=moon&page=3")).toEqual({ q: "moon", tag: "", sort: "", page: 3, show: "" });
+    expect(withBrowse("utm_source=x&tag=old", { q: " moon ", tag: "", sort: "oldest", page: 2, show: "" })).toBe("utm_source=x&q=moon&sort=oldest&page=2");
+    expect(withBrowse("q=moon&page=4&show=trending", SHOW_ALL)).toBe("");
   });
 
-  it("orders by best match while searching, and newest first otherwise", () => {
+  it("orders by best match while searching, most read for trending, and newest first otherwise", () => {
     expect(sortOf({ q: "", sort: "" })).toBe("newest");
     expect(sortOf({ q: "moon", sort: "" })).toBe("best");
     expect(sortOf({ q: "", sort: "best" })).toBe("newest");
     expect(sortOf({ q: "moon", sort: "oldest" })).toBe("oldest");
+    expect(sortOf({ q: "", sort: "", show: "trending" })).toBe("read");
+    expect(sortOf({ q: "", sort: "read" })).toBe("newest");
+  });
+
+  it("shows the most read posts for Trending, in their order, in place of a topic", () => {
+    const trending = ["adhika", "gone", "sunrise"];
+    const top = (browse: Partial<Browse>) => slugs(browsePosts(posts, { ...SHOW_ALL, show: "trending", ...browse }, trending).posts);
+    // A slug with no post (renamed, or not live) is skipped.
+    expect(top({})).toEqual(["adhika", "sunrise"]);
+    expect(top({ sort: "newest" })).toEqual(["sunrise", "adhika"]);
+    expect(top({ q: "sunrise" })).toEqual(["sunrise"]);
+    expect(readBrowse("show=trending&tag=tithi")).toEqual({ q: "", tag: "", sort: "", page: 1, show: "trending" });
+    expect(withBrowse("", { ...SHOW_ALL, show: "trending" })).toBe("show=trending");
   });
 });
 

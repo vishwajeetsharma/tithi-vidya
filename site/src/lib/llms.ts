@@ -22,7 +22,7 @@ export function llmsIntro(origin: string): string[] {
     "- Method: Sun and Moon positions from NASA JPL's DE440 ephemeris; a tithi is each 12° step of the Moon's angle from the Sun; a date takes the tithi in effect at local sunrise; months are amanta with the Lahiri ayanamsa.",
     "- Accuracy: checked against Swiss Ephemeris over 1900 to 2149. All 3,095 moon months matched, and only 8 of 91,311 days at New Delhi differed, each within 18 seconds of a tithi change.",
     "- Coverage: years 1900 to 2149, anywhere on Earth (built-in cities, or any latitude, longitude and time zone).",
-    "- Privacy: birth details stay on the device. The site uses Google Analytics and the Meta Pixel to count visits, and they do not receive birth details.",
+    "- Privacy: birth details stay on the device. The site uses Google Analytics, Microsoft Clarity and the Meta Pixel to count visits and measure ads, and they do not receive birth details.",
     `- Made by: ${AUTHOR} (${AUTHOR_EMAIL}). Questions about the site: ${CONTACT_EMAIL}`,
     "",
   ];

@@ -13,11 +13,12 @@ import { ReadIn } from "@/components/blog/ReadIn";
 import { ReadingRail } from "@/components/blog/ReadingRail";
 import { RecentPosts } from "@/components/blog/RecentPosts";
 import { ShareButtons } from "@/components/blog/ShareButtons";
+import { ViewCounter } from "@/components/blog/ViewCounter";
 import s from "@/components/blog/blog.module.css";
 import { ArrowIcon, SearchIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
 import { JsonLd } from "@/components/JsonLd";
-import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, serverNow, type Post } from "@/lib/blog";
+import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, serverNow, trendingPosts, type Post } from "@/lib/blog";
 import { inLang, TRANSLATED } from "@/i18n/config";
 import { dictionary } from "@/i18n/dictionaries";
 import { isLive, PREVIEW } from "@/lib/posts";
@@ -40,6 +41,10 @@ const BUILT_AT_DEPLOY = 20;
 // (revalidate = false). A deploy starts afresh, with the newest posts built.
 export const dynamicParams = true;
 export const revalidate = false;
+
+// Views are counted on the live site only: never in `npm run dev`, a local
+// build or a preview deployment. app/api/views checks the same.
+const COUNT_VIEWS = process.env.VERCEL_ENV === "production";
 
 // The route needs at least one page here, so an empty blog still builds.
 const NO_POSTS = "no-posts-yet";
@@ -128,6 +133,8 @@ export default async function PostPage({ params }: Params) {
   const { isEnabled: backstage } = await draftMode();
   const early = backstage && liveAt > serverNow();
   const scheduled = !backstage && !isLive(post, Date.parse(builtAt));
+  // The most read posts when this page is made. The card under the article loads the latest list too.
+  const trending = await trendingPosts(4, post.slug);
 
   return (
     // The notice's script marks this element, so the attribute it adds is expected.
@@ -188,6 +195,8 @@ export default async function PostPage({ params }: Params) {
           ],
         }}
       />
+      {/* Signed in to Backstage, this page is made for this visit only, so the counter can be left out. */}
+      {COUNT_VIEWS && !backstage && <ViewCounter slug={post.slug} />}
       <div className={s.postWrap}>
         <div className={s.postLayout}>
           <article className={s.postMain}>
@@ -294,16 +303,7 @@ export default async function PostPage({ params }: Params) {
         </div>
 
         <section className={s.recent} aria-labelledby="recent-title">
-          <div className={s.recentHead}>
-            <h2 id="recent-title" className={`display ${s.moreTitle}`}>
-              Recent articles
-            </h2>
-            <Link className="btn btnGhost" href="/blog">
-              View all articles
-              <ArrowIcon />
-            </Link>
-          </div>
-          <RecentPosts posts={latestPosts(3, post.slug)} builtAt={builtAt} />
+          <RecentPosts posts={latestPosts(3, post.slug)} trending={trending} current={post.slug} builtAt={builtAt} />
           <Form className={s.findMore} action="/blog" role="search" aria-label="Articles">
             <p className={s.findMoreTitle}>Looking for something else?</p>
             <div className={s.search}>

@@ -24,6 +24,8 @@
   --peri-200: #c6d1ff;
   --sun: #ffb25e;
   --sun-deep: #ff8a5c;
+  /* The flame beside "Trending". */
+  --fire: #ef5b25;
 
   --grad: linear-gradient(105deg, #2758ec 0%, #5138ee 48%, #8f35e8 100%);
   --grad-text: linear-gradient(100deg, #2758ec 0%, #5a38ee 45%, #a12fd8 100%);
@@ -624,9 +626,19 @@ select {
   align-items: center;
 }
 
+/* Outside Europe the box is a notice: Settings, then OK. */
+.cookieActionsNotice {
+  grid-template-columns: auto 1fr;
+}
+
 .cookieChoices {
   display: grid;
   gap: 10px;
+}
+
+/* Google's ads, which the box doesn't cover. */
+.cookieNote {
+  color: var(--ink-mute);
 }
 
 .cookieOption {

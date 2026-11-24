@@ -332,6 +332,18 @@
   color: #fff;
 }
 
+/* Trending: the most read articles of the last 30 days. */
+.trendingTopic svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--fire);
+}
+
+.trendingTopic[aria-pressed="true"] svg {
+  color: #ffd9b8;
+}
+
 .moreTopics {
   background: transparent;
   box-shadow: inset 0 0 0 1.5px var(--field-line);
@@ -951,6 +963,77 @@ a.pageStep:hover,
 @media (min-width: 1000px) {
   .recentGrid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Once posts have views: the most read one, then the newest, each under its
+   own heading. One column on phones, with two new posts. On tablets, two
+   columns: trending beside the newest post. From 1000 px, three cards in a
+   row. Side by side, the headings share a row, so the cards line up. */
+.recentSplit {
+  display: grid;
+  gap: clamp(32px, 5vw, 48px);
+}
+
+.recentPair {
+  display: grid;
+  gap: clamp(14px, 2vw, 22px);
+}
+
+.trendingTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.trendingTitle svg {
+  flex: none;
+  width: 0.85em;
+  height: 0.85em;
+  color: var(--fire);
+}
+
+@media (min-width: 620px) {
+  .recentSplit {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 clamp(14px, 2vw, 22px);
+  }
+
+  .recentSplit > div {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 999px) {
+  .recentPair > :nth-child(n + 2) {
+    display: none;
+  }
+
+  /* "View all articles" drops below its heading here, so both headings sit at the top. */
+  .recentSplit .recentHead {
+    align-content: start;
+    align-items: start;
+  }
+}
+
+@media (min-width: 1000px) {
+  .recentSplit {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .recentSplit > div:last-child {
+    grid-column: span 2;
+    grid-template-columns: subgrid;
+  }
+
+  .recentSplit > div:last-child > * {
+    grid-column: 1 / -1;
+  }
+
+  .recentPair {
+    grid-template-columns: subgrid;
   }
 }
 

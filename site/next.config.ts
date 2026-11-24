@@ -8,6 +8,8 @@ import type { NextConfig } from "next";
 // (sitemap, feed, llms.txt, the blog page), made again every 10 minutes so
 // new posts join them without a deploy (lib/blog.ts). app/api/push sends article
 // notifications, with a daily run at 6:00 AM IST (crons in vercel.json).
+// app/api/views counts article views, and app/api/region tells the cookie box
+// whether the visitor's country needs a yes first.
 const nextConfig: NextConfig = {
   images: { unoptimized: true },
   // Those pages read the posts from the files scripts/content.mjs built.
@@ -24,6 +26,8 @@ const nextConfig: NextConfig = {
     "/llms-full.txt": ["./.content/blog.json", "./.content/posts/*.json"],
     "/backstage": ["./.content/blog.json"],
     "/api/push/send": ["./.content/blog.json"],
+    // Counts views of live posts only, so it checks the slug against the list.
+    "/api/views": ["./.content/blog.json"],
   },
 };
 

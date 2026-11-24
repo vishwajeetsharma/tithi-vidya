@@ -7,6 +7,7 @@ import { Listen } from "@/components/blog/Listen";
 import { PostCard } from "@/components/blog/PostCard";
 import { ReadIn } from "@/components/blog/ReadIn";
 import { ShareButtons } from "@/components/blog/ShareButtons";
+import { ViewCounter } from "@/components/blog/ViewCounter";
 import s from "@/components/blog/blog.module.css";
 import { ArrowIcon } from "@/components/Icons";
 import { TocSpy } from "@/components/how/TocSpy";
@@ -41,6 +42,9 @@ export function generateStaticParams() {
 }
 
 const atSixIst = (date: string) => `${date}T06:00:00+05:30`;
+
+/** Views count on the live site only. A translation counts as a view of the post. */
+const COUNT_VIEWS = process.env.VERCEL_ENV === "production";
 
 /** The same post in every language it has, for hreflang: search engines then show each reader their own language. */
 function languagesOf(post: Post): Record<string, string> {
@@ -172,6 +176,7 @@ export default async function TranslatedPost({ params }: Params) {
           ],
         }}
       />
+      {COUNT_VIEWS && <ViewCounter slug={post.slug} />}
       <div className={s.postWrap}>
         <div className={s.postLayout}>
           <article className={s.postMain}>
