@@ -159,3 +159,4 @@ It's the tithi that was running when you were born. Put your birth date, time an
 - [Tithi birthday: what it is and how to find yours](/blog/tithi-birthday): your own tithi, and the date it returns each year.
 - [Ekadashi 2027 list: all 25 dates](/blog/ekadashi-list): the 11th tithi, 25 times in one year.
 - [Tithi birthday calculator: 5 things it must get right](/blog/tithi-birthday-calculator): sunrise, skipped tithis and extra months, with real cases.
+- The [Purnima](/blog/purnima-list) and [Amavasya](/blog/amavasya-list) 2027 lists: tithi 15 of each half, every month of next year.

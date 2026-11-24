@@ -16,7 +16,7 @@ A date isn't always as simple as it looks, though. Some festivals are fixed by m
 
 ## How to read this calendar
 
-Each table gives the date, the festival and its tithi, the lunar day it's tied to. A Hindu calendar names each day after the tithi that's running at sunrise. That's the rule for most festivals here. [Getting that sunrise right](/blog/tithi-birthday-calculator) is one of the trickiest parts of any panchang.
+Each table gives the date, the festival and its [tithi, the lunar day](/blog/what-is-tithi) it's tied to. A Hindu calendar names each day after the tithi that's running at sunrise. That's the rule for most festivals here. [Getting that sunrise right](/blog/tithi-birthday-calculator) is one of the trickiest parts of any panchang.
 
 When a festival goes by another time of day, the tithi column says so:
 
@@ -27,7 +27,7 @@ When a festival goes by another time of day, the tithi column says so:
 - **At moonrise:** Karwa Chauth and Sakat Chauth.
 - **By the sun:** Makar Sankranti and Baisakhi follow the sun's move into a new zodiac sign, not the moon.
 
-Two more things. Month names are the North Indian (purnimanta) ones. In the amanta calendar of the south and west, festivals in the dark half of the month fall in the month before. And 2027 has no adhik maas, the extra month that some years get, so every festival stays close to where it was in 2026.
+Two more things. Month names are the North Indian (purnimanta) ones. In the amanta calendar of the south and west, festivals in the dark half of the month fall in the month before. And 2027 has no adhik maas, the extra month that some years get, so every festival stays close to where it was in 2026. For the monthly fast days on their own, the [Purnima](/blog/purnima-list) and [Amavasya](/blog/amavasya-list) lists have every full and new moon of 2027, with exact times.
 
 ![Hindu festivals 2027 at a glance: the main festivals of each month, January to December, with their dates](hindu-festivals-2027-at-a-glance.png "Save it or share it: the whole year on one page. Dates for New Delhi.")
 

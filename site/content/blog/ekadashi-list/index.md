@@ -46,7 +46,7 @@ Three of the 25 come with two dates: one for most families, and one a day later 
 
 \* Vaishnava families and temples, ISKCON included, fast a day later: on 19 January, 30 July and 26 October. [The reason for each](#the-3-ekadashis-with-two-dates) is further down.
 
-Ekadashi (Gyaras in everyday Hindi) is the 11th tithi, or lunar day. It comes twice in every moon cycle: once while the moon grows, and once while it shrinks. If the word tithi is new to you, [this short explainer with a picture](/blog/tithi-birthday) covers it.
+Ekadashi (Gyaras in everyday Hindi) is the 11th tithi, or lunar day. It comes twice in every moon cycle: once while the moon grows, and once while it shrinks. If the word tithi is new to you, [this short explainer with a picture](/blog/what-is-tithi) covers it.
 
 ![Ekadashi 2027 at a glance: the 25 fast days from January to December, month by month](ekadashi-2027-list-at-a-glance.png "Save it or share it: every Ekadashi of 2027 on one page. Dates for New Delhi.")
 
@@ -277,3 +277,4 @@ Not always. A tithi starts at the same moment everywhere, but sunrise doesn't. I
 - [Utpanna Ekadashi 2026: date, parana time and how to start](/blog/utpanna-ekadashi): the best first fast, with simple steps for beginners.
 - [Dev Uthani Ekadashi 2026: 20 or 21 November?](/blog/dev-uthani-ekadashi): a split like the three above, explained with pictures.
 - [Hindu calendar 2027: all festival dates with tithi](/blog/hindu-calendar): the rest of the year in one list.
+- The [Purnima](/blog/purnima-list) and [Amavasya](/blog/amavasya-list) 2027 lists: the year's other monthly fast days, with exact times.

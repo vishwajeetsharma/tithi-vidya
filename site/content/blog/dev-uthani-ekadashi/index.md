@@ -29,7 +29,7 @@ Dev Uthani Ekadashi, also called Prabodhini Ekadashi, is the Ekadashi (11th luna
 
 ## Why some calendars say 20 November and some 21
 
-A Hindu calendar names each day after the tithi that's running at sunrise. This is called the udaya tithi rule, and it's one of the [five things a tithi calculator must get right](/blog/tithi-birthday-calculator).
+A Hindu calendar names each day after the tithi that's running at sunrise. This is called the udaya tithi rule, and it's one of the [five things a tithi calculator must get right](/blog/tithi-birthday-calculator). Your own tithi birthday is dated the same way, and [Find my tithi](/find) shows it.
 
 But tithis don't line up neatly with days. Each one lasts somewhere between about 20 and 27 hours, depending on how fast the moon is moving. This Ekadashi lasts 23 hours and 16 minutes, so it fits between two sunrises without touching either. A tithi like that is called kshaya, a skipped tithi, and [I've explained how skipped tithis work](/blog/tithi-birthday#skipped-and-doubled-tithis) with another real example.
 
@@ -138,7 +138,7 @@ On Dev Uthani Ekadashi: 20 November for most families, and 21 November for Vaish
 
 On Wednesday, 10 November 2027. That year Ekadashi is running at sunrise and before dawn, so Smarta and Vaishnava families fast on the same day.
 
-The next Ekadashi is [Utpanna Ekadashi on 4 December](/blog/utpanna-ekadashi), the traditional one to begin Ekadashi fasts with, and the [Ekadashi 2027 list](/blog/ekadashi-list) has all 25 of next year's dates with parana times.
+The next Ekadashi is [Utpanna Ekadashi on 4 December](/blog/utpanna-ekadashi), the traditional one to begin Ekadashi fasts with. The [Ekadashi 2027 list](/blog/ekadashi-list) has all 25 of next year's dates, with parana times.
 
 > **Tip:** Ekadashi comes twice a month, but your own birth tithi comes back once a year. [Find my tithi](/find) shows yours, and your tithi birthday for the next 100 years.
 

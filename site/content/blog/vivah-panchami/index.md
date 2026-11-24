@@ -19,7 +19,7 @@ And here's the odd part. It's a wedding festival, yet many families in Mithila a
 | Panchami begins | 13 Dec, 4:48 pm | 13 Dec, 5:03 pm |
 | Panchami ends | 14 Dec, 7:16 pm | 14 Dec, 7:31 pm |
 
-The tithi starts on the evening of the 13th, so why is the festival on the 14th? Because a Hindu calendar day is named by the tithi running at sunrise. On the morning of 14 December, Panchami is running, so that's the day. If tithis are new to you, [here's what a tithi is, with a picture](/blog/tithi-birthday).
+The tithi starts on the evening of the 13th, so why is the festival on the 14th? Because a Hindu calendar day is named by the tithi running at sunrise. On the morning of 14 December, Panchami is running, so that's the day. If tithis are new to you, [here's what a tithi is, with a picture](/blog/what-is-tithi).
 
 The dates come from Tithi Vidya, which uses NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html) for the sun and moon.
 
@@ -67,6 +67,6 @@ The wedding season itself opens about three weeks earlier, when Vishnu is said t
 
 ## Keep reading
 
-- [Chhath Puja 2026: dates, Kharna and arghya times](/blog/chhath-puja): Mithila's other great festival, a month before this one.
+- [Hindu calendar 2027](/blog/hindu-calendar): Vivah Panchami 2027 and every other festival of next year, with its tithi.
 - [Tithi birthday calculator: 5 things it must get right](/blog/tithi-birthday-calculator): why the same date can come out differently in two apps.
 - [Why your Hindu birthday moves every year](/blog/why-your-hindu-birthday-moves): the same 11-day slide, for birthdays.

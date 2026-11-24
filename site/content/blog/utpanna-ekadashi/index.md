@@ -56,7 +56,7 @@ When Vishnu woke, he named her Ekadashi, after the 11th day on which she appeare
 
 ## Why it's the best Ekadashi to start fasting
 
-Since every Ekadashi fast traces back to this day, many families start the habit here. Then they keep it on both Ekadashis of every month, the 11th day of the waxing moon and the 11th day of the waning moon.
+Since every Ekadashi fast traces back to this day, many families start the habit here. Then they keep it on both Ekadashis of every month, the 11th day of the waxing moon and the 11th day of the waning moon. (New to tithis? [Here's how they work](/blog/what-is-tithi).)
 
 ![Tithi wheel: the moon at Krishna Ekadashi, tithi 26, with Shukla Ekadashi, tithi 11, also marked](utpanna-ekadashi-tithi-wheel.png "Ekadashi comes twice a month, once in each half of the moon's cycle.")
 

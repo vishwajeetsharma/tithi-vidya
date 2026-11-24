@@ -30,7 +30,7 @@ Kartik Purnima is the full moon of the month of Kartika, the holiest month of th
 
 ## Why the evening of 24 November counts
 
-A Hindu calendar names each day after the tithi running at sunrise. Purnima begins late on Monday night, so Tuesday's sunrise falls in it, and Tuesday is Kartik Purnima. It's the same sunrise rule that made [Dev Uthani Ekadashi so confusing](/blog/dev-uthani-ekadashi) this year.
+A Hindu calendar names each day after the tithi running at sunrise. Purnima begins late on Monday night, so Tuesday's sunrise falls in it, and Tuesday is Kartik Purnima. It's the same sunrise rule that made [Dev Uthani Ekadashi so confusing](/blog/dev-uthani-ekadashi) this year, and the one [Find my tithi](/find) uses to date your own tithi birthday.
 
 Evening rituals need one more thing: Purnima has to be running after sunset too. On Monday evening it hasn't started yet. On Tuesday it runs until 8:23 pm, more than 3 hours after Varanasi's 5:08 pm sunset. So the lamps of Dev Deepawali and the deepdaan (lamps floated on the river) are lit while the full moon tithi is still on.
 
@@ -103,7 +103,7 @@ Yes. Guru Nanak's Birthday, on Tuesday, 24 November, is on the central governmen
 
 ### When is Kartik Purnima in 2027?
 
-On Sunday, 14 November 2027, the day of the holy dip. Purnima begins at 9:55 am on Saturday, 13 November, so Dev Deepawali's evening lamps are likely to be lit that Saturday.
+On Sunday, 14 November 2027, the day of the holy dip. Purnima begins at 9:55 am on Saturday, 13 November, so Dev Deepawali's evening lamps are likely to be lit that Saturday. All 12 full moons of 2027 are in the [Purnima 2027 list](/blog/purnima-list).
 
 > **Tip:** Your birth tithi comes back every year, just like Kartik Purnima. [Find my tithi](/find) shows yours, with your tithi birthday for the next 100 years.
 

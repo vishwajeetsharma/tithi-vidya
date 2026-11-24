@@ -17,7 +17,7 @@ So why does it move, how do you find yours, and what happens in the odd years? O
 
 Picture the sun, the Earth and the moon. As the moon goes around us, the angle between the moon and the sun keeps growing. It's 0° at the new moon, 180° at the full moon, and back to 360° at the next new moon.
 
-Every 12° of that angle is one **tithi**. And 360 divided by 12 gives 30 tithis in a lunar month.
+Every 12° of that angle is one **tithi**. And 360 divided by 12 gives 30 tithis in a lunar month. (There's [a fuller guide to tithis, with all 30 names](/blog/what-is-tithi), if you want more.)
 
 ![Tithi wheel: the moon is 274° from the sun, which is tithi 23 of 30, Krishna Ashtami](tithi-wheel-krishna-ashtami.png "The moment of our example's birth: 274° from the sun")
 

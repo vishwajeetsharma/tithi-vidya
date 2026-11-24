@@ -20,7 +20,7 @@ Notice the order. Most prayers to the sun greet it as it rises. Chhath's biggest
 | 3. Sandhya Arghya | Sunday, 15 November | The offering to the setting sun |
 | 4. Usha Arghya | Monday, 16 November | The offering to the rising sun, then the fast ends |
 
-These dates hold across India and Nepal. Each day follows a tithi, or lunar day, and this year no tithi changes anywhere near sunrise, so no region ends up a day apart. If tithis are new to you, [here's what a tithi is, with a picture](/blog/tithi-birthday).
+These dates hold across India and Nepal. Each day follows a tithi, or lunar day, and this year no tithi changes anywhere near sunrise, so no region ends up a day apart. If tithis are new to you, [here's what a tithi is, with a picture](/blog/what-is-tithi).
 
 ## Chhath arghya time 2026 in your city
 
@@ -54,7 +54,7 @@ Where there's no river nearby, families use a pond, or set up a tank of water at
 
 ## Which tithi is Chhath Puja?
 
-The main day is **Kartika Shukla Shashthi**, the 6th tithi of the bright half of the month of Kartika. That's where the name comes from: chhath simply means "the sixth". The festival is also called Surya Shashthi, and its four days run from Chaturthi, the 4th tithi, to Saptami, the 7th.
+The main day is **Kartika Shukla Shashthi**, the 6th tithi of the bright half of the month of Kartika. That's where the name comes from: chhath simply means "the sixth". The festival is also called Surya Shashthi, and its four days run from Chaturthi, the 4th tithi, to Saptami, the 7th. Every day has a tithi like this, including the day you were born: [Find my tithi](/find) shows yours.
 
 This year, Shashthi begins at 11:24 pm on Saturday, 14 November, and ends at 2:01 am on Monday, 16 November (New Delhi time). It covers all of Sunday, sunset included, so there's no doubt about the evening arghya.
 
@@ -112,7 +112,7 @@ Holidays are set state by state. Bihar and Jharkhand, where Chhath is biggest, u
 
 ### When is Chhath Puja in 2027?
 
-From Tuesday, 2 November, to Friday, 5 November 2027. The evening arghya is on Thursday, 4 November.
+From Tuesday, 2 November, to Friday, 5 November 2027. The evening arghya is on Thursday, 4 November. The [Hindu calendar 2027](/blog/hindu-calendar) has it with every other festival of the year.
 
 ### When is Chaiti Chhath in 2027?
 

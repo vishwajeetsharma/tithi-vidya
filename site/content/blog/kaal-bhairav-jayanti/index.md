@@ -83,7 +83,7 @@ The dog is his vahana, the animal he rides. That's why feeding dogs is one of th
 
 ### When is Kaal Bhairav Jayanti in 2027?
 
-On Saturday, 20 November 2027. Ashtami begins at 7:17 pm that evening and ends before the next evening, so Saturday night is the one that counts.
+On Saturday, 20 November 2027. Ashtami begins at 7:17 pm that evening and ends before the next evening, so Saturday night is the one that counts. The [Hindu calendar 2027](/blog/hindu-calendar) flags it, with the other festivals set by the time of day.
 
 > **Tip:** Your birth tithi comes back every year too, just like Bhairav's Ashtami. [Find my tithi](/find) shows yours, with your tithi birthday for the next 100 years.
 

@@ -31,7 +31,7 @@ Two of the twelve need care. For Raksha Bandhan's Purnima in August and Kartik P
 | Sun, 14 Nov | Kartika Purnima | Dev Deepawali, Guru Nanak Jayanti |
 | Mon, 13 Dec | Margashirsha Purnima | Dattatreya Jayanti |
 
-Each date is the day that has Purnima at sunrise, the rule most calendars print. Purnima is the 15th tithi, the last [lunar day](/blog/what-is-tithi) of the bright half, when the moon stands opposite the sun. In South India it's Pournami, and in Gujarat, Poonam.
+Each date is the day that has Purnima at sunrise, the rule most calendars print. Purnima is the 15th tithi, the last [lunar day](/blog/what-is-tithi) of the bright half, when the moon stands opposite the sun. Fifteen tithis later comes Amavasya, the new moon, and the [Amavasya 2027 list](/blog/amavasya-list) has all 13 of those. In South India it's Pournami, and in Gujarat, Poonam.
 
 See how the date slides, from the 22nd in January to the 13th in December? One full moon follows the last after about 29.5 days, and most calendar months are longer than that. So Purnima comes about a day earlier each month.
 
@@ -215,3 +215,4 @@ Yes, it's the most common day for it. Families usually hold it on the evening of
 - [Hindu calendar 2027: all festival dates with tithi](/blog/hindu-calendar): where each Purnima sits among the year's festivals.
 - [Kartik Purnima 2026: date and snan time](/blog/kartik-purnima): one Purnima, three celebrations.
 - [What is a tithi?](/blog/what-is-tithi): why a Purnima can start at 6:50 pm, in one picture.
+- [Amavasya 2027 list](/blog/amavasya-list): the new moons between these full moons, and which day is for shraddha.

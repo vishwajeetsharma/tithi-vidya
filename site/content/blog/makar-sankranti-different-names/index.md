@@ -58,7 +58,7 @@ That "almost" matters. I worked out the moment the sun enters Makar for a few ye
 | 2027 | Thursday, 14 January, 9:10 pm | 15 January |
 | 2028 | Saturday, 15 January, 3:24 am | 15 January |
 
-See the pattern? The moment comes about 6 hours later each year, then a leap day pulls it back. In 2027 it comes at 9:10 pm, after sunset everywhere in India, so many calendars keep the festival the next day, Friday, 15 January. (Our [Hindu calendar 2027](/blog/hindu-calendar) does too, with Lohri on Thursday, 14 January.)
+See the pattern? The moment comes about 6 hours later each year, then a leap day pulls it back. In 2027 it comes at 9:10 pm, after sunset everywhere in India, so many calendars keep the festival the next day, Friday, 15 January. (Our [Hindu calendar 2027](/blog/hindu-calendar) does too, with Lohri on Thursday, 14 January.) The same moment ends [Kharmas](/blog/kharmas), the month when many North Indian families hold no weddings.
 
 It's also creeping later over the centuries. The same Wikipedia page notes that Makar Sankranti will fall on 16 January for the first time in 2102.
 

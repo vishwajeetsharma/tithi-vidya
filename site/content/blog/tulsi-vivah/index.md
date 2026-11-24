@@ -78,7 +78,7 @@ In the evening, after sunset. In New Delhi the sun sets at 5:25 pm on 21 Novembe
 
 ### When is Tulsi Vivah in 2027?
 
-On Thursday, 11 November 2027, the day after Dev Uthani Ekadashi on 10 November.
+On Thursday, 11 November 2027, the day after Dev Uthani Ekadashi on 10 November. The [Hindu calendar 2027](/blog/hindu-calendar) has it with every other festival of the year.
 
 > **Tip:** Tulsi Vivah comes back on the same tithi every year, and so does your own birth tithi. [Find my tithi](/find) shows yours, with your tithi birthday for the next 100 years.
 
