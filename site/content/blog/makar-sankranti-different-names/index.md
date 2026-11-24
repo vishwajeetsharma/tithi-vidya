@@ -1,18 +1,18 @@
 ---
 title: "Makar Sankranti different names: Pongal, Lohri, Bihu"
-description: "Makar Sankranti's different names in every state, from Pongal to Bihu, what each region does, and why the day moves to 15 January in 2027."
+description: "Makar Sankranti's different names in every state, from Pongal to Bihu, what each region does, and why 2027 is split between 14 and 15 January."
 date: 2026-12-02
 tags: [traditions, festivals, hindu calendar]
 cover: cover.jpg
 coverAlt: "Three kites flying in front of a big low sun, with the words Makar Sankranti, One sun, 12 names, and Pongal to Bihu"
 coverArt: cover-art.jpg
 pushTitle: "One festival, 12 names: Makar Sankranti"
-pushBody: "Pongal, Lohri, Bihu, Uttarayan, Khichdi and more, state by state. And why it moves to 15 January in 2027."
+pushBody: "Pongal, Lohri, Bihu, Uttarayan, Khichdi and more, state by state. And why 2027 is split between 14 and 15 January."
 ---
 
 **Makar Sankranti has a different name in almost every part of India.** It's Pongal in Tamil Nadu, Lohri and Maghi in Punjab, and Magh Bihu in Assam. It's Uttarayan in Gujarat, Khichdi in Uttar Pradesh and Bihar, Poush Sankranti in Bengal, and Maghe Sankranti in Nepal. They all mark one moment: the sun moving into Makar, the sign of Capricorn.
 
-That makes it unusual. Almost every other Hindu festival follows the moon, so [its date jumps around by weeks](/blog/why-your-hindu-birthday-moves). Makar Sankranti follows the sun, so it sits on 14 or 15 January. In 2027 it's the 15th for most calendars, and I'll show you why with real numbers.
+That makes it unusual. Almost every other Hindu festival follows the moon, so [its date jumps around by weeks](/blog/why-your-hindu-birthday-moves). Makar Sankranti follows the sun, so it sits on 14 or 15 January. In 2027 it's split: the sun's move comes late on the 14th, so many panchangs keep the festival on the 15th. I'll show you why with real numbers.
 
 ## Makar Sankranti names in different states
 
@@ -58,7 +58,9 @@ That "almost" matters. I worked out the moment the sun enters Makar for a few ye
 | 2027 | Thursday, 14 January, 9:10 pm | 15 January |
 | 2028 | Saturday, 15 January, 3:24 am | 15 January |
 
-See the pattern? The moment comes about 6 hours later each year, then a leap day pulls it back. In 2027 it comes at 9:10 pm, after sunset everywhere in India, so many calendars keep the festival the next day, Friday, 15 January. (Our [Hindu calendar 2027](/blog/hindu-calendar) does too, with Lohri on Thursday, 14 January.) The same moment ends [Kharmas](/blog/kharmas), the month when many North Indian families hold no weddings.
+See the pattern? The moment comes about 6 hours later each year, then a leap day pulls it back. In 2027 it comes at 9:10 pm, after sunset everywhere in India, so many panchangs keep the festival the next day, Friday, 15 January. (Our [Hindu calendar 2027](/blog/hindu-calendar) does too, with Lohri on Thursday, 14 January.)
+
+The central government's [2027 holiday list](https://utilities.cept.gov.in/dop/pdfbind.ashx?id=15435) sticks with Thursday, 14 January, for Makar Sankranti, and puts Pongal on the 15th. The sun's move into Makar also ends [Kharmas](/blog/kharmas), the month when many North Indian families hold no weddings.
 
 It's also creeping later over the centuries. The same Wikipedia page notes that Makar Sankranti will fall on 16 January for the first time in 2102.
 
@@ -80,7 +82,7 @@ Pongal in Tamil Nadu, Lohri and Maghi in Punjab, Magh Bihu in Assam, and Uttaray
 
 ### Is Lohri the same as Makar Sankranti?
 
-Not quite. Lohri is the bonfire night before it. In Punjab the next day, Maghi, is the Sankranti itself. In 2027, Lohri is on Thursday, 14 January, by most calendars.
+Not quite. Lohri is the bonfire night before it. In Punjab the next day, Maghi, is the Sankranti itself. In 2027, Lohri falls on Thursday, 14 January, the night before Maghi.
 
 ### Is Pongal the same as Makar Sankranti?
 
@@ -88,7 +90,7 @@ It's the same festival in Tamil Nadu, kept over three or four days. Thai Pongal,
 
 ### Why is Makar Sankranti on 15 January in 2027?
 
-The sun enters Makar at 9:10 pm IST on Thursday, 14 January, after sunset. So many calendars move the festival to the next morning, Friday, 15 January.
+The sun enters Makar at 9:10 pm IST on Thursday, 14 January, after sunset. So many panchangs move the festival to the next morning, Friday, 15 January. The government's holiday list still keeps it on the 14th.
 
 ### What is Makar Sankranti called in Nepal?
 

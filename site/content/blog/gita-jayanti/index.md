@@ -24,7 +24,7 @@ Two festivals on one day isn't a coincidence: they're the same tithi by definiti
 | Parana (breaking the fast), New Delhi | Monday, 21 December, 7:09 am to 9:13 am |
 | International Gita Mahotsav, Kurukshetra | 5 to 25 December |
 
-The tithi times are the same everywhere in India, because a tithi starts and ends at one moment for everyone. These come from Tithi Vidya, which works out the sun and moon from NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html) ([here's how](/how-it-works)).
+The tithi times are the same everywhere in India, because a tithi starts and ends at one moment for everyone. These come from Tithi Vidya, which works out the sun and moon from NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html) ([here's how](/how-it-works)). I checked the date against Drik Panchang too, and it has the same Sunday for New Delhi.
 
 ## Why Gita Jayanti and Mokshada Ekadashi share a day
 

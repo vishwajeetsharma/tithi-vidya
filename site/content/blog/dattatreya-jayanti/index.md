@@ -43,7 +43,7 @@ Most Hindu calendars name a day after the tithi running at sunrise. It's called 
 
 So in Delhi, Mumbai and Pune, Purnima touches neither Wednesday's sunrise nor Thursday's. It's a skipped tithi (kshaya) there, and the calendar gives it to Wednesday. In the east and south, a sunrise calendar names Thursday "Purnima".
 
-Wednesday, though, is the only day with Purnima in its daytime and its evening, everywhere in India: from 10:47 am until well after dark. That's why Wednesday, 23 December, is the date most published calendars give for Datta Jayanti. If your family or temple follows a calendar that says Thursday, go with it.
+Wednesday, though, is the only day with Purnima in its daytime and its evening, everywhere in India: from 10:47 am until well after dark. That's why Wednesday, 23 December, is the date most calendars give for Datta Jayanti, including the government's [Incredible India festival page](https://www.incredibleindia.gov.in/en/festivals-and-events/maharashtra/shree-datta-jayanti). If your family or temple follows a calendar that says Thursday, go with it.
 
 ## Why this full moon is so short: a supermoon
 
