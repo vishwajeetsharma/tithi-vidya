@@ -1224,6 +1224,7 @@ a.pageStep:hover,
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
   width: 100%;
   min-height: 36px;
   padding: 0 12px;
@@ -1240,6 +1241,12 @@ a.pageStep:hover,
 
 .shareLink:hover {
   background: var(--lilac-100);
+}
+
+.shareIcon {
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
 }
 
 .railCta {
@@ -1422,6 +1429,35 @@ a.pageStep:hover,
 .shareInline .shareLink {
   min-height: 44px;
   font-size: 0.9375rem;
+}
+
+/* After the share box on phones and tablets: the Google button full width, with smaller words. */
+.preferredInline {
+  margin-top: 16px;
+}
+
+@media (min-width: 1280px) {
+  .preferredInline {
+    display: none;
+  }
+}
+
+.preferredInline .preferred {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.preferredInline .preferredG {
+  width: 18px;
+  height: 18px;
+}
+
+.preferredInline .preferredText small {
+  font-size: 0.75rem;
 }
 
 @media (min-width: 1280px) {

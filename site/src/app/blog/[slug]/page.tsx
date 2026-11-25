@@ -273,8 +273,12 @@ export default async function PostPage({ params }: Params) {
                 Share this article
               </h2>
               <ShareButtons url={`${origin}/blog/${post.slug}`} title={post.title} />
-              <PreferredSource />
             </section>
+
+            {/* Not sharing, so outside the share box. Wide screens have it in the left rail. */}
+            <div className={s.preferredInline}>
+              <PreferredSource />
+            </div>
 
             <NotifyButton card />
 
