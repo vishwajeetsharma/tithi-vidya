@@ -77,6 +77,45 @@ function asDate(value) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+/**
+ * The post's authors, from `author:`. Each is a name with an optional link in
+ * brackets, separated by commas:
+ *   author: "Aman Gupta (https://instagram.com/aman), Virat Kohli (https://virat.example)"
+ * A link may be a full https address or a page on this site, like /about.
+ * Vishwajeet Sharma without a link goes to /about; another name without one is
+ * shown as plain text. No author means Vishwajeet Sharma.
+ * Returns the authors, or an error message.
+ */
+function parseAuthors(value) {
+  if (value === undefined || value === null || (typeof value === "string" && !value.trim())) return [{ name: DEFAULT_AUTHOR, url: "/about" }];
+  if (typeof value !== "string") return 'author must be text in double quotes, like  author: "Aman Gupta (https://instagram.com/aman)"';
+  // Commas inside brackets belong to the link, not between authors.
+  const parts = [];
+  let depth = 0;
+  let current = "";
+  for (const char of value) {
+    if (char === "(") depth++;
+    if (char === ")") depth = Math.max(0, depth - 1);
+    if (char === "," && depth === 0) {
+      parts.push(current);
+      current = "";
+    } else current += char;
+  }
+  parts.push(current);
+  const authors = [];
+  for (const part of parts.map((p) => p.trim()).filter(Boolean)) {
+    const match = part.match(/^(.+?)\s*(?:\(\s*([^()\s]+)\s*\))?$/);
+    const name = match?.[1].trim();
+    const url = match?.[2];
+    if (!name || /[()]/.test(name)) return `author "${part}" should be a name with an optional link in brackets, like  Aman Gupta (https://instagram.com/aman)`;
+    if (url && !/^https:\/\/[^\s/]+\.[^\s]+$/.test(url) && !/^\/[a-z0-9/#?=&_-]*$/i.test(url)) {
+      return `author link "${url}" must start with https:// or be a page on this site, like /about`;
+    }
+    authors.push({ name, url: url ?? (name === DEFAULT_AUTHOR ? "/about" : "") });
+  }
+  return authors.length ? authors : [{ name: DEFAULT_AUTHOR, url: "/about" }];
+}
+
 /** A post goes live at 6:00 AM IST on its date. India has no daylight saving, so that is always 00:30 UTC. */
 function liveAt(date) {
   return `${date}T00:30:00.000Z`;
@@ -95,6 +134,8 @@ function checkFrontMatter(slug, data, problems) {
   if (data.tags !== undefined && !(Array.isArray(data.tags) && data.tags.every((t) => typeof t === "string"))) {
     problems.push(`${where} tags must be a list, like  tags: [tithi, birthday]`);
   }
+  const authors = parseAuthors(data.author);
+  if (typeof authors === "string") problems.push(`${where} ${authors}`);
   for (const key of ["pushTitle", "pushBody", "coverArt"]) {
     if (data[key] !== undefined && (typeof data[key] !== "string" || !data[key].trim())) {
       problems.push(`${where} ${key} must be text in double quotes, or left out`);
@@ -308,7 +349,11 @@ async function renderPost({ slug, file, source, base }, processImage, problems) 
     date,
     liveAt: liveAt(date),
     updated: data.updated ? asDate(data.updated) : date,
-    author: typeof data.author === "string" && data.author.trim() ? data.author.trim() : DEFAULT_AUTHOR,
+    // `authors` has each name and link; `author` is the names alone, for feeds and plain text.
+    authors: parseAuthors(data.author),
+    author: parseAuthors(data.author)
+      .map((a) => a.name)
+      .join(", "),
     tags: Array.isArray(data.tags) ? data.tags : [],
     draft: data.draft === true,
     cover,
@@ -579,4 +624,4 @@ if (isCli) {
 }
 
 // Exposed for tests.
-export { asDate, findPosts, liveAt };
+export { asDate, findPosts, liveAt, parseAuthors };

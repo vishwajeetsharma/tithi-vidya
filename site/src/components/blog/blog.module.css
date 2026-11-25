@@ -1691,3 +1691,17 @@ a.pageStep:hover,
 .readInLink:hover {
   background: var(--lilac-100);
 }
+
+/* An author's name in an article's date line, linked to their page. */
+.author {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+.author:hover {
+  color: var(--indigo);
+  text-decoration-color: currentColor;
+}

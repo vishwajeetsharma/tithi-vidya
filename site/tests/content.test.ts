@@ -5,7 +5,7 @@ import { join } from "node:path";
 import sharp from "sharp";
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { buildContent, liveAt } from "../scripts/content.mjs";
+import { buildContent, liveAt, parseAuthors } from "../scripts/content.mjs";
 
 type Built = {
   slug: string;
@@ -164,5 +164,30 @@ describe("blog mistakes", () => {
       expect(message).toContain(words);
     }
     expect(existsSync(join(root, ".content/blog.json"))).toBe(false);
+  });
+});
+
+describe("post authors", () => {
+  it("default to Vishwajeet Sharma, linked to /about", () => {
+    expect(parseAuthors(undefined)).toEqual([{ name: "Vishwajeet Sharma", url: "/about" }]);
+    expect(parseAuthors("Vishwajeet Sharma")).toEqual([{ name: "Vishwajeet Sharma", url: "/about" }]);
+  });
+
+  it("read several authors, each with an optional link, separated by commas", () => {
+    expect(parseAuthors("Aman Gupta (https://instagram.com/aman), Virat Kohli (https://virat.example/a,b), Priya")).toEqual([
+      { name: "Aman Gupta", url: "https://instagram.com/aman" },
+      { name: "Virat Kohli", url: "https://virat.example/a,b" },
+      { name: "Priya", url: "" },
+    ]);
+    expect(parseAuthors("Vishwajeet Sharma (/about), Aman Gupta")).toEqual([
+      { name: "Vishwajeet Sharma", url: "/about" },
+      { name: "Aman Gupta", url: "" },
+    ]);
+  });
+
+  it("refuse links that aren't https or a page on this site", () => {
+    expect(typeof parseAuthors("Aman (http://insecure.example)")).toBe("string");
+    expect(typeof parseAuthors("Aman (javascript:alert(1))")).toBe("string");
+    expect(typeof parseAuthors(["Aman"])).toBe("string");
   });
 });

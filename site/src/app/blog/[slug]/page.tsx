@@ -5,6 +5,7 @@ import { draftMode } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Authors, authorsLd } from "@/components/blog/Authors";
 import { Listen } from "@/components/blog/Listen";
 import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { NotifyButton } from "@/components/blog/NotifyButton";
@@ -22,7 +23,7 @@ import { formatDate, getBuiltAt, getPost, getPosts, latestPosts, serverNow, tren
 import { inLang, TRANSLATED } from "@/i18n/config";
 import { dictionary } from "@/i18n/dictionaries";
 import { isLive, PREVIEW } from "@/lib/posts";
-import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
+import { SITE_NAME, siteUrl } from "@/lib/site";
 
 // Only downloaded by pages that show code.
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap", preload: false });
@@ -66,7 +67,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
-    authors: [{ name: post.author }],
+    authors: post.authors.map((author) => ({ name: author.name, ...(author.url ? { url: author.url } : {}) })),
     keywords: post.tags,
     // `languages` names the post's translations (hreflang), so search engines show each reader their own language.
     alternates: { canonical: url, types: { "text/markdown": `${url}.md` }, ...(translated.length ? { languages } : {}) },
@@ -79,7 +80,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: post.description,
       publishedTime: atSixIst(post.date),
       modifiedTime: atSixIst(post.updated),
-      authors: [post.author],
+      authors: post.authors.map((author) => author.name),
       tags: post.tags,
       images: [post.cover ? { url: post.cover.og, width: 1200, height: 630, alt: post.cover.alt } : "/opengraph-image.png"],
     },
@@ -169,8 +170,8 @@ export default async function PostPage({ params }: Params) {
               description: post.description,
               datePublished: atSixIst(post.date),
               dateModified: atSixIst(post.updated),
-              // The site's own author has a page; guest authors are named only.
-              author: { "@type": "Person", name: post.author, ...(post.author === AUTHOR ? { url: `${origin}/about` } : {}) },
+              // Each author with their link: the site's own author goes to /about.
+              author: authorsLd(post.authors, origin),
               publisher: {
                 "@type": "Organization",
                 name: SITE_NAME,
@@ -224,7 +225,7 @@ export default async function PostPage({ params }: Params) {
                     · Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time>
                   </>
                 )}{" "}
-                · {post.minutes} min read · {post.author}
+                · {post.minutes} min read · <Authors authors={post.authors} />
                 {PREVIEW && liveAt > serverNow() && <strong> · Scheduled: live on the site at 6:00 AM IST that day</strong>}
               </p>
             </header>

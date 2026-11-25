@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Authors, authorsLd } from "@/components/blog/Authors";
 import { Listen } from "@/components/blog/Listen";
 import { PostCard } from "@/components/blog/PostCard";
 import { ReadIn } from "@/components/blog/ReadIn";
@@ -16,7 +17,7 @@ import { dateFormatter, inLang, isTranslated, LANGS, TRANSLATED, type Lang } fro
 import { dictionary } from "@/i18n/dictionaries";
 import { getBuiltAt, getPostsIn, getTranslation } from "@/lib/blog";
 import { isLive, type Post } from "@/lib/posts";
-import { AUTHOR, SITE_NAME, siteUrl } from "@/lib/site";
+import { SITE_NAME, siteUrl } from "@/lib/site";
 
 // A translated article: /hi/blog/<slug> is content/blog/<slug>/index.hi.md.
 // It is the English post's page (src/app/blog/[slug]/page.tsx) in another
@@ -70,7 +71,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: post.title,
     description: post.description,
-    authors: [{ name: post.author }],
+    authors: post.authors.map((author) => ({ name: author.name, ...(author.url ? { url: author.url } : {}) })),
     alternates: { canonical: url, languages: languagesOf(post) },
     openGraph: {
       type: "article",
@@ -81,7 +82,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: post.description,
       publishedTime: atSixIst(post.date),
       modifiedTime: atSixIst(post.updated),
-      authors: [post.author],
+      authors: post.authors.map((author) => author.name),
       images: [image],
     },
     twitter: { card: "summary_large_image", title: post.title, description: post.description, images: [post.cover ? post.cover.og : "/opengraph-image.png"] },
@@ -150,7 +151,7 @@ export default async function TranslatedPost({ params }: Params) {
               description: post.description,
               datePublished: atSixIst(post.date),
               dateModified: atSixIst(post.updated),
-              author: { "@type": "Person", name: post.author, ...(post.author === AUTHOR ? { url: `${origin}/about` } : {}) },
+              author: authorsLd(post.authors, origin),
               publisher: {
                 "@type": "Organization",
                 name: SITE_NAME,
@@ -194,7 +195,7 @@ export default async function TranslatedPost({ params }: Params) {
                     · {t.updated} <time dateTime={post.updated}>{formatDate(post.updated)}</time>
                   </>
                 )}{" "}
-                · {post.minutes} {t.minRead} · {post.author}
+                · {post.minutes} {t.minRead} · <Authors authors={post.authors} and=", " />
               </p>
             </header>
 

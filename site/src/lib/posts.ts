@@ -14,7 +14,10 @@ export type Post = {
   /** 6:00 AM IST on `date`, as an ISO time. Until then the post is scheduled. */
   liveAt: string;
   updated: string;
+  /** The authors' names, joined with commas: for feeds and plain text. */
   author: string;
+  /** Each author, with a link: a full address, a page on this site, or "" for none. See `author:` in content/blog/README.md. */
+  authors: { name: string; url: string }[];
   tags: string[];
   draft: boolean;
   cover: (BlogImage & { alt: string }) | null;

@@ -47,7 +47,7 @@ More text. **Bold**, *italic* and [links](/find) all work.
 | `coverArt` | No | A square picture in the post's folder: the cover's picture without its words. Notifications show it small, beside the text. Without it they show the site's icon. |
 | `pushTitle` | No | The notification's first line, in double quotes: a short hook of about 40 characters. Defaults to the title. |
 | `pushBody` | No | The notification's second line, in double quotes: what's inside, in about 100 characters. Defaults to the description. |
-| `author` | No | Defaults to Vishwajeet Sharma. |
+| `author` | No | Defaults to Vishwajeet Sharma, linked to the About page. For other or several authors, give each name with an optional link in brackets, separated by commas, in double quotes: `author: "Aman Gupta (https://instagram.com/aman), Virat Kohli (https://viratkohli.example)"`. A link must start with `https://` or be a page on this site, like `/about`. A name without a link shows as plain text. |
 | `draft` | No | `draft: true` hides the post on the live site, but still shows it when running the site on your computer. |
 
 ## Scheduling a post
