@@ -4,7 +4,7 @@ description: "Utpanna Ekadashi 2026: tithi times, the parana window for 12 citie
 date: 2026-11-17
 tags: [festivals, ekadashi, vrat, hindu calendar]
 cover: cover.jpg
-coverAlt: "A brass puja plate with a diya and tulsi leaves at dawn, a calendar page for 4 December, and the words Utpanna Ekadashi 2026"
+coverAlt: "Utpanna Ekadashi 2026 on 4 December: a brass puja plate with a diya and tulsi leaves at dawn, beside the calendar page"
 coverArt: cover-art.jpg
 pushTitle: "Utpanna Ekadashi: Friday, 4 December"
 pushBody: "New to Ekadashi fasts? This is the one to start with. Parana times for 12 cities inside."
@@ -58,7 +58,7 @@ When Vishnu woke, he named her Ekadashi, after the 11th day on which she appeare
 
 Since every Ekadashi fast traces back to this day, many families start the habit here. Then they keep it on both Ekadashis of every month, the 11th day of the waxing moon and the 11th day of the waning moon. (New to tithis? [Here's how they work](/blog/what-is-tithi).)
 
-![Tithi wheel: the moon at Krishna Ekadashi, tithi 26, with Shukla Ekadashi, tithi 11, also marked](utpanna-ekadashi-tithi-wheel.png "Ekadashi comes twice a month, once in each half of the moon's cycle.")
+![Utpanna Ekadashi on the tithi wheel: the moon at Krishna Ekadashi, tithi 26, with Shukla Ekadashi, tithi 11, also marked](utpanna-ekadashi-tithi-wheel.png "Ekadashi comes twice a month, once in each half of the moon's cycle.")
 
 If you're starting, these steps keep it simple:
 

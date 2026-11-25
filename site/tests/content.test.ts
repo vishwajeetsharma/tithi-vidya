@@ -70,6 +70,13 @@ describe("the blog build", () => {
     expect(built.toc.map((h) => h.id)).toEqual(["big-heading", "one", "two"]);
   });
 
+  it("lists the pictures in the text, largest size first in order, for the sitemap", () => {
+    const index = JSON.parse(readFileSync(join(root, ".content/blog.json"), "utf8"));
+    const listed = index.posts.find((p: Built) => p.slug === "with-image").images;
+    expect(listed).toEqual([{ src: expect.stringMatching(/^\/blog-media\/with-image-photo-[0-9a-f]+-1600\.webp$/), alt: "A photo" }]);
+    expect(index.posts.find((p: Built) => p.slug === "plain-file").images).toEqual([]);
+  });
+
   it("writes a Markdown copy that points at the published images", () => {
     const copy = readFileSync(join(root, "public/blog/with-image.md"), "utf8");
     expect(copy).toMatch(/^# A post/);

@@ -4,7 +4,7 @@ description: "Amavasya 2027 list with the date and time of all 13 new moons for 
 date: 2026-11-24
 tags: [amavasya, moon, hindu calendar]
 cover: cover.jpg
-coverAlt: "A dark moon shown as a faint ring among stars above a row of lit diyas, beside the words Amavasya 2027"
+coverAlt: "Amavasya 2027: a dark new moon shown as a faint ring among stars, above a row of lit diyas"
 coverArt: cover-art.jpg
 pushTitle: "Amavasya 2027: 13 dates, 3 on a Monday"
 pushBody: "Every new moon of 2027 with exact times, the Somvati and Shani dates, and which day is for shraddha."
@@ -36,7 +36,7 @@ Each date is the day that has Amavasya at sunrise, which is what most calendars 
 
 Amavasya is the 30th and last [tithi, or lunar day](/blog/what-is-tithi), of the moon's cycle, when the moon sits between us and the sun and can't be seen.
 
-![Amavasya 2027 at a glance: the 13 new moon days from January to December with the name each is known by](amavasya-2027-list-at-a-glance.png "Save it or share it: every Amavasya of 2027 on one page. Dates for New Delhi.")
+![Amavasya 2027 list at a glance: all 13 new moon dates from January to December, with the name each is known by](amavasya-2027-list-at-a-glance.png "Save it or share it: every Amavasya of 2027 on one page. Dates for New Delhi.")
 
 Why 13? Twelve moon cycles take only about 354 days. The first Amavasya of 2027 comes early, on 7 January, so a thirteenth fits in before the year is out. August gets two: the 2nd and the 31st.
 
@@ -97,7 +97,7 @@ On nine of the 13 Amavasyas, both land on the same date. These four are differen
 | Ashvina (Sarva Pitru) | Thu, 30 Sep | Wed, 29 Sep |
 | Margashirsha | Sun, 28 Nov | Sat, 27 Nov |
 
-![Timelines of Sarva Pitru Amavasya on 29 to 30 September and Phalguna Amavasya on 7 to 8 March 2027, with afternoons marked](amavasya-2027-shraddha-day-and-sunrise-day.png "The afternoon is the fourth fifth of the daylight hours: about 1:23 pm to 3:47 pm in late September.")
+![Amavasya 2027 shraddha day: timelines of Sarva Pitru Amavasya, 29 to 30 September, and Phalguna Amavasya, 7 to 8 March](amavasya-2027-shraddha-day-and-sunrise-day.png "The afternoon is the fourth fifth of the daylight hours: about 1:23 pm to 3:47 pm in late September.")
 
 Take **Sarva Pitru Amavasya**, the most important shraddha day of the year. The tithi begins at 10:56 am on Wednesday, 29 September, and ends at 8:06 am on Thursday. Wednesday's afternoon lies inside it. Thursday's doesn't. So the shraddha is on Wednesday, even though many calendars print Thursday as the Amavasya.
 

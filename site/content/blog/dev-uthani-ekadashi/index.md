@@ -4,7 +4,7 @@ description: "Dev Uthani Ekadashi 2026 is on Friday, 20 November, and on Saturda
 date: 2026-11-11
 tags: [festivals, ekadashi, vrat, hindu calendar]
 cover: cover.jpg
-coverAlt: "Calendar pages for 20 and 21 November and a white conch sounding toward the moon, with the words Dev Uthani 2026"
+coverAlt: "Dev Uthani Ekadashi 2026: calendar pages for 20 and 21 November and a white conch sounding toward the moon"
 ---
 
 **Dev Uthani Ekadashi 2026 is on Friday, 20 November.** That's the day most families fast. Vaishnava families, including ISKCON, keep it a day later, on Saturday, 21 November. If you fast on Friday, break it on Saturday between 1:11 pm and 3:18 pm (New Delhi time).
@@ -33,7 +33,7 @@ A Hindu calendar names each day after the tithi that's running at sunrise. This 
 
 But tithis don't line up neatly with days. Each one lasts somewhere between about 20 and 27 hours, depending on how fast the moon is moving. This Ekadashi lasts 23 hours and 16 minutes, so it fits between two sunrises without touching either. A tithi like that is called kshaya, a skipped tithi, and [I've explained how skipped tithis work](/blog/tithi-birthday#skipped-and-doubled-tithis) with another real example.
 
-![Ekadashi starts after Friday's sunrise and ends at 6:32 am Saturday, before Delhi's sunrise but after Kolkata's](dev-uthani-ekadashi-2026-sunrise.png "Tithi times are the same across India. Sunrise isn't.")
+![Dev Uthani Ekadashi 2026 timing: the tithi ends at 6:32 am on Saturday, before sunrise in Delhi but after sunrise in Kolkata](dev-uthani-ekadashi-2026-sunrise.png "Tithi times are the same across India. Sunrise isn't.")
 
 Look at Saturday morning in the picture. In New Delhi the sun comes up at 6:48 am, 16 minutes after Ekadashi has ended. In Kolkata it comes up at 5:53 am, with 39 minutes of Ekadashi still to run.
 

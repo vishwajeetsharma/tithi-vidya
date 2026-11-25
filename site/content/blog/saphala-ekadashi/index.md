@@ -4,7 +4,7 @@ description: "Saphala Ekadashi 2027: tithi times, parana for 12 cities, why the 
 date: 2026-12-01
 tags: [ekadashi, festivals, hindu calendar]
 cover: cover.jpg
-coverAlt: "A white conch under a waning moon, a calendar page for Sunday 3 January, and the words Saphala Ekadashi 2027, First of 2027"
+coverAlt: "Saphala Ekadashi 2027 on Sunday, 3 January, the first Ekadashi of 2027: a white conch under a waning moon"
 coverArt: cover-art.jpg
 pushTitle: "Saphala Ekadashi: Sunday, 3 January"
 pushBody: "The first Ekadashi of 2027. When to break the fast in 12 cities, and why the US keeps it a day earlier."

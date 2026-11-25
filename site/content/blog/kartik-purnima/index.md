@@ -4,7 +4,7 @@ description: "Kartik Purnima 2026: tithi times, sunrise for the holy dip in 6 ci
 date: 2026-11-13
 tags: [festivals, purnima, hindu calendar]
 cover: cover.jpg
-coverAlt: "A full moon over ghat steps lined with lamps, a calendar page for 24 November, and the words Kartik Purnima 2026"
+coverAlt: "Kartik Purnima 2026 on 24 November: a full moon over ghat steps lined with lamps, beside the calendar page"
 coverArt: cover-art.jpg
 pushTitle: "🌕 Kartik Purnima 2026: 3 festivals, 1 day"
 pushBody: "It's Tuesday, 24 November. A holy dip at dawn, Gurpurab all day, Dev Deepawali at dusk. See the timings."
@@ -26,7 +26,7 @@ That isn't a given. Next year, the same full moon splits these celebrations acro
 
 Kartik Purnima is the full moon of the month of Kartika, the holiest month of the year for many Hindus. It's also called Tripuri Purnima, and in Bengal, Rash Purnima.
 
-![Timeline of Kartik Purnima 2026: Purnima begins at 11:42 pm on 23 November and ends at 8:23 pm on 24 November](kartik-purnima-2026-timeline.png "Sunrise and sunset times are for Varanasi.")
+![Kartik Purnima 2026 time: Purnima begins at 11:42 pm on 23 November and ends at 8:23 pm on 24 November](kartik-purnima-2026-timeline.png "Sunrise and sunset times are for Varanasi.")
 
 ## Why the evening of 24 November counts
 

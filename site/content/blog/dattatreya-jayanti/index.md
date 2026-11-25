@@ -4,7 +4,7 @@ description: "Dattatreya Jayanti 2026: why calendars disagree on the day, the ex
 date: 2026-11-30
 tags: [festivals, purnima, hindu calendar]
 cover: cover.jpg
-coverAlt: "A full moon over a lake, calendar pages for 23 and 24 December, and the words Datta Jayanti 2026 and Closest full moon"
+coverAlt: "Dattatreya Jayanti 2026: a full moon over a lake, calendar pages for 23 and 24 December, and the words Closest full moon"
 coverArt: cover-art.jpg
 pushTitle: "Datta Jayanti 2026: 23 or 24 December?"
 pushBody: "Most calendars say Wednesday, some Thursday. The Purnima times, why, and the closest full moon of the year."

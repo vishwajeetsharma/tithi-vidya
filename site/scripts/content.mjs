@@ -231,7 +231,7 @@ const SIZES = "(min-width: 2400px) 860px, (min-width: 2100px) 800px, (min-width:
  * with fixed sizes so nothing jumps, captions from image titles, and tables
  * that scroll on phones. Also collects the headings for "On this page".
  */
-function rehypeArticle({ file, slug, processImage, images, toc, problems }) {
+function rehypeArticle({ file, slug, processImage, images, pictures, toc, problems }) {
   return () => async (tree) => {
     const jobs = [];
     visit(tree, "element", (node, index, parent) => {
@@ -248,9 +248,13 @@ function rehypeArticle({ file, slug, processImage, images, toc, problems }) {
           problems.push(`${slug}: image "${raw}" was not found next to the post`);
           return;
         }
+        // In the order they appear, for the sitemap's image entries.
+        const at = pictures.push(null) - 1;
+        const alt = String(node.properties.alt ?? "");
         jobs.push(
           processImage(path, slug).then((image) => {
             images.set(raw, image);
+            pictures[at] = { src: image.largest, alt };
             Object.assign(node.properties, { src: image.src, width: image.width, height: image.height });
             if (image.srcset) Object.assign(node.properties, { srcSet: image.srcset, sizes: SIZES });
           }),
@@ -299,6 +303,7 @@ async function renderPost({ slug, file, source, base }, processImage, problems) 
   checkFrontMatter(slug, data, problems);
 
   const images = new Map();
+  const pictures = [];
   const toc = [];
   const html = String(
     await unified()
@@ -306,7 +311,7 @@ async function renderPost({ slug, file, source, base }, processImage, problems) 
       .use(remarkGfm)
       .use(remarkRehype)
       .use(rehypeSlug)
-      .use(rehypeArticle({ file, slug, processImage, images, toc, problems }))
+      .use(rehypeArticle({ file, slug, processImage, images, pictures, toc, problems }))
       .use(rehypeShiki, SHIKI)
       .use(rehypeStringify)
       .process(content),
@@ -349,6 +354,8 @@ async function renderPost({ slug, file, source, base }, processImage, problems) 
     date,
     liveAt: liveAt(date),
     updated: data.updated ? asDate(data.updated) : date,
+    // The pictures in the text, largest size, for the sitemap.
+    images: pictures.filter(Boolean),
     // `authors` has each name and link; `author` is the names alone, for feeds and plain text.
     authors: parseAuthors(data.author),
     author: parseAuthors(data.author)

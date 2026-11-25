@@ -4,7 +4,7 @@ description: "Tulsi Vivah 2026 is on Saturday, 21 November, the day after Dev Ut
 date: 2026-11-12
 tags: [festivals, traditions, hindu calendar]
 cover: cover.jpg
-coverAlt: "A tulsi plant in a red veil under a sugarcane mandap, a calendar page for 21 November, and the words Tulsi Vivah 2026"
+coverAlt: "Tulsi Vivah 2026 on 21 November: a tulsi plant in a red veil under a sugarcane mandap, beside the calendar page"
 coverArt: cover-art.jpg
 pushTitle: "Tulsi Vivah 2026 is on 21 November"
 pushBody: "The wedding that opens shaadi season. The story, the timings and a simple 7-step puja at home."

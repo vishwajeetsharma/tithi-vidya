@@ -4,7 +4,7 @@ description: "Tithi calculator by date of death: find the tithi from the date, t
 date: 2026-11-26
 tags: [shraddha, tithi]
 cover: cover.jpg
-coverAlt: "A garlanded photo frame with a diya and incense under the moon, with the words Shraddha tithi, from the date of passing"
+coverAlt: "Shraddha tithi from the date of death: a garlanded photo frame with a diya and incense under the moon"
 coverArt: cover-art.jpg
 pushTitle: "Find the tithi of a death anniversary"
 pushBody: "All you need is the date, time and place of passing. And why the shraddha can fall a day before the date shown."
@@ -49,7 +49,7 @@ Your details stay on your device. Tithi Vidya runs the calculation inside your b
 5. **Under "Show me", keep "My moon birthday".** That gives one date a year, in the right Hindu month.
 6. **Press "Find my dates".**
 
-![Tithi Vidya form filled in with 14 March 2019, 9:40 pm and Pune, ready to find the tithi](tithi-vidya-form-for-date-of-death.png "The boxes say birth, but any date and time works.")
+![Tithi calculator by date of death: the Tithi Vidya form filled in with 14 March 2019, 9:40 pm and Pune](tithi-vidya-form-for-date-of-death.png "The boxes say birth, but any date and time works.")
 
 ## A worked example, from start to finish
 
@@ -61,7 +61,7 @@ Say someone passed away in Pune at 9:40 pm on Thursday, 14 March 2019. Here's wh
 
 So the yearly shraddha falls on Phalguna Shukla Ashtami. The result card shows it, with the next dates under it.
 
-![Tithi Vidya result: Shukla Ashtami in Phalguna for a 9:40 pm passing in Pune, with 16 March 2027 marked as the next date](tithi-vidya-shraddha-tithi-result.png "The result card, then the next dates. Each date shows when the tithi starts and ends.")
+![Shraddha tithi result: Shukla Ashtami in Phalguna for a 9:40 pm passing in Pune, with 16 March 2027 as the next date](tithi-vidya-shraddha-tithi-result.png "The result card, then the next dates. Each date shows when the tithi starts and ends.")
 
 Here are the next four years, with the times the tithi runs. The times are the same anywhere in India, because a tithi starts and ends at one moment for everyone.
 

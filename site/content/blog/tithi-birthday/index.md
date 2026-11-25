@@ -4,7 +4,7 @@ description: "Your tithi birthday is your birthday by the moon. Here's what it m
 date: 2026-11-07
 tags: [tithi, birthday]
 cover: cover.jpg
-coverAlt: "A half-lit moon next to the words Your 2nd birthday, with a yellow sticker that says Set by the moon"
+coverAlt: "Tithi birthday explained: a half-lit moon beside the words Your 2nd birthday, with a sticker saying Set by the moon"
 ---
 
 **Your tithi birthday is your birthday by the moon.** It's the day each year when the moon comes back to the same tithi, in the same Hindu month, as when you were born. It almost never lands on the same calendar date twice. You can find yours on [Find my tithi](/find) in about a minute.
@@ -19,7 +19,7 @@ Picture the sun, the Earth and the moon. As the moon goes around us, the angle b
 
 Every 12° of that angle is one **tithi**. And 360 divided by 12 gives 30 tithis in a lunar month. (There's [a fuller guide to tithis, with all 30 names](/blog/what-is-tithi), if you want more.)
 
-![Tithi wheel: the moon is 274° from the sun, which is tithi 23 of 30, Krishna Ashtami](tithi-wheel-krishna-ashtami.png "The moment of our example's birth: 274° from the sun")
+![Tithi birthday on the tithi wheel: the moon is 274° from the sun at birth, which is tithi 23 of 30, Krishna Ashtami](tithi-wheel-krishna-ashtami.png "The moment of our example's birth: 274° from the sun")
 
 In the wheel, the moon is 274° from the sun. That's the 23rd step, Krishna Ashtami, the moment our example was born.
 
@@ -56,7 +56,7 @@ That can't go on forever, or festivals would slowly drift through the seasons. S
 
 Here's our example's tithi birthday from 2026 to 2037:
 
-![Line chart: the tithi birthday falls about 11 days earlier each year, then jumps about 19 days later after an extra month](tithi-birthday-dates-2026-2037.png "Krishna Ashtami of Shravana, at New Delhi, from 2026 to 2037")
+![Tithi birthday dates, 2026 to 2037: about 11 days earlier each year, then about 19 days later after an extra month](tithi-birthday-dates-2026-2037.png "Krishna Ashtami of Shravana, at New Delhi, from 2026 to 2037")
 
 See how it never leaves a window of about four weeks, from 10 August to 5 September? The extra months keep it in its season. Here are the same dates in a table:
 

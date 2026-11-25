@@ -4,7 +4,7 @@ description: "What is a tithi? It's a lunar day: the time the moon takes to gain
 date: 2026-11-20
 tags: [tithi, hindu calendar, panchang]
 cover: cover.jpg
-coverAlt: "A ring of 30 slices around the Earth, the sun on top and one slice lit beside the moon, with the words What is a tithi?"
+coverAlt: "What is a tithi: a ring of 30 slices around the Earth, with the sun on top and one slice lit beside the moon"
 coverArt: cover-art.jpg
 pushTitle: "What is a tithi? 12°, 30 steps, 1 moon"
 pushBody: "Why a Hindu day can start at 7:16 am, and why some days get skipped. One picture explains it."
@@ -24,7 +24,7 @@ Now cut that lap into 30 equal slices of 12°. Each slice is one tithi.
 - **Gap of 180°:** the moon is opposite the sun and fully lit. That's Purnima, the full moon.
 - **Gap of 360°:** it's level with the sun again, and the next month begins.
 
-![Tithi wheel for 6:00 am on 20 November 2026: the moon is 119.4° ahead of the sun, at the end of Shukla Dashami, tithi 10](what-is-tithi-wheel.png "A real moment: 6:00 am on 20 November 2026, New Delhi time.")
+![Tithi wheel for 20 November 2026, 6:00 am: the moon is 119.4° ahead of the sun, at the end of Shukla Dashami, tithi 10](what-is-tithi-wheel.png "A real moment: 6:00 am on 20 November 2026, New Delhi time.")
 
 The picture shows a real moment: 6:00 am on 20 November 2026, the day this post went out. The moon was 119.4° ahead of the sun. That falls in slice number 10, which runs from 108° to 120°, so the tithi was Dashami, the tenth.
 
@@ -79,7 +79,7 @@ Festivals are pinned to these names. [All 25 Ekadashi fasts of 2027](/blog/ekada
 
 Here are three real days in November 2026, counted both ways.
 
-![Three calendar dates, 19 to 21 November 2026, above the four tithis that ran across them, with start times and sunrises](tithi-vs-date-november-2026.png "The tithis start at 7:07 am, 7:16 am and 6:32 am, never at midnight.")
+![Tithi vs date: three calendar dates, 19 to 21 November 2026, above the four tithis that ran across them, with sunrises](tithi-vs-date-november-2026.png "The tithis start at 7:07 am, 7:16 am and 6:32 am, never at midnight.")
 
 Look at Ekadashi. It began at 7:16 am on Friday and ended at 6:32 am on Saturday. It lasted 23 hours 16 minutes, and it never lined up with a calendar date.
 

@@ -4,7 +4,7 @@ description: "Hindu calendar 2027: all 51 festivals month by month with date, da
 date: 2026-11-18
 tags: [festivals, hindu calendar, panchang]
 cover: cover.jpg
-coverAlt: "A wall of twelve small month calendars with festival dates circled, beside the words Every festival of 2027"
+coverAlt: "Hindu calendar 2027: a wall of twelve small month calendars with the festival dates circled"
 coverArt: cover-art.jpg
 pushTitle: "🗓️ Every Hindu festival of 2027, on one page"
 pushBody: "Holi 22 March, Diwali 29 October, and 49 more dates with tithi. Save the one-page calendar."
@@ -29,7 +29,7 @@ When a festival goes by another time of day, the tithi column says so:
 
 Two more things. Month names are the North Indian (purnimanta) ones. In the amanta calendar of the south and west, festivals in the dark half of the month fall in the month before. And 2027 has no adhik maas, the extra month that some years get, so every festival stays close to where it was in 2026. For the monthly fast days on their own, the [Purnima](/blog/purnima-list) and [Amavasya](/blog/amavasya-list) lists have every full and new moon of 2027, with exact times.
 
-![Hindu festivals 2027 at a glance: the main festivals of each month, January to December, with their dates](hindu-festivals-2027-at-a-glance.png "Save it or share it: the whole year on one page. Dates for New Delhi.")
+![Hindu calendar 2027 at a glance: the main festivals of each month, January to December, with their dates](hindu-festivals-2027-at-a-glance.png "Save it or share it: the whole year on one page. Dates for New Delhi.")
 
 ## January 2027 festivals
 

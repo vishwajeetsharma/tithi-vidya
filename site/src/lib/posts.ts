@@ -21,6 +21,8 @@ export type Post = {
   tags: string[];
   draft: boolean;
   cover: (BlogImage & { alt: string }) | null;
+  /** The pictures in the article's text, in order: each one's largest size and its alt text. For the sitemap. */
+  images: { src: string; alt: string }[];
   /**
    * What a notification for the post shows: `pushTitle` and `pushBody` from the
    * post (empty means its title and description), a wide picture cut from the

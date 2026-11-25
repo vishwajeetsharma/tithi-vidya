@@ -4,7 +4,7 @@ description: "Ekadashi 2027 list: all 25 fast dates with tithi and parana times 
 date: 2026-11-19
 tags: [ekadashi, vrat, hindu calendar]
 cover: cover.jpg
-coverAlt: "Twenty-five small moons in a grid, crescents and nearly full moons in turn, beside the words 25 Ekadashis 2027"
+coverAlt: "Ekadashi 2027 list: 25 small moons in a grid, one for each Ekadashi, crescents and nearly full moons in turn"
 coverArt: cover-art.jpg
 pushTitle: "🗓️ 2027 has 25 Ekadashis, not 24"
 pushBody: "Every fast day of 2027 with parana times, and the 3 Ekadashis where two dates are both right."
@@ -48,7 +48,7 @@ Three of the 25 come with two dates: one for most families, and one a day later 
 
 Ekadashi (Gyaras in everyday Hindi) is the 11th tithi, or lunar day. It comes twice in every moon cycle: once while the moon grows, and once while it shrinks. If the word tithi is new to you, [this short explainer with a picture](/blog/what-is-tithi) covers it.
 
-![Ekadashi 2027 at a glance: the 25 fast days from January to December, month by month](ekadashi-2027-list-at-a-glance.png "Save it or share it: every Ekadashi of 2027 on one page. Dates for New Delhi.")
+![Ekadashi 2027 list at a glance: all 25 Ekadashi fast dates from January to December, month by month](ekadashi-2027-list-at-a-glance.png "Save it or share it: every Ekadashi of 2027 on one page. Dates for New Delhi.")
 
 ## How to read this list
 
@@ -184,7 +184,7 @@ Mokshada Ekadashi is also Gita Jayanti, the day Krishna is said to have spoken t
 
 Most days in the Hindu calendar are named after the tithi running at sunrise. Ekadashi fasts add two more conditions, and that's where the second date comes from. Here are the three splits of 2027, with what the clock shows.
 
-![Timelines of the Ekadashi tithi against sunrise on 18 to 19 January, 29 to 30 July and 25 to 26 October 2027](ekadashi-2027-two-dates-explained.png "Sunrise times are for New Delhi. The purple bar is the Ekadashi tithi.")
+![Three Ekadashis of 2027 with two dates: Pausha Putrada on 18 or 19 January, Kamika on 29 or 30 July and Rama on 25 or 26 October](ekadashi-2027-two-dates-explained.png "Sunrise times are for New Delhi. The purple bar is the Ekadashi tithi.")
 
 ### Pausha Putrada Ekadashi: 18 or 19 January
 

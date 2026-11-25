@@ -4,7 +4,7 @@ description: "Purnima 2027 list with the date and time of all 12 full moons for 
 date: 2026-11-23
 tags: [purnima, moon, hindu calendar]
 cover: cover.jpg
-coverAlt: "A big full moon over a lake with its light on the water, a boat and lotuses, beside the words Purnima 2027"
+coverAlt: "Purnima 2027: a big full moon over a lake, with its light on the water, a boat and lotuses"
 coverArt: cover-art.jpg
 pushTitle: "🌕 Purnima 2027: all 12 full moons"
 pushBody: "Dates, exact full-moon times and moonrise. Plus the 2 Purnimas where the fast falls a day early."
@@ -35,7 +35,7 @@ Each date is the day that has Purnima at sunrise, the rule most calendars print.
 
 See how the date slides, from the 22nd in January to the 13th in December? One full moon follows the last after about 29.5 days, and most calendar months are longer than that. So Purnima comes about a day earlier each month.
 
-![Purnima 2027 at a glance: the 12 full moon days from January to December with the festival on each](purnima-2027-list-at-a-glance.png "Save it or share it: every Purnima of 2027 on one page. Dates for New Delhi.")
+![Purnima 2027 list at a glance: all 12 full moon dates from January to December, with the festival on each](purnima-2027-list-at-a-glance.png "Save it or share it: every Purnima of 2027 on one page. Dates for New Delhi.")
 
 ## Purnima 2027 date and time
 
@@ -83,7 +83,7 @@ Many families keep a fast on Purnima, hold a Satyanarayan Puja in the evening, a
 
 The rule most panchangs follow goes like this. The fast is kept on the day with Purnima at sunrise. But if Purnima has already begun by early afternoon of the day before, the fast moves to that earlier day, so the evening puja falls inside the tithi. In 2027 that happens twice.
 
-![Timelines of Shravana Purnima on 16 to 17 August and Kartika Purnima on 13 to 14 November 2027, with moonrise and sunrise](purnima-2027-fast-day-and-bath-day.png "On both, the first evening's moonrise is inside Purnima and the second isn't.")
+![Purnima 2027 fast day and bath day: Shravana Purnima on 16 to 17 August and Kartika Purnima on 13 to 14 November, with moonrise](purnima-2027-fast-day-and-bath-day.png "On both, the first evening's moonrise is inside Purnima and the second isn't.")
 
 Look at Shravana Purnima. The tithi begins at 10:29 am on Monday, 16 August. Monday's moon rises at 6:29 pm, inside Purnima. By Tuesday's moonrise the tithi is over. So the fast and the evening puja are on Monday, and Raksha Bandhan, which goes by the sunrise date, is on Tuesday.
 

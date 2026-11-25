@@ -4,7 +4,7 @@ description: "How a tithi birthday calculator works, the 5 things that can make 
 date: 2026-11-08
 tags: [tithi, birthday]
 cover: cover.jpg
-coverAlt: "A phone showing 7 Sep ticked and 8 Aug crossed out, beside the words Wrong by a month and a sticker saying 5 checks"
+coverAlt: "Tithi birthday calculator check: a phone showing 7 Sep ticked and 8 Aug crossed out, with the words Wrong by a month"
 ---
 
 **A tithi birthday calculator takes your birth date, time and place, finds the tithi you were born on, and then finds the day it comes back each year.** That sounds simple. But five small choices inside it decide whether your date is right, a day off, or a whole month off.
@@ -39,7 +39,7 @@ The moon doesn't move at a steady speed. It speeds up and slows down along its p
 
 When I built Tithi Vidya, I tried the shortcuts first. Here's how many days each one got wrong, out of 73,049 days from 1900 to 2100, compared with exact NASA data:
 
-![Bar chart of wrong days in 200 years: a 6-term moon formula 429, sunrise at the sun's centre 222, astronomy-engine 20](wrong-days-by-method.png "Days that get a different tithi at sunrise in New Delhi, 1900 to 2100, compared with NASA JPL's DE440 data")
+![Tithi calculator accuracy over 200 years, as wrong days: a 6-term moon formula 429, sunrise at the sun's centre 222, astronomy-engine 20](tithi-calculator-accuracy-wrong-days-by-method.png "Days that get a different tithi at sunrise in New Delhi, 1900 to 2100, compared with NASA JPL's DE440 data")
 
 A short moon formula gets about 2 days a year wrong. Even a good free library slips about once a decade. So Tithi Vidya reads NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html) directly. It's the same kind of data used to fly spacecraft.
 

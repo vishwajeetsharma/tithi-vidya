@@ -4,7 +4,7 @@ description: "Kharmas 2026: the exact start and end times, why its dates hardly 
 date: 2026-11-25
 tags: [festivals, hindu calendar, traditions]
 cover: cover.jpg
-coverAlt: "Calendar pages for 16 December and 14 January beside an empty wedding mandap with a pause sign, and the words Kharmas 2026"
+coverAlt: "Kharmas 2026 dates: calendar pages for 16 December and 14 January beside an empty wedding mandap with a pause sign"
 coverArt: cover-art.jpg
 pushTitle: "Kharmas starts 16 Dec: weddings pause"
 pushBody: "It ends on 14 January at 9:10 pm. What families avoid, what carries on, and why the date barely moves."
@@ -26,7 +26,7 @@ Kharmas comes twice a year. These are the next three:
 
 The times are in IST, and they're the same across India. Kharmas lands in the middle of the wedding season, which [opened on Dev Uthani Ekadashi](/blog/dev-uthani-ekadashi), 20 November.
 
-![Timeline: the wedding season opens on 20 November, Kharmas runs from 16 December to 14 January and returns on 15 March](kharmas-2026-27-timeline.png "The sun decides every date here except the first, which follows the moon.")
+![Kharmas 2026-27 timeline: weddings open on 20 November, Kharmas runs from 16 December to 14 January and returns on 15 March](kharmas-2026-27-timeline.png "The sun decides every date here except the first, which follows the moon.")
 
 ## What is Kharmas?
 

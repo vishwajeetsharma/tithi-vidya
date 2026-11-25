@@ -4,7 +4,7 @@ description: "Kaal Bhairav Jayanti 2026: the Ashtami tithi times, why Bhairav's 
 date: 2026-11-16
 tags: [festivals, vrat, hindu calendar]
 cover: cover.jpg
-coverAlt: "A trident with a damru, a black dog and an oil lamp at night, a calendar page for 1 December, and the words Kaal Bhairav 2026"
+coverAlt: "Kaal Bhairav Jayanti 2026 on 1 December: a trident with a damru, a black dog and an oil lamp at night"
 coverArt: cover-art.jpg
 pushTitle: "Kaal Bhairav Jayanti is on 1 December"
 pushBody: "Why is his puja kept at night? The Ashtami timings, the story, and the next 4 Kalashtami dates."

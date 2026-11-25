@@ -48,7 +48,10 @@ function entries(origin: string): Entry[] {
         lastModified: day(post.updated),
         changeFrequency: "monthly",
         priority: 0.7,
-        ...(post.cover ? { images: [`${origin}${post.cover.largest}`] } : {}),
+        // The cover and every picture in the text, so Google Images can find them all.
+        images: [...new Set([post.cover?.largest, ...(post.images ?? []).map((image) => image.src)].filter((src): src is string => Boolean(src)))].map(
+          (src) => (src.startsWith("http") ? src : `${origin}${src}`),
+        ),
         ...(versions.length ? { languages } : {}),
       }));
     }),

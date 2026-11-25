@@ -4,7 +4,7 @@ description: Your tithi birthday falls on a different date each year. Here is th
 date: 2026-11-03
 tags: [tithi, birthday, hindu calendar]
 cover: cover.jpg
-coverAlt: The moon inside a ring of 30 tithis, almost full
+coverAlt: "Why your Hindu birthday moves: the moon inside a ring of 30 tithis, almost full"
 ---
 
 Ask an elder in your family about your birthday, and they may not give you a date. They may give you a **tithi**, like "Shukla Dashami in Jyeshtha". That is your birthday by the moon. It comes back every year, but almost never on the same calendar date.
@@ -35,7 +35,7 @@ When an extra month comes, your tithi birthday jumps back by about 19 days. Then
 
 Here is one tithi, Shukla Dashami in the month of Jyeshtha, at New Delhi. These dates come straight from Tithi Vidya, which reads the sun's and moon's positions from NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html).
 
-![The date of one tithi from 2026 to 2037. It falls about 11 days each year, then jumps back after each extra month](drift-chart.jpg "One tithi, year by year, at New Delhi")
+![Why your Hindu birthday moves: one tithi's date from 2026 to 2037, about 11 days earlier each year, then back after each extra month](hindu-birthday-date-drift-2026-2037.jpg "One tithi, year by year, at New Delhi")
 
 | Year | Date | What happened |
 | --- | --- | --- |

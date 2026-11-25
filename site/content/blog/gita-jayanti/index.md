@@ -4,7 +4,7 @@ description: "Gita Jayanti 2026: the Ekadashi tithi times, when to break the Mok
 date: 2026-11-27
 tags: [festivals, ekadashi, hindu calendar]
 cover: cover.jpg
-coverAlt: "An open book on a rehal with a peacock feather, a calendar page for Sunday 20 December, and the words Gita Jayanti 2026"
+coverAlt: "Gita Jayanti 2026 on Sunday, 20 December: an open book on a rehal with a peacock feather, beside the calendar page"
 coverArt: cover-art.jpg
 pushTitle: "Gita Jayanti 2026: Sunday, 20 December"
 pushBody: "It's Mokshada Ekadashi too. The tithi times, when to break the fast in 12 cities, and Kurukshetra's festival dates."

@@ -4,7 +4,7 @@ description: "Chhath Puja 2026 runs from 13 to 16 November, with the evening arg
 date: 2026-11-10
 tags: [festivals, hindu calendar]
 cover: cover.jpg
-coverAlt: "Calendar pages for 15 and 16 November, the sun setting on a river and a soop of offerings, with the words Chhath 2026"
+coverAlt: "Chhath Puja 2026 dates: calendar pages for 15 and 16 November, the sun setting on a river and a soop of offerings"
 ---
 
 **Chhath Puja 2026 is from Friday, 13 November, to Monday, 16 November.** The main evening arghya is at sunset on Sunday, 15 November: 5:00 pm in Patna. The fast ends with the morning arghya at sunrise on Monday, 16 November, at 6:07 am in Patna.
@@ -43,7 +43,7 @@ A real river bank isn't flat, though. Behind trees or buildings, the sun drops o
 
 ## What happens on each day of Chhath
 
-![Timeline of Chhath Puja 2026: Nahay Khay on 13 November, Kharna on 14, evening arghya on 15, morning arghya on 16](chhath-puja-2026-four-days.png "The dates are the same across India and Nepal. The times are for Patna.")
+![Chhath Puja 2026 dates, all four days: Nahay Khay on 13 November, Kharna on 14, evening arghya on 15, morning arghya on 16](chhath-puja-2026-four-days.png "The dates are the same across India and Nepal. The times are for Patna.")
 
 1. **Nahay Khay, 13 November.** The person keeping the fast, called the parvaitin, takes a holy bath, often in a river, and the whole house is cleaned. Then comes one simple, pure meal, usually lauki bhaat: bottle gourd, chana dal and rice, cooked without onion or garlic.
 2. **Kharna, 14 November.** A fast through the day, without even water. After sunset, the parvaitin eats kheer made with jaggery, with roti. This meal starts the hardest part: about 36 hours with no food or water.

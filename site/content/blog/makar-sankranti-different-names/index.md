@@ -4,7 +4,7 @@ description: "Makar Sankranti's different names in every state, from Pongal to B
 date: 2026-12-02
 tags: [traditions, festivals, hindu calendar]
 cover: cover.jpg
-coverAlt: "Three kites flying in front of a big low sun, with the words Makar Sankranti, One sun, 12 names, and Pongal to Bihu"
+coverAlt: "Makar Sankranti names, from Pongal to Bihu: three kites flying in front of a big low sun, with the words One sun, 12 names"
 coverArt: cover-art.jpg
 pushTitle: "One festival, 12 names: Makar Sankranti"
 pushBody: "Pongal, Lohri, Bihu, Uttarayan, Khichdi and more, state by state. And why 2027 is split between 14 and 15 January."
