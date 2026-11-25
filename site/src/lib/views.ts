@@ -97,5 +97,28 @@ export function trendingViews(now = Date.now()): Promise<[string, number][]> {
   return kept.trending;
 }
 
+let keptAll: { at: number; views: Promise<Map<string, number>> } | undefined;
+
+/**
+ * Every post's views since counting began, for "Most viewed" on the blog page.
+ * Empty when there's no database or it doesn't answer. Kept for a minute.
+ */
+export function allViews(now = Date.now()): Promise<Map<string, number>> {
+  if (!keptAll || Math.abs(now - keptAll.at) > 60_000) {
+    keptAll = {
+      at: now,
+      views: hasDatabase()
+        ? redis(["ZRANGE", ALL_VIEWS, 0, -1, "WITHSCORES"], { prebuilt: true, timeout: 3000 })
+            .then(scores)
+            .catch((error) => {
+              console.error("views: couldn't read view counts", error);
+              return new Map<string, number>();
+            })
+        : Promise.resolve(new Map<string, number>()),
+    };
+  }
+  return keptAll.views;
+}
+
 /** Anything that announces itself as a robot, a crawler or a script. */
 export const ROBOT = /bot|crawl|spider|slurp|archiver|preview|facebookexternalhit|headless|lighthouse|pagespeed|python|curl|wget|httpclient|okhttp|axios|node-fetch|go-http/i;

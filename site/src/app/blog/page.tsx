@@ -9,6 +9,7 @@ import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 import { JsonLd } from "@/components/JsonLd";
 import { inLang, TRANSLATED } from "@/i18n/config";
 import { getLivePosts, latestPosts, trendingPosts } from "@/lib/blog";
+import { allViews } from "@/lib/views";
 import { PAGE_SIZE, topics, TRENDING_COUNT } from "@/lib/posts";
 import { AUTHOR, SITE_NAME, pageMetadata, siteUrl } from "@/lib/site";
 
@@ -35,6 +36,9 @@ export default async function BlogIndex() {
   const trending = await trendingPosts(TRENDING_COUNT, "", Date.parse(madeAt));
   const firstPage = latestPosts(PAGE_SIZE, "", madeAt);
   const listed = new Set(firstPage.map((post) => post.slug));
+  // Each live post's views, for "Most viewed". Posts without any are left out.
+  const counts = await allViews(Date.parse(madeAt));
+  const views = Object.fromEntries(posts.flatMap((post) => (counts.get(post.slug) ? [[post.slug, counts.get(post.slug)!]] : [])));
   return (
     <div className={s.page}>
       <JsonLd
@@ -72,6 +76,7 @@ export default async function BlogIndex() {
         <BlogBrowser
           firstPage={[...firstPage, ...trending.filter((post) => !listed.has(post.slug))]}
           trending={trending.map((post) => post.slug)}
+          views={views}
           total={posts.length}
           topics={topics(posts)}
           builtAt={madeAt}

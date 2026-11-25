@@ -61,6 +61,8 @@ type Props = {
   firstPage: PostSummary[];
   /** The most read slugs of the last 30 days, most first. Empty until posts have views. */
   trending: string[];
+  /** Each live post's views since counting began, for "Most viewed". Empty until posts have views. */
+  views: Record<string, number>;
   /** Live posts when the site was built, and their topics: what the page shows until every post has loaded. */
   total: number;
   topics: [string, number][];
@@ -72,7 +74,7 @@ type Props = {
  * choices are kept in the address (?q=, ?tag=, ?sort=, ?page=), so topic links
  * from articles, shared links and the back button all work.
  */
-export function BlogBrowser({ firstPage, trending, total, topics: builtTopics, builtAt }: Props) {
+export function BlogBrowser({ firstPage, trending, views, total, topics: builtTopics, builtAt }: Props) {
   const all = useAllPosts();
   const live = useLivePosts(all.posts ?? firstPage, builtAt);
   const [browse, setBrowse] = useState<Browse>(SHOW_ALL);
@@ -86,7 +88,8 @@ export function BlogBrowser({ firstPage, trending, total, topics: builtTopics, b
   // ?show=trending from an old link, before any post has views: everything shows.
   const shown = trending.length > 0 && browse.show === "trending";
   const view = useMemo<Browse>(() => ({ ...browse, q, show: shown ? "trending" : "" }), [browse, q, shown]);
-  const found = useMemo(() => browsePosts(live, view, trending), [live, view, trending]);
+  const found = useMemo(() => browsePosts(live, view, trending, views), [live, view, trending, views]);
+  const hasViews = Object.keys(views).length > 0;
 
   // From the address: on arrival, and when a link or the back button changes it.
   const fromAddress = useCallback((query: string) => {
@@ -210,7 +213,7 @@ export function BlogBrowser({ firstPage, trending, total, topics: builtTopics, b
             <span>Sort</span>
             <select className={s.field} value={sort} onChange={(event) => pickSort(event.target.value as Sort)}>
               {Object.entries(SORTS)
-                .filter(([value]) => (value !== "best" || searching) && (value !== "read" || shown))
+                .filter(([value]) => (value !== "best" || searching) && (value !== "viewed" || hasViews || shown))
                 .map(([value, label]) => (
                   <option key={value} value={value}>
                     {label}

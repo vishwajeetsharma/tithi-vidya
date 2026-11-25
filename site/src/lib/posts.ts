@@ -73,7 +73,7 @@ export const formatDate = (iso: string) => longDate.format(new Date(`${iso}T00:0
 /** Articles on each page of the blog: four rows of three on a wide screen. */
 export const PAGE_SIZE = 12;
 
-export const SORTS = { best: "Best match", read: "Most read", newest: "Newest first", oldest: "Oldest first", quickest: "Quickest read" } as const;
+export const SORTS = { best: "Best match", newest: "Newest first", viewed: "Most viewed", oldest: "Oldest first", quickest: "Quickest read" } as const;
 export type Sort = keyof typeof SORTS;
 /**
  * `sort` stays "" until someone picks one; see sortOf. `show` is "trending"
@@ -87,13 +87,13 @@ export const TRENDING_COUNT = 10;
 
 /**
  * The order in use: what was picked, or else best match while searching,
- * most read for trending, and newest first otherwise. "Best match" needs a
- * search, and "Most read" needs trending.
+ * most viewed for trending, and newest first otherwise. "Best match" needs a
+ * search.
  */
 export function sortOf({ q, sort, show = "" }: Pick<Browse, "q" | "sort"> & { show?: Browse["show"] }): Sort {
   const searching = q.trim() !== "";
-  const fallback = searching ? "best" : show ? "read" : "newest";
-  if (!sort || (sort === "best" && !searching) || (sort === "read" && !show)) return fallback;
+  const fallback = searching ? "best" : show ? "viewed" : "newest";
+  if (!sort || (sort === "best" && !searching)) return fallback;
   return sort;
 }
 
@@ -127,7 +127,7 @@ export function withBrowse(search: string, { q, tag, sort, page, show }: Browse)
 
 const newestFirst = (a: PostSummary, b: PostSummary) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title);
 
-const ORDER: Record<Exclude<Sort, "best" | "read">, (a: PostSummary, b: PostSummary) => number> = {
+const ORDER: Record<Exclude<Sort, "best" | "viewed">, (a: PostSummary, b: PostSummary) => number> = {
   newest: newestFirst,
   oldest: (a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title),
   quickest: (a, b) => a.minutes - b.minutes || newestFirst(a, b),
@@ -135,10 +135,16 @@ const ORDER: Record<Exclude<Sort, "best" | "read">, (a: PostSummary, b: PostSumm
 
 /**
  * The posts to show, with the terms to highlight. See searchPosts in lib/search
- * for how words match. `trending` is the most read slugs, most first: Trending
- * shows those, in that order.
+ * for how words match. `trending` is the most read slugs of the last 30 days,
+ * most first: Trending shows those, in that order. `views` is each post's
+ * views since counting began, for "Most viewed".
  */
-export function browsePosts<T extends PostSummary>(posts: T[], browse: Browse, trending: string[] = []): Found<T> {
+export function browsePosts<T extends PostSummary>(
+  posts: T[],
+  browse: Browse,
+  trending: string[] = [],
+  views: Record<string, number> = {},
+): Found<T> {
   const bySlug = new Map(posts.map((post) => [post.slug, post]));
   const inView = browse.show
     ? trending.flatMap((slug) => bySlug.get(slug) ?? []).slice(0, TRENDING_COUNT)
@@ -148,9 +154,13 @@ export function browsePosts<T extends PostSummary>(posts: T[], browse: Browse, t
   const found = searchPosts(inView, browse.q);
   const sort = sortOf(browse);
   if (sort === "best") return found;
-  if (sort === "read") {
+  if (sort === "viewed" && browse.show) {
+    // Trending: most viewed in the last 30 days.
     const rank = new Map(trending.map((slug, i) => [slug, i]));
     return { ...found, posts: [...found.posts].sort((a, b) => (rank.get(a.slug) ?? Infinity) - (rank.get(b.slug) ?? Infinity)) };
+  }
+  if (sort === "viewed") {
+    return { ...found, posts: [...found.posts].sort((a, b) => (views[b.slug] ?? 0) - (views[a.slug] ?? 0) || newestFirst(a, b)) };
   }
   return { ...found, posts: [...found.posts].sort(ORDER[sort]) };
 }

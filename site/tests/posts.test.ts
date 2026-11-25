@@ -68,8 +68,14 @@ describe("searching and sorting the blog", () => {
     expect(sortOf({ q: "moon", sort: "" })).toBe("best");
     expect(sortOf({ q: "", sort: "best" })).toBe("newest");
     expect(sortOf({ q: "moon", sort: "oldest" })).toBe("oldest");
-    expect(sortOf({ q: "", sort: "", show: "trending" })).toBe("read");
-    expect(sortOf({ q: "", sort: "read" })).toBe("newest");
+    expect(sortOf({ q: "", sort: "", show: "trending" })).toBe("viewed");
+    expect(sortOf({ q: "", sort: "viewed" })).toBe("viewed");
+  });
+
+  it("sorts every post by views, most first, then newest first among posts with the same views", () => {
+    const views = { adhika: 40, moves: 40 };
+    expect(slugs(browsePosts(posts, { ...SHOW_ALL, sort: "viewed" }, [], views).posts)).toEqual(["moves", "adhika", "sunrise"]);
+    expect(slugs(browsePosts(posts, { ...SHOW_ALL, sort: "viewed", tag: "tithi" }, [], { adhika: 5 }).posts)).toEqual(["adhika", "moves"]);
   });
 
   it("shows the most read posts for Trending, in their order, in place of a topic", () => {
