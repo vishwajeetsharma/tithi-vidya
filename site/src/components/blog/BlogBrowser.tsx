@@ -201,7 +201,9 @@ export function BlogBrowser({ firstPage, trending, views, total, topics: builtTo
                   field.current?.focus();
                 }}
               >
-                <span aria-hidden="true">×</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
               </button>
             ) : (
               <kbd className={s.slashHint} title="Press / to search">

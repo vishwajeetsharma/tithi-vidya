@@ -191,7 +191,7 @@
   position: relative;
 }
 
-.search svg {
+.search > svg {
   position: absolute;
   top: 50%;
   left: 18px;
@@ -203,7 +203,7 @@
 }
 
 .search .field {
-  padding-right: 52px;
+  padding-right: 50px;
   padding-left: 48px;
 }
 
@@ -215,19 +215,25 @@
 .clear {
   position: absolute;
   top: 50%;
-  right: 8px;
+  right: 9px;
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   background: var(--lilac-50);
   color: var(--ink-soft);
-  font-size: 1.375rem;
-  line-height: 1;
   translate: 0 -50%;
   cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* A drawn cross, so it sits dead centre in every font. */
+.clear svg {
+  width: 16px;
+  height: 16px;
 }
 
 .clear:hover {
