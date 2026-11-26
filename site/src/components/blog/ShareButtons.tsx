@@ -59,16 +59,16 @@ export function ShareButtons({ url, title }: { url: string; title: string }) {
         )}
         {links.map((link) => (
           <li key={link.name}>
-            <a className={s.shareLink} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${link.name} (opens in a new tab)`}>
+            <a className={s.shareLink} href={link.href} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${link.name} (opens in a new tab)`} title={`Share on ${link.name}`}>
               <Logo {...link.logo} />
-              {!link.iconOnly && link.name}
+              {!link.iconOnly && <span className={s.shareLabel}>{link.name}</span>}
             </a>
           </li>
         ))}
         <li>
-          <button className={s.shareLink} type="button" onClick={() => void copy()}>
+          <button className={s.shareLink} type="button" title="Copy link" onClick={() => void copy()}>
             <Outline>{copied ? ICONS.copied : ICONS.link}</Outline>
-            {copied ? "Link copied" : "Copy link"}
+            <span className={s.shareLabel}>{copied ? "Link copied" : "Copy link"}</span>
           </button>
         </li>
       </ul>
