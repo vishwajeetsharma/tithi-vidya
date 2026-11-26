@@ -35,7 +35,7 @@ describe("the blog build", () => {
     ({ root } = site({
       "with-image/index.md": post(
         "tags: [moon]\ncover: photo.png\ncoverAlt: A test photo\n",
-        "# Big heading\n\n![A photo](photo.png \"A caption\")\n\n## One\n\n## Two\n\n| a | b |\n| - | - |\n| 1 | 2 |\n",
+        "# Big heading\n\n![A photo](photo.png \"A caption\")\n\n## One\n\n## Two\n\n| a | b |\n| - | - |\n| 1 | 2 |\n\n[NASA](https://science.nasa.gov/moon/), [our method](/how-it-works) and [our site](https://www.tithividya.org/find).\n",
       ),
       "plain-file.md": post(),
       "secret.md": post("draft: true\n"),
@@ -60,6 +60,13 @@ describe("the blog build", () => {
     const files = readdirSync(join(root, "public/blog-media"));
     expect(files.filter((f) => f.endsWith(".webp"))).toHaveLength(3);
     expect(files.some((f) => f.endsWith("-og.jpg"))).toBe(true);
+  });
+
+  it("opens links to other sites in a new tab, and keeps our own in this one", () => {
+    const html = posts.find((p) => p.slug === "with-image")!.html;
+    expect(html).toContain('<a href="https://science.nasa.gov/moon/" target="_blank" rel="noopener" aria-label="NASA (opens in a new tab)">NASA</a>');
+    expect(html).toContain('<a href="/how-it-works">our method</a>');
+    expect(html).toContain('<a href="https://www.tithividya.org/find">our site</a>');
   });
 
   it("keeps one main heading, wraps tables, and lists sections", () => {

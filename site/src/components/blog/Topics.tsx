@@ -1,15 +1,14 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { FireIcon } from "@/components/Icons";
 import { searchTerms } from "@/lib/search";
 
 import s from "./blog.module.css";
 
-/** Topics shown as buttons straight away, on wide screens and on phones. The rest are a click away, so a blog with many topics stays tidy. */
+/** Topics shown as buttons straight away. The rest are a click away, so a blog with many topics stays tidy. On phones the buttons sit in one row that scrolls sideways. */
 const SHOWN = 8;
-const SHOWN_ON_PHONES = 4;
 /** With more topics than this, the full list gets a box to find one. */
 const FINDABLE = 16;
 
@@ -21,11 +20,11 @@ type Props = {
   trending?: { on: boolean; toggle: () => void };
 };
 
-type ButtonProps = { tag: string; count: number; active: boolean; onPick: (tag: string) => void; className?: string };
+type ButtonProps = { tag: string; count: number; active: boolean; onPick: (tag: string) => void };
 
-function TopicButton({ tag, count, active, onPick, className = "" }: ButtonProps) {
+function TopicButton({ tag, count, active, onPick }: ButtonProps) {
   return (
-    <button type="button" className={`${s.topic} ${className}`} aria-pressed={active} onClick={() => onPick(active ? "" : tag)}>
+    <button type="button" className={s.topic} aria-pressed={active} onClick={() => onPick(active ? "" : tag)}>
       {tag}{" "}
       <span>
         {count}
@@ -44,6 +43,17 @@ export function Topics({ counts, active, onPick, trending }: Props) {
   const [open, setOpen] = useState(false);
   const [find, setFind] = useState("");
   const panel = useId();
+  const row = useRef<HTMLDivElement>(null);
+
+  // On phones the row scrolls sideways: bring the picked button into view, say after a reload with a topic picked.
+  useEffect(() => {
+    const box = row.current;
+    const on = box?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (!box || !on || box.scrollWidth <= box.clientWidth) return;
+    const edge = box.getBoundingClientRect();
+    const chip = on.getBoundingClientRect();
+    if (chip.left < edge.left || chip.right > edge.right) box.scrollLeft += chip.left - edge.left - parseFloat(getComputedStyle(box).paddingLeft);
+  }, [active, trending?.on]);
 
   const shown = counts.slice(0, SHOWN);
   const picked = counts.find(([tag]) => tag === active) ?? (active ? ([active, 0] as [string, number]) : null);
@@ -65,7 +75,7 @@ export function Topics({ counts, active, onPick, trending }: Props) {
 
   return (
     <>
-      <div className={s.topics} role="group" aria-label="Topics">
+      <div ref={row} className={s.topics} role="group" aria-label="Topics">
         <button type="button" className={s.topic} aria-pressed={!active && !trending?.on} onClick={() => onPick("")}>
           All
         </button>
@@ -75,20 +85,13 @@ export function Topics({ counts, active, onPick, trending }: Props) {
             Trending
           </button>
         )}
-        {shown.map(([tag, count], i) => (
-          <TopicButton
-            key={tag}
-            tag={tag}
-            count={count}
-            active={tag === active}
-            onPick={onPick}
-            className={i >= SHOWN_ON_PHONES && tag !== active ? s.topicWide : ""}
-          />
+        {shown.map(([tag, count]) => (
+          <TopicButton key={tag} tag={tag} count={count} active={tag === active} onPick={onPick} />
         ))}
-        {counts.length > SHOWN_ON_PHONES && (
+        {counts.length > SHOWN && (
           <button
             type="button"
-            className={`${s.topic} ${s.moreTopics} ${counts.length > SHOWN ? "" : s.topicPhone}`}
+            className={`${s.topic} ${s.moreTopics}`}
             aria-expanded={open}
             aria-controls={panel}
             onClick={() => setOpen(!open)}

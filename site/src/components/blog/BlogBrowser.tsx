@@ -169,61 +169,59 @@ export function BlogBrowser({ firstPage, trending, views, total, topics: builtTo
           field.current?.blur();
         }}
       >
-        <div className={s.browseRow}>
-          <div className={s.search}>
-            <SearchIcon />
-            <input
-              ref={field}
-              className={s.field}
-              type="search"
-              value={browse.q}
-              placeholder="Search by word, festival or topic"
-              aria-label="Search articles"
-              aria-keyshortcuts="/"
-              enterKeyHint="search"
-              autoComplete="off"
-              spellCheck={false}
-              onChange={(event) => change({ q: event.target.value })}
-              onKeyDown={(event) => {
-                if (event.key === "Escape" && browse.q) {
-                  event.preventDefault();
-                  change({ q: "" });
-                }
+        <div className={s.search}>
+          <SearchIcon />
+          <input
+            ref={field}
+            className={s.field}
+            type="search"
+            value={browse.q}
+            placeholder="Search by word, festival or topic"
+            aria-label="Search articles"
+            aria-keyshortcuts="/"
+            enterKeyHint="search"
+            autoComplete="off"
+            spellCheck={false}
+            onChange={(event) => change({ q: event.target.value })}
+            onKeyDown={(event) => {
+              if (event.key === "Escape" && browse.q) {
+                event.preventDefault();
+                change({ q: "" });
+              }
+            }}
+          />
+          {browse.q ? (
+            <button
+              type="button"
+              className={s.clear}
+              aria-label="Clear search"
+              onClick={() => {
+                change({ q: "" });
+                field.current?.focus();
               }}
-            />
-            {browse.q ? (
-              <button
-                type="button"
-                className={s.clear}
-                aria-label="Clear search"
-                onClick={() => {
-                  change({ q: "" });
-                  field.current?.focus();
-                }}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
-                  <path d="M6 6l12 12M18 6 6 18" />
-                </svg>
-              </button>
-            ) : (
-              <kbd className={s.slashHint} title="Press / to search">
-                /
-              </kbd>
-            )}
-          </div>
-          <label className={s.sort}>
-            <span>Sort</span>
-            <select className={s.field} value={sort} onChange={(event) => pickSort(event.target.value as Sort)}>
-              {Object.entries(SORTS)
-                .filter(([value]) => (value !== "best" || searching) && (value !== "viewed" || hasViews || shown))
-                .map(([value, label]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-            </select>
-          </label>
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" />
+              </svg>
+            </button>
+          ) : (
+            <kbd className={s.slashHint} title="Press / to search">
+              /
+            </kbd>
+          )}
         </div>
+        <label className={s.sort}>
+          <span>Sort</span>
+          <select className={s.field} value={sort} onChange={(event) => pickSort(event.target.value as Sort)}>
+            {Object.entries(SORTS)
+              .filter(([value]) => (value !== "best" || searching) && (value !== "viewed" || hasViews || shown))
+              .map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+          </select>
+        </label>
         {tagCounts.length > 0 && (
           <Topics
             counts={tagCounts}
@@ -232,12 +230,12 @@ export function BlogBrowser({ firstPage, trending, views, total, topics: builtTo
             trending={trending.length > 0 ? { on: shown, toggle: () => change({ show: shown ? "" : "trending", tag: "", sort: "" }) } : undefined}
           />
         )}
+        {/* In the form, so on phones the sort menu can sit beside it, under the topics. */}
+        <p ref={top} className={s.count} role="status" tabIndex={-1}>
+          {waiting ? "" : describe(count, view, found.partial)}
+          {!waiting && pages > 1 && <span className={s.countPage}> · Page {page} of {pages}</span>}
+        </p>
       </form>
-
-      <p ref={top} className={s.count} role="status" tabIndex={-1}>
-        {waiting ? "" : describe(count, view, found.partial)}
-        {!waiting && pages > 1 && <span className={s.countPage}> · Page {page} of {pages}</span>}
-      </p>
 
       {waiting ? (
         all.failed ? (

@@ -122,7 +122,13 @@ export function NotifyButton({ card = false }: { card?: boolean }) {
     ) : (
       <button type="button" className={`btn ${card ? "btnPrimary" : "btnGhost"} ${s.notifyButton}`} onClick={() => void turnOn()} disabled={status === "working" || status === "checking"}>
         <BellIcon />
-        {status === "working" ? "One moment…" : "Get notified of new articles"}
+        {status === "working" ? (
+          "One moment…"
+        ) : (
+          <span>
+            Get notified<span className={s.longLabel}> of new articles</span>
+          </span>
+        )}
       </button>
     );
 

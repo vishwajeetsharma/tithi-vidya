@@ -25,7 +25,9 @@ export function FollowFeed({ feed }: { feed: string }) {
     <details className={s.follow}>
       <summary className="btn btnGhost">
         <RssIcon />
-        Follow with RSS
+        <span>
+          <span className={s.longLabel}>Follow with </span>RSS
+        </span>
       </summary>
       <div className={s.followPanel}>
         <p>Get new articles in your feed reader. Copy this address into it, or pick a reader.</p>

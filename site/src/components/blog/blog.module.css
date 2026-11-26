@@ -87,6 +87,55 @@
   gap: 0 10px;
 }
 
+/* Phones: smaller buttons, RSS and notifications on one line, Google's below. */
+@media (max-width: 619px) {
+  .headTools {
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .headTools .follow,
+  .headTools .notifyButton:global(.btn),
+  .headTools .preferredCompact {
+    margin-top: 0;
+  }
+
+  .headTools .follow summary,
+  .headTools .notifyButton:global(.btn) {
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px 0 14px;
+    font-size: 0.9375rem;
+  }
+
+  .headTools .follow summary svg,
+  .headTools .notifyButton svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .headTools .preferredCompact {
+    gap: 10px;
+    min-height: 40px;
+    padding: 0 16px 0 12px;
+    font-size: 0.875rem;
+  }
+
+  /* "Follow with RSS" reads "RSS", and "Get notified of new articles" "Get notified"; screen readers still hear it all. */
+  .headTools .longLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .headTools .notifyNote {
+    margin-top: 0;
+  }
+}
+
 .follow[open] summary {
   background: #fff;
 }
@@ -148,20 +197,34 @@
 
 /* Search, topics and sort above the cards. */
 
+/*
+ * Wide screens: search and sort side by side, then topics, then the count.
+ * Phones: search, one sideways-scrolling row of topics, then the count with
+ * the sort menu beside it.
+ */
 .browse {
   display: grid;
-  gap: 14px;
-  margin-bottom: 14px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px 10px;
+  align-items: center;
+  margin-bottom: clamp(14px, 2vw, 20px);
 }
 
-.browseRow {
-  display: grid;
-  gap: 10px;
+.browse > * {
+  grid-column: 1 / -1;
+}
+
+.browse > .count {
+  margin-bottom: 0;
 }
 
 @media (min-width: 620px) {
-  .browseRow {
-    grid-template-columns: minmax(0, 1fr) auto;
+  .browse > .search {
+    grid-column: 1;
+  }
+
+  .browse > .sort {
+    grid-column: 2;
   }
 }
 
@@ -396,16 +459,62 @@
   color: var(--ink-mute);
 }
 
-/* Phones show fewer topic buttons, so they take two rows at most. */
-@media (max-width: 559px) {
-  .topicWide {
+/* Phones: the browse area, after the rules it changes. */
+@media (max-width: 619px) {
+  .browse {
+    gap: 12px 10px;
+  }
+
+  .browse > .count {
+    order: 1;
+    grid-column: 1;
+  }
+
+  .browse > .sort {
+    order: 2;
+    grid-column: 2;
+  }
+
+  .browse .field {
+    min-height: 46px;
+  }
+
+  .sort {
+    gap: 8px;
+  }
+
+  .sort span {
+    font-size: 0.875rem;
+  }
+
+  .sort .field {
+    flex: none;
+    min-height: 40px;
+    padding: 6px 38px 6px 14px;
+    background-position: right 14px center;
+  }
+
+  /* One row that scrolls sideways, edge to edge, instead of three rows of buttons. */
+  .topics {
+    flex-wrap: nowrap;
+    /* Holds the buttons' hidden "articles" words too; without it they poke out past the screen and the page goes wide. */
+    position: relative;
+    margin: -4px calc(-1 * var(--gutter)) -12px;
+    padding: 4px var(--gutter) 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .topics::-webkit-scrollbar {
     display: none;
   }
-}
 
-@media (min-width: 560px) {
-  .topicPhone {
-    display: none;
+  .topics .topic {
+    flex: none;
+    min-height: 38px;
+    padding: 5px 14px;
   }
 }
 
@@ -775,6 +884,17 @@ a.pageStep:hover,
   color: #3b2fc4;
   font-weight: 600;
   text-underline-offset: 3px;
+}
+
+/* Links to other sites open in a new tab: a small arrow says so. Screen readers get it from the link's label instead. */
+.prose a[target="_blank"]::after {
+  content: "\2197";
+  content: "\2197" / "";
+  display: inline-block;
+  margin-left: 0.15em;
+  font-size: 0.8em;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .prose strong {
@@ -1339,7 +1459,6 @@ a.pageStep:hover,
     font-size: 0.9375rem;
   }
 }
-
 
 /* Newsletter signup: text and form side by side on wide screens. */
 

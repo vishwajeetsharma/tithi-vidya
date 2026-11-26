@@ -231,6 +231,17 @@ const SIZES = "(min-width: 2400px) 860px, (min-width: 2100px) 800px, (min-width:
  * with fixed sizes so nothing jumps, captions from image titles, and tables
  * that scroll on phones. Also collects the headings for "On this page".
  */
+/** A link to another site: http or https, and not tithividya.org itself. */
+function isOutside(href) {
+  const link = String(href ?? "");
+  if (!/^https?:\/\//i.test(link)) return false;
+  try {
+    return !/^(www\.)?tithividya\.org$/i.test(new URL(link).hostname);
+  } catch {
+    return false;
+  }
+}
+
 function rehypeArticle({ file, slug, processImage, images, pictures, toc, problems }) {
   return () => async (tree) => {
     const jobs = [];
@@ -275,6 +286,14 @@ function rehypeArticle({ file, slug, processImage, images, pictures, toc, proble
             children: caption ? [image, { type: "element", tagName: "figcaption", properties: {}, children: [{ type: "text", value: String(caption) }] }] : [image],
           };
         }
+      }
+
+      // Links to other sites open in a new tab, so the reader keeps their place in the article.
+      // The label tells screen readers; it stays out of the text, which "Listen" and feed readers use.
+      if (node.tagName === "a" && isOutside(node.properties.href)) {
+        node.properties.target = "_blank";
+        node.properties.rel = ["noopener"];
+        node.properties.ariaLabel = `${hastText(node)} (opens in a new tab)`;
       }
 
       if (node.tagName === "table" && parent && index !== undefined && !(parent.type === "element" && parent.properties?.dataTable)) {
