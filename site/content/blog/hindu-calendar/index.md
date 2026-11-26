@@ -2,6 +2,7 @@
 title: "Hindu calendar 2027: all festival dates with tithi"
 description: "Hindu calendar 2027: all 51 festivals month by month with date, day and tithi, and the ones like Maha Shivratri that fall a day before plain calendars show."
 date: 2026-11-18
+updated: 2026-11-26
 tags: [festivals, hindu calendar, panchang]
 cover: cover.jpg
 coverAlt: "Hindu calendar 2027: a wall of twelve small month calendars with the festival dates circled"
@@ -40,7 +41,7 @@ Two more things. Month names are the North Indian (purnimanta) ones. In the aman
 | Fri, 22 Jan | Paush Purnima | Pausha Purnima |
 | Mon, 25 Jan | Sakat Chauth | Magha Krishna Chaturthi, at moonrise |
 
-The sun moves into Capricorn (Makar) at 9:10 pm on Thursday, 14 January. That's after sunset, so the holy hours of Makar Sankranti fall on Friday, 15 January, along with Thai Pongal. Some calendars still print the 14th. Paush Purnima opens the month-long Magh Mela bathing season at Prayagraj.
+The sun moves into Capricorn (Makar) at 9:10 pm on Thursday, 14 January. That's after sunset, so the holy hours of Makar Sankranti fall on Friday, 15 January, along with Thai Pongal. Some calendars still print the 14th. The same move ends [Kharmas](/blog/kharmas), so weddings start again. Paush Purnima starts kalpvas, the month of living by the river at the Magh Mela in Prayagraj.
 
 ## February 2027 festivals
 
@@ -49,7 +50,7 @@ The sun moves into Capricorn (Makar) at 9:10 pm on Thursday, 14 January. That's 
 | Sat, 6 Feb | Mauni Amavasya | Magha Amavasya |
 | Thu, 11 Feb | Vasant Panchami, Saraswati Puja | Magha Shukla Panchami |
 
-Mauni Amavasya, the new moon of silence, is the biggest bathing day of the Magh Mela. Vasant Panchami's Panchami runs from 3:05 am on 11 February to 3:18 am on the 12th, so the whole morning puja falls inside it.
+Mauni Amavasya, the new moon of silence, is the biggest bathing day of the Magh Mela. Vasant Panchami's Panchami runs from 3:05 am on 11 February to 3:19 am on the 12th, so the whole morning puja falls inside it.
 
 ## March 2027 festivals
 

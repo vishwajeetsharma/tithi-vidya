@@ -144,6 +144,8 @@ In much of Tamil Nadu and Kerala, families often go by the birth nakshatra, the 
 
 Lots of people keep both birthdays. The calendar one is for cake and friends, and the tithi one is for prayers and family. You don't have to pick.
 
+The same idea works for remembering someone. A family's yearly shraddha falls on the tithi of passing, and [the date-of-death tithi calculator](/blog/tithi-calculator-by-date-of-death) finds it the same way.
+
 ## Where these dates come from
 
 Every date in this post comes from Tithi Vidya. It works out where the sun and the moon are using NASA JPL's [DE440 data](https://ssd.jpl.nasa.gov/doc/de440_de441.html), the same kind of data used to fly spacecraft. It uses the Lahiri ayanamsa and amanta months, and the times here are for New Delhi (IST).

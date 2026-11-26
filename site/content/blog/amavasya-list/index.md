@@ -141,7 +141,7 @@ Customs differ from home to home. These are the common ones:
 
 **Bhadrapada Amavasya, 31 August.** Pithori Amavasya, when mothers pray for their children. In Maharashtra and Chhattisgarh it's Pola, the day farmers thank their bullocks.
 
-**Ashvina Amavasya, 29 and 30 September.** Sarva Pitru Amavasya, also called Mahalaya. It's the shraddha for every ancestor, and for anyone whose tithi of passing isn't known. Navratri begins the next morning.
+**Ashvina Amavasya, 29 and 30 September.** Sarva Pitru Amavasya, also called Mahalaya. It's the shraddha for every ancestor, and for anyone whose tithi of passing isn't known. If you know the date, you can [find the tithi of passing from it](/blog/tithi-calculator-by-date-of-death). Navratri begins the next morning.
 
 ### October to December
 

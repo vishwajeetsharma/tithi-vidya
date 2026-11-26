@@ -99,7 +99,9 @@ Hindu tradition says Vishnu sleeps for four months of the year. He falls asleep 
 
 The names all say the same thing. Dev Uthani means "the god rises", and Prabodhini means "the awakening". You'll also hear Devutthana Ekadashi, Hari Prabodhini and Dev Uthani Gyaras (gyaras is the everyday Hindi word for the 11th). In Maharashtra it's Kartiki Ekadashi, and in Nepal it's Thulo Ekadashi.
 
-Weddings are the other reason the day matters so much. Many families don't hold weddings during Chaturmas, so Dev Uthani reopens the wedding season. In Rajasthan, so many weddings fall on this day that it once moved an election. In 2023, more than 50,000 weddings were planned for Dev Uthani on 23 November. So the Election Commission moved the state's assembly vote to the 25th ([ETV Bharat reported it](https://etvbharat.com/english/state/rajasthan/with-more-than-50k-marriages-in-rajasthan-on-november-23-eci-delays-assembly-polls-to-accommodate-dev-uthani-ekadashi-festivities/na20231012194849152152511)).
+Weddings are the other reason the day matters so much. Many families don't hold weddings during Chaturmas, so Dev Uthani reopens the wedding season, until [Kharmas](/blog/kharmas) closes it again from 16 December.
+
+In Rajasthan, so many weddings fall on this day that it once moved an election. In 2023, more than 50,000 weddings were planned for Dev Uthani on 23 November. So the Election Commission moved the state's assembly vote to the 25th ([ETV Bharat reported it](https://etvbharat.com/english/state/rajasthan/with-more-than-50k-marriages-in-rajasthan-on-november-23-eci-delays-assembly-polls-to-accommodate-dev-uthani-ekadashi-festivities/na20231012194849152152511)).
 
 The day after Dev Uthani, many homes hold [Tulsi Vivah](/blog/tulsi-vivah), the wedding of the tulsi plant to Vishnu. And a month later, Mithila celebrates the most famous wedding of all on [Vivah Panchami, 14 December](/blog/vivah-panchami).
 

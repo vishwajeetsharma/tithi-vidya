@@ -2,6 +2,7 @@
 title: "Purnima 2027 list: all 12 dates, times and fast days"
 description: "Purnima 2027 list with the date and time of all 12 full moons for New Delhi: when each tithi begins and ends, the fast day, and the moonrise that evening."
 date: 2026-11-23
+updated: 2026-11-26
 tags: [purnima, moon, hindu calendar]
 cover: cover.jpg
 coverAlt: "Purnima 2027: a big full moon over a lake, with its light on the water, a boat and lotuses"
@@ -18,7 +19,7 @@ Two of the twelve need care. For Raksha Bandhan's Purnima in August and Kartik P
 
 | Date | Purnima | Known for |
 | --- | --- | --- |
-| Fri, 22 Jan | Pausha Purnima | Shakambhari Purnima; Magh Mela bathing begins |
+| Fri, 22 Jan | Pausha Purnima | Shakambhari Purnima; kalpvas begins at the Magh Mela |
 | Sat, 20 Feb | Magha Purnima | Maghi Purnima, Guru Ravidas Jayanti |
 | Mon, 22 Mar | Phalguna Purnima | Holi; Holika Dahan the night before |
 | Tue, 20 Apr | Chaitra Purnima | Hanuman Jayanti |
@@ -114,7 +115,7 @@ If you're pregnant, diabetic or on medicine, talk to your doctor before a fast.
 
 ### January: Pausha Purnima, 22 January
 
-The first Purnima of the year opens the Magh Mela bathing season at Prayagraj. It's also Shakambhari Purnima. Its tithi is the shortest of the twelve.
+The first Purnima of the year starts kalpvas, the month of living by the river at the Magh Mela in Prayagraj. It's also Shakambhari Purnima. Its tithi is the shortest of the twelve.
 
 ### February: Magha Purnima, 20 February
 

@@ -62,7 +62,7 @@ Many people fast until the puja is over. If you're pregnant, diabetic or on medi
 
 ## Why it opens the wedding season
 
-For four months before Dev Uthani, many families don't hold weddings. Tradition says Vishnu sleeps through this time, called Chaturmas, and he wakes on Dev Uthani Ekadashi. Tulsi Vivah is the first wedding after he wakes, so once it's done, the shehnai comes back out and the wedding season begins.
+For four months before Dev Uthani, many families don't hold weddings. Tradition says Vishnu sleeps through this time, called Chaturmas, and he wakes on Dev Uthani Ekadashi. Tulsi Vivah is the first wedding after he wakes, so once it's done, the shehnai comes back out and the wedding season begins. It runs until [Kharmas](/blog/kharmas), the sun's month without weddings, from 16 December.
 
 Mithila has its own famous wedding day later in the season: [Vivah Panchami on 14 December](/blog/vivah-panchami), when Ram and Sita's wedding is celebrated.
 

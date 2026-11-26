@@ -12,7 +12,7 @@ pushBody: "Why a Hindu day can start at 7:16 am, and why some days get skipped. 
 
 **A tithi is a lunar day: the time the moon takes to move 12° further ahead of the sun.** A lunar month has 30 tithis, 15 while the moon grows and 15 while it shrinks. The Hindu calendar counts its days in tithis, not in dates.
 
-That one idea explains a lot. It's why [Hindu dates move every year](/blog/why-your-hindu-birthday-moves). It's why a Hindu "day" can begin at 7:16 in the morning. And it's why you have a second birthday you may not know about.
+That one idea explains a lot. It's why [Hindu dates move every year](/blog/why-your-hindu-birthday-moves). It's why a Hindu "day" can begin at 7:16 in the morning. And it's why you have a second birthday you may not know about, and why a family's yearly [shraddha falls on the tithi of passing](/blog/tithi-calculator-by-date-of-death), not the date.
 
 ## What is a tithi, in one picture
 

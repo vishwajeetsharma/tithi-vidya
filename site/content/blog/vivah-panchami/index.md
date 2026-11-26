@@ -61,7 +61,7 @@ The belief comes from Sita's married life. Soon after the wedding came exile, he
 
 It's a custom, not a rule from scripture, and plenty of families elsewhere see the day as lucky instead. If a wedding date is being chosen in your family, the elders or the family priest will have their own view.
 
-The wedding season itself opens about three weeks earlier, when Vishnu is said to wake on [Dev Uthani Ekadashi](/blog/dev-uthani-ekadashi). Its first wedding is [Tulsi Vivah](/blog/tulsi-vivah), held in homes the next evening.
+The wedding season itself opens about three weeks earlier, when Vishnu is said to wake on [Dev Uthani Ekadashi](/blog/dev-uthani-ekadashi). Its first wedding is [Tulsi Vivah](/blog/tulsi-vivah), held in homes the next evening. And it pauses two days after Vivah Panchami, when [Kharmas](/blog/kharmas) begins on 16 December.
 
 > **Tip:** Want a festival like this to feel personal? Your own tithi comes back every year too. [Find my tithi](/find) shows your tithi birthday for the next 100 years.
 
