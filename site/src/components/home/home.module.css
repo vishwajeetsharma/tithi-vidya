@@ -1369,6 +1369,30 @@
   }
 }
 
+/*
+ * Phones and tablets standing up: shorter pinned scenes. Swiping through the
+ * desktop lengths felt endless on a phone, so the same story plays out in
+ * about half the scrolling. The scenes measure their own height, so every
+ * animation keeps its full range.
+ */
+@media (max-width: 999.98px), (max-aspect-ratio: 11/10) {
+  :global(html[data-motion="on"]) .statement {
+    height: 170svh;
+  }
+
+  :global(html[data-motion="on"]) .tithi {
+    height: 400svh;
+  }
+
+  :global(html[data-motion="on"]) .drift {
+    height: 230svh;
+  }
+
+  :global(html[data-motion="on"]) .sunrise {
+    height: 260svh;
+  }
+}
+
 /* Tablets standing up have room for bigger type. */
 @media (min-width: 700px) and (max-aspect-ratio: 11/10) {
   .heroCopy {
