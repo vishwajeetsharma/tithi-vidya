@@ -1,7 +1,8 @@
 ---
 title: "Gita Jayanti 2026: Mokshada Ekadashi, parana time"
-description: "Gita Jayanti 2026: the Ekadashi tithi times, when to break the Mokshada Ekadashi fast in 12 cities, and the one city abroad where the day is different."
+description: "Gita Jayanti 2026: the Ekadashi tithi times, when to break the Mokshada Ekadashi fast in 12 cities, and why the US and Canada have two fast days."
 date: 2026-11-27
+updated: 2026-11-28
 tags: [festivals, ekadashi, hindu calendar]
 cover: cover.jpg
 coverAlt: "Gita Jayanti 2026 on Sunday, 20 December: an open book on a rehal with a peacock feather, beside the calendar page"
@@ -10,16 +11,16 @@ pushTitle: "Gita Jayanti 2026: Sunday, 20 December"
 pushBody: "It's Mokshada Ekadashi too. The tithi times, when to break the fast in 12 cities, and Kurukshetra's festival dates."
 ---
 
-**Gita Jayanti 2026 is on Sunday, 20 December, the same day as Mokshada Ekadashi.** The Ekadashi tithi runs from 10:09 pm on Saturday, 19 December, to 8:15 pm on Sunday (IST). If you fast, break it on Monday morning: between 7:09 am and 9:13 am in New Delhi.
+**Gita Jayanti 2026 is on Sunday, 20 December, the same day as Mokshada Ekadashi.** The Ekadashi tithi runs from 10:10 pm on Saturday, 19 December, to 8:15 pm on Sunday (IST). If you fast, break it on Monday morning: between 7:09 am and 9:13 am in New Delhi.
 
-Two festivals on one day isn't a coincidence: they're the same tithi by definition. And this year the calendars agree, which isn't always true of an Ekadashi. I ran the date for 15 cities, and only one came out different. More on that below.
+Two festivals on one day isn't a coincidence: they're the same tithi by definition. And in India this year the calendars agree, which isn't always true of an Ekadashi. In the US and Canada they don't, and most families there fast a day early, on Saturday. More on that below.
 
 ## Gita Jayanti 2026 date and time
 
 | | Date and time (IST) |
 | --- | --- |
 | Gita Jayanti and Mokshada Ekadashi | Sunday, 20 December |
-| Ekadashi begins | Saturday, 19 December, 10:09 pm |
+| Ekadashi begins | Saturday, 19 December, 10:10 pm |
 | Ekadashi ends | Sunday, 20 December, 8:15 pm |
 | Parana (breaking the fast), New Delhi | Monday, 21 December, 7:09 am to 9:13 am |
 | International Gita Mahotsav, Kurukshetra | 5 to 25 December |
@@ -34,15 +35,15 @@ Mokshada Ekadashi is the name of that same Ekadashi, and the fast is kept on the
 
 New to tithis? A tithi is a lunar day, the time the moon takes to move 12° further from the sun. Here's [what a tithi is, with a picture](/blog/what-is-tithi).
 
-## One day for everyone this year
+## One day for everyone in India
 
 Ekadashi fasts follow two sets of rules. Most families (Smarta) go by the tithi running at sunrise. Vaishnava families, including ISKCON, also need Ekadashi to be running at arunodaya, the dawn hour about 96 minutes before sunrise.
 
-In 2026, both rules land on Sunday. Ekadashi begins at 10:09 pm on Saturday, so by Sunday's dawn and sunrise it's well under way, all over India. Compare [Dev Uthani Ekadashi this November](/blog/dev-uthani-ekadashi), when the two traditions fasted on different days.
+In 2026, both rules land on Sunday. Ekadashi begins at 10:10 pm on Saturday, so by Sunday's dawn and sunrise it's well under way, all over India. Compare [Dev Uthani Ekadashi this November](/blog/dev-uthani-ekadashi), when the two traditions fasted on different days.
 
 ## Mokshada Ekadashi parana time 2026
 
-Parana means breaking the fast. It's done on Monday morning, during Dwadashi (the 12th tithi), after Hari Vasara, its first quarter. This year Hari Vasara ends at 1:35 am on Monday, so the window opens at sunrise.
+Parana means breaking the fast. It's done on Monday morning, during Dwadashi (the 12th tithi), after Hari Vasara, its first quarter. This year Hari Vasara ends at 1:36 am on Monday, so the window opens at sunrise.
 
 | City | Break the fast, Monday, 21 December |
 | --- | --- |
@@ -65,22 +66,32 @@ Each window runs from sunrise to the end of pratahkal, the first fifth of the da
 
 ## Outside India
 
-Abroad, Ekadashi begins on Saturday local time and is running at Sunday's sunrise. So most cities fast on Sunday, 20 December, too:
+In the UK, the Gulf and Asia, Ekadashi is running at Sunday's sunrise and Dwadashi lasts past Monday's, just as in India. So everyone there fasts on Sunday, 20 December:
 
-| City | Fast day | Break the fast, Monday, 21 December |
+| City | Break the fast, Monday, 21 December |
+| --- | --- |
+| London | 8:04 am to 9:38 am |
+| Dubai | 7:00 am to 9:07 am |
+| Singapore | 7:01 am to 9:26 am |
+| Kathmandu | 6:50 am to 8:55 am |
+
+## Gita Jayanti 2026 in the USA and Canada
+
+Here the two traditions split, and so does Gita Jayanti. Most families (Smarta) fast and keep it on **Saturday, 19 December**. Vaishnavas and ISKCON keep **Sunday, 20 December**.
+
+| City | Families: break the fast Sunday | Vaishnavas: break the fast Monday |
 | --- | --- | --- |
-| London | Sunday | 8:04 am to 9:38 am |
-| New York | Sunday | 7:17 am to 9:08 am |
-| Toronto | Sunday | 7:48 am to 9:35 am |
-| Dubai | Sunday | 7:00 am to 9:07 am |
-| Singapore | Sunday | 7:01 am to 9:26 am |
-| Kathmandu | Sunday | 6:50 am to 8:55 am |
+| New York | after 3:06 pm | 7:17 am to 9:08 am |
+| Toronto | after 3:06 pm | 7:48 am to 9:35 am |
+| San Francisco | 1:05 pm to 2:59 pm | 7:21 am to 9:16 am |
 
-In New York and Toronto, Dwadashi ends before Monday's sunrise, so the custom is to break the fast soon after sunrise.
+**In New York and Toronto, the reason is Dwadashi.** Ekadashi runs from 11:40 am on Saturday to 9:45 am on Sunday, so it holds Sunday's sunrise. But Dwadashi is over at 7:07 am on Monday, before the sun is up. Families must break the fast while Dwadashi lasts. After a Sunday fast it would be gone by Monday morning, so they fast on Saturday and break it on Sunday.
 
-**The different one is San Francisco,** and the rest of the US west coast. There, Ekadashi runs from 8:39 am on Saturday to 6:45 am on Sunday, before Sunday's sunrise at 7:21 am. It touches no sunrise at all, so it's a kshaya (skipped) tithi there.
+Sunday's window opens late because of Hari Vasara, the first quarter of Dwadashi, when the fast isn't broken. It lasts until 3:06 pm in both cities. Vaishnavas keep Sunday and break the fast after Monday's sunrise.
 
-Our engine places it on Saturday, 19 December. Temples on the west coast may keep Saturday or Sunday, so follow the calendar of your temple.
+**In San Francisco, the reason is the Ekadashi itself.** There it runs from 8:40 am on Saturday to 6:45 am on Sunday, before Sunday's sunrise at 7:21 am. It touches no sunrise at all, so it's a kshaya (skipped) tithi. Families then fast on Saturday, the day it begins, and Vaishnavas on Sunday.
+
+The same split holds across the US and most of Canada. Atlantic Canada is the exception: in Halifax, Dwadashi lasts past Monday's sunrise, so everyone fasts on Sunday. Temples print their own calendars, so check yours too.
 
 ## Gita Mahotsav in Kurukshetra
 
@@ -102,7 +113,7 @@ Yes, every year. Both are kept on Margashirsha Shukla Ekadashi: Gita Jayanti rem
 
 ### When is Gita Jayanti 2026 in the USA?
 
-On Sunday, 20 December, in New York, Toronto and most of the East. On the west coast, the Ekadashi tithi misses every sunrise, and our engine places it on Saturday, 19 December. Check with your temple.
+On Saturday, 19 December, by the Smarta rule most families follow, from New York to San Francisco. Vaishnavas and ISKCON keep Sunday, 20 December. Check with your temple.
 
 ### When is Gita Jayanti in 2027?
 

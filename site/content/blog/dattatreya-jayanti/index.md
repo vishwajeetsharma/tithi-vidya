@@ -53,7 +53,7 @@ The reason is the moon's distance. Its orbit is an oval, and the moon moves fast
 
 A full moon at its closest point is what [NASA calls a supermoon](https://science.nasa.gov/moon/supermoons/). So step outside on Wednesday evening: it's the biggest-looking full moon of the year.
 
-> **Read next:** [Gita Jayanti 2026](/blog/gita-jayanti), three days earlier, and the one city abroad where its Ekadashi falls on a different day.
+> **Read next:** [Gita Jayanti 2026](/blog/gita-jayanti), three days earlier, and why most US families keep it on Saturday.
 
 ## Who is Dattatreya?
 
