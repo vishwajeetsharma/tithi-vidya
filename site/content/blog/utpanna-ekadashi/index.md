@@ -70,7 +70,7 @@ If you're starting, these steps keep it simple:
 
 > **Tip:** Start gently. A fruit-and-milk fast is still an Ekadashi fast, and you can make it stricter later. If you're pregnant, diabetic or on medicine, talk to your doctor before a fast.
 
-The next Ekadashi is Mokshada Ekadashi on Sunday, 20 December, which is also Gita Jayanti.
+The next Ekadashi is [Mokshada Ekadashi on Sunday, 20 December](/blog/gita-jayanti), which is also Gita Jayanti.
 
 > **Read next:** [Kaal Bhairav Jayanti 2026](/blog/kaal-bhairav-jayanti), three days earlier, on 1 December, and why its puja is kept at night.
 

@@ -254,7 +254,7 @@ For the stories behind each fast, [Wikipedia's Ekadashi page](https://en.wikiped
 
 ### Ekadashi kab hai? When is the next one?
 
-If you're reading this in late 2026, the next ones are Dev Uthani Ekadashi on 20 November, Utpanna Ekadashi on 4 December and Mokshada Ekadashi on 20 December. The first Ekadashi of 2027 is Saphala, on Sunday, 3 January.
+If you're reading this in late 2026, the next ones are Dev Uthani Ekadashi on 20 November, Utpanna Ekadashi on 4 December and Mokshada Ekadashi on 20 December. That last one is also [Gita Jayanti](/blog/gita-jayanti). The first Ekadashi of 2027 is Saphala, on Sunday, 3 January.
 
 ### When is Nirjala Ekadashi in 2027?
 

@@ -2,7 +2,7 @@
 title: "Hindu calendar 2027: all festival dates with tithi"
 description: "Hindu calendar 2027: all 51 festivals month by month with date, day and tithi, and the ones like Maha Shivratri that fall a day before plain calendars show."
 date: 2026-11-18
-updated: 2026-11-26
+updated: 2026-11-28
 tags: [festivals, hindu calendar, panchang]
 cover: cover.jpg
 coverAlt: "Hindu calendar 2027: a wall of twelve small month calendars with the festival dates circled"
@@ -146,7 +146,7 @@ Pitru Paksha runs from 15 to 29 September. Its last day, Sarva Pitru Amavasya, i
 | Sat, 30 Oct | Govardhan Puja | Kartika Shukla Pratipada |
 | Sun, 31 Oct | Bhai Dooj | Kartika Shukla Dwitiya |
 
-October is the busiest month of the year, and Karwa Chauth is the one to watch. Chaturthi begins at 5:52 pm on Monday, 18 October, and is still running when the moon rises at 7:31 pm in Delhi. By Tuesday's moonrise it has ended, so the fast is on Monday, even though some calendars print the 19th.
+October is the busiest month of the year, and Karwa Chauth is the one to watch. Chaturthi begins at 5:52 pm on Monday, 18 October, and is still running when the moon rises at 7:30 pm in Delhi. By Tuesday's moonrise it has ended, so the fast is on Monday, even though some calendars print the 19th.
 
 Diwali is simpler: Amavasya covers the evening Lakshmi Puja on Friday, 29 October, and not on Thursday.
 
@@ -168,7 +168,7 @@ Kartik Purnima is a two-day story in 2027. Purnima runs from 9:55 am on Saturday
 | Date | Festival | Tithi |
 | --- | --- | --- |
 | Fri, 3 Dec | [Vivah Panchami](/blog/vivah-panchami) | Margashirsha Shukla Panchami |
-| Thu, 9 Dec | Gita Jayanti, Mokshada Ekadashi | Margashirsha Shukla Ekadashi |
+| Thu, 9 Dec | [Gita Jayanti](/blog/gita-jayanti), Mokshada Ekadashi | Margashirsha Shukla Ekadashi |
 | Mon, 13 Dec | Dattatreya Jayanti | Margashirsha Purnima |
 
 > **Tip:** Festivals follow the moon, and so does your birthday in the Hindu calendar. [Find my tithi](/find) shows the tithi you were born on and your tithi birthday for the next 100 years.
